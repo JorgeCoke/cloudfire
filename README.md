@@ -1,30 +1,46 @@
-# React + TypeScript + Vite
+# 🔥 CloudFire
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Cloudfire = Hono + Drizzle + React + Cloudflare (Pages & D1)
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎨 [BiomeJS](https://biomejs.dev/) as **linter** and **formatter**
+- 🐶 Pre-Commit and Commit [Husky](https://github.com/typicode/husky) **hooks**, runs linter and formatter before any commit!
+- 💄 **Commit nomenclature** rules following [Conventional Commit Format](https://commitlint.js.org/) and [Commitizen CLI](https://github.com/commitizen/cz-cli) (emoji [powered](https://github.com/folke/devmoji))
+- 🚀 **Release management policy** with [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version), including automagically CHANGELOG.md generation, GitTags, and version bumping
+- 🔦 Included [npm-check](https://www.npmjs.com/package/npm-check) to check for **outdated, incorrect, and unused** dependencies.
+- 🥷🏻 Included [better-npm-audit](https://www.npmjs.com/package/better-npm-audit) to check for dependency **vulnerabilities**
 
-## Expanding the ESLint configuration
+## 🛠 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```
+npm ci               # Install dependencies
+npm run dev          # Launch project locally
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 🎨 Linter & Formatter
+
+```
+npm run format         # Run BiomeJS
+```
+
+## ⛩ Git Commit with Commitizen
+
+```
+git add .            # Add files
+npm run cz           # Commit with Commitizen CLI
+```
+
+## 🚀 Release a new version
+
+```
+npm run release             # Bump version and generate CHANGELOG.md
+git push --follow-tags      # Push changes and GitTag to origin
+```
+
+## 🔦 Check vulnerabilities and update outdated dependencies
+
+```
+npm run npm:audit     # Check dependency vulnerabilities
+npm run npm:check     # Check outdated dependencies
+```
