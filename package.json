@@ -12,14 +12,17 @@
 		"cf:preview": "npm run build && wrangler pages dev",
 		"npm:audit": "npx better-npm-audit audit",
 		"npm:check": "npx npm-check -u",
-		"release": "branch=$(git branch --show-current); if [[ $branch == 'master' || $branch == 'main' ]]; then commit-and-tag-version; else echo 'Releases allowed from main branch only'; exit 1; fi;",
 		"cz": "npx cz",
+		"release": "branch=$(git branch --show-current); if [[ $branch == 'master' || $branch == 'main' ]]; then commit-and-tag-version; else echo 'Releases allowed from main branch only'; exit 1; fi;",
 		"devmoji": "devmoji -e --lint",
 		"prepare": "husky"
 	},
 	"dependencies": {
+		"@hono/zod-validator": "^0.2.2",
+		"hono": "^4.5.0",
 		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
+		"react-dom": "^18.3.1",
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3",

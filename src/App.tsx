@@ -1,10 +1,21 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import viteLogo from "/vite.svg";
 import reactLogo from "./assets/react.svg";
+import { rpc } from "./lib/rpc";
 
+// TODO: Watch for file changes
 function App() {
 	const [count, setCount] = useState(0);
+
+	useEffect(() => {
+		rpc.api.auth["log-in"]
+			.$post({ json: { username: "asd", password: "password" } })
+			.then((res) => res.json())
+			.then((res) => {
+				console.log(res);
+			});
+	}, []);
 
 	return (
 		<>
@@ -16,7 +27,7 @@ function App() {
 					<img src={reactLogo} className="logo react" alt="React logo" />
 				</a>
 			</div>
-			<h1>Vite + React + Cloudflare Pages</h1>
+			<h1>Vite + React + Cloudflare Pages..</h1>
 			<div className="card">
 				<button type="button" onClick={() => setCount((count) => count + 1)}>
 					count is {count}
