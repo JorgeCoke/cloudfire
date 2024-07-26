@@ -1,10 +1,21 @@
-import { Hono } from "hono";
-import type { GetHealthResponse } from "../../types/health.controller.types";
+import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
+import { GetHealthResponse } from "../../types/health.controller.types";
+import { openApiResponse } from "../utils/zod-to-json-openapi";
 
-const HealthController = new Hono().basePath("/health").get("/", async (c) => {
-	// TODO: Maybe types folder is not needed
-	const response: GetHealthResponse = { status: "ok" };
-	return c.json(response);
-});
+const basePath = "/health";
+
+const HealthController = new OpenAPIHono().openapi(
+	createRoute({
+		tags: [basePath],
+		method: "get",
+		path: `${basePath}`,
+		responses: {
+			...openApiResponse(GetHealthResponse, 200, "Retrieve service status"),
+		},
+	}),
+	async (c) => {
+		return c.json({ status: "ok" }, 200);
+	},
+);
 
 export default HealthController;

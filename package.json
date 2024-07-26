@@ -4,12 +4,12 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
+		"dev": "npm run build && wrangler pages dev",
+		"dev_bak": "vite",
 		"build": "tsc -b && vite build",
 		"format": "biome format --write src",
 		"preview": "vite preview",
 		"cf:deploy": "npm run build && wrangler pages deploy",
-		"cf:preview": "npm run build && wrangler pages dev",
 		"npm:audit": "npx better-npm-audit audit",
 		"npm:check": "npx npm-check -u",
 		"cz": "npx cz",
@@ -18,6 +18,8 @@
 		"prepare": "husky"
 	},
 	"dependencies": {
+		"@hono/swagger-ui": "^0.4.0",
+		"@hono/zod-openapi": "^0.15.0",
 		"@hono/zod-validator": "^0.2.2",
 		"hono": "^4.5.0",
 		"react": "^18.3.1",

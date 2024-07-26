@@ -9,7 +9,7 @@ function App() {
 	const [count, setCount] = useState(0);
 
 	useEffect(() => {
-		rpc.api.auth["log-in"]
+		rpc.api.v1.auth["log-in"]
 			.$post({ json: { username: "asd", password: "password" } })
 			.then((res) => res.json())
 			.then((res) => {
