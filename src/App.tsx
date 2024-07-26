@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import viteLogo from "/vite.svg";
 import reactLogo from "./assets/react.svg";
+import { Button } from "./components/ui/button";
 import { rpc } from "./lib/rpc";
 
 // TODO: Watch for file changes
@@ -27,7 +28,8 @@ function App() {
 					<img src={reactLogo} className="logo react" alt="React logo" />
 				</a>
 			</div>
-			<h1>Vite + React + Cloudflare Pages..</h1>
+			<h1 className="font-bold text-4xl">Vite + React + Cloudflare Pages..</h1>
+			<Button>asd</Button>
 			<div className="card">
 				<button type="button" onClick={() => setCount((count) => count + 1)}>
 					count is {count}
