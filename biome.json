@@ -9,6 +9,16 @@
 			"recommended": true,
 			"style": {
 				"noNonNullAssertion": "info"
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"useKeyWithClickEvents": "off"
+			},
+			"complexity": {
+				"noForEach": "off"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "info"
 			}
 		}
 	}
