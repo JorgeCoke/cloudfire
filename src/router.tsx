@@ -27,6 +27,12 @@ const router = createBrowserRouter([
 					Component: (await import("./pages/users/users")).default,
 				}),
 			},
+			{
+				path: "/tasks",
+				lazy: async () => ({
+					Component: (await import("./pages/tasks")).default,
+				}),
+			},
 		],
 	},
 
