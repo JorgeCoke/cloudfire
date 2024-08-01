@@ -9,6 +9,10 @@ import {
 	openApiRequest,
 	openApiResponse,
 } from "../utils/zod-to-json-openapi";
+import type { Bindings } from "../utils/bindings";
+import { drizzle } from "drizzle-orm/d1";
+import { users } from "../lib/db/schemas/users";
+import { eq } from "drizzle-orm";
 
 export const AuthErrors = {
 	USER_NOT_FOUND: {
@@ -19,7 +23,7 @@ export const AuthErrors = {
 
 const basePath = "/auth";
 
-const AuthController = new OpenAPIHono().openapi(
+const AuthController = new OpenAPIHono<{ Bindings: Bindings }>().openapi(
 	createRoute({
 		tags: [basePath],
 		method: "post",
@@ -31,8 +35,14 @@ const AuthController = new OpenAPIHono().openapi(
 		},
 	}),
 	async (c) => {
+		const db = drizzle(c.env.DB);
 		const body = c.req.valid("json");
-		if (body.password !== "password") {
+		const [user] = await db
+			.select()
+			.from(users)
+			.limit(1)
+			.where(eq(users.email, body.username));
+		if (!user) {
 			throw new HTTPException(AuthErrors.USER_NOT_FOUND.status, {
 				message: AuthErrors.USER_NOT_FOUND.message,
 			});

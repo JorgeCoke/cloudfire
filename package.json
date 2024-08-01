@@ -4,17 +4,22 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "npm run build && wrangler pages dev",
-		"dev_bak": "vite",
-		"build": "tsc -b && vite build",
+		"dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run db:studio:local\"",
+		"dev:backend": "wrangler pages dev",
+		"dev:frontend": "vite build --watch",
+		"cf:deploy": "tsc -b && vite build && wrangler pages deploy",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate:local": "wrangler d1 migrations apply cloudfire-prod-db --local",
+		"db:migrate:preview": "wrangler d1 migrations apply --env preview cloudfire-preview-db --remote",
+		"db:migrate:prod": "wrangler d1 migrations apply cloudfire-prod-db --remote",
+		"db:studio:local": "cross-env LOCAL_DB_PATH=$(find .wrangler/state/v3/d1/miniflare-D1DatabaseObject -type f -name '*.sqlite' -print -quit) drizzle-kit studio",
+		"db:studio:preview": "source .env && cross-env $(grep -m 2 \"^database_id=\" wrangler.toml | tail -n1) drizzle-kit studio",
+		"db:studio:prod": "source .env && cross-env $(grep -m 1 \"^database_id=\" wrangler.toml) drizzle-kit studio",
 		"format": "biome format --write src",
-		"preview": "vite preview",
-		"cf:deploy": "npm run build && wrangler pages deploy",
 		"npm:audit": "npx better-npm-audit audit",
 		"npm:check": "npx npm-check -u",
 		"cz": "npx cz",
 		"release": "branch=$(git branch --show-current); if [[ $branch == 'master' || $branch == 'main' ]]; then commit-and-tag-version; else echo 'Releases allowed from main branch only'; exit 1; fi;",
-		"devmoji": "devmoji -e --lint",
 		"prepare": "husky"
 	},
 	"dependencies": {
@@ -38,7 +43,10 @@
 		"@tanstack/react-table": "^8.19.3",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
+		"concurrently": "^8.2.2",
 		"date-fns": "^3.6.0",
+		"drizzle-orm": "^0.32.1",
+		"drizzle-zod": "^0.5.1",
 		"hono": "^4.5.0",
 		"lucide-react": "^0.416.0",
 		"react": "^18.3.1",
@@ -52,15 +60,19 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3",
+		"@cloudflare/workers-types": "^4.20240725.0",
 		"@commitlint/cli": "^19.3.0",
 		"@commitlint/config-conventional": "^19.2.2",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
 		"@vitejs/plugin-react": "^4.3.1",
 		"autoprefixer": "^10.4.19",
+		"better-sqlite3": "^11.1.2",
 		"commit-and-tag-version": "^12.4.1",
+		"cross-env": "^7.0.3",
 		"cz-conventional-changelog": "^3.3.0",
 		"devmoji": "^2.3.0",
+		"drizzle-kit": "^0.23.1",
 		"husky": "^9.1.1",
 		"postcss": "^8.4.40",
 		"tailwindcss": "^3.4.7",
@@ -74,8 +86,6 @@
 		}
 	},
 	"commitlint": {
-		"extends": [
-			"@commitlint/config-conventional"
-		]
+		"extends": ["@commitlint/config-conventional"]
 	}
 }

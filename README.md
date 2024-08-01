@@ -14,6 +14,11 @@ Cloudfire = Hono + Drizzle + React + Cloudflare (Pages & D1)
 ## 🛠 Getting Started
 
 ```
+wrangler d1 create cloudfire-prod-db
+wrangler d1 create cloudfire-preview-db
+```
+
+```
 npm ci               # Install dependencies
 npm run dev          # Launch project locally
 ```

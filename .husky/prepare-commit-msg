@@ -1,1 +1,1 @@
-npm run devmoji
+devmoji -e --lint
