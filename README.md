@@ -4,7 +4,12 @@ Cloudfire = Hono + Drizzle + React + Cloudflare (Pages & D1)
 
 ## ✨ Features
 
-- 🎨 [BiomeJS](https://biomejs.dev/) as **linter** and **formatter**
+- ☁️ **Serverless deployment** with [Cloudflare Pages](https://pages.cloudflare.com/) and serverless SQLite database with [Cloudflare D1](https://developers.cloudflare.com/d1/)
+- 🔥 The **fastest JS framework**: [Hono](https://hono.dev/) 
+- ⚛️ Simple [React](https://react.dev/) SPA **dashboard**, with [Zustand](https://github.com/pmndrs/zustand) state management
+- 🌧 [Drizzle](https://orm.drizzle.team/) as **SQLite ORM**
+- 🦄 [Tailwind](https://tailwindcss.com/) + [Shadcn](https://ui.shadcn.com/) styles
+- 🎨 The best **linter** and **formatter**, [BiomeJS](https://biomejs.dev/)
 - 🐶 Pre-Commit and Commit [Husky](https://github.com/typicode/husky) **hooks**, runs linter and formatter before any commit!
 - 💄 **Commit nomenclature** rules following [Conventional Commit Format](https://commitlint.js.org/) and [Commitizen CLI](https://github.com/commitizen/cz-cli) (emoji [powered](https://github.com/folke/devmoji))
 - 🚀 **Release management policy** with [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version), including automagically CHANGELOG.md generation, GitTags, and version bumping
@@ -13,14 +18,24 @@ Cloudfire = Hono + Drizzle + React + Cloudflare (Pages & D1)
 
 ## 🛠 Getting Started
 
+First, create your production and preview databases, and update your wrangler configuration file:
 ```
-wrangler d1 create cloudfire-prod-db
-wrangler d1 create cloudfire-preview-db
+npm i -g wrangler                           # Install Cloudflare Wrangler CLI
+wrangler login                              # Login to Cloudflare
+wrangler d1 create cloudfire-prod-db        # Create Prod database, and don't forget to update [[d1_databases]] section in wrangle.toml with your database_id
+wrangler d1 create cloudfire-preview-db     # Create Preview database, and  don't forget to update [[env.preview.d1_databases]] section in wrangle.toml with your database_id
 ```
 
+(Optional) In case you want to use Drizzle studio, You'll need you CloudfoundryAccountId and CloudfoundryToken
 ```
-npm ci               # Install dependencies
-npm run dev          # Launch project locally
+cp .env.example .env      # Create a .env file, and don't forget to fill it with your CloudfoundryAccountId and CloudfoundryToken
+```
+
+Then, simply install dependencies, run the migrations and launch it!
+```
+npm ci                          # Install dependencies
+npm run db:migrate:local        # Run database migrations locally
+npm run dev                     # Launch project locally
 ```
 
 ## 🎨 Linter & Formatter
@@ -36,11 +51,12 @@ git add .            # Add files
 npm run cz           # Commit with Commitizen CLI
 ```
 
-## 🚀 Release a new version
+## 🚀 Release and deploy a new version
 
 ```
 npm run release             # Bump version and generate CHANGELOG.md
 git push --follow-tags      # Push changes and GitTag to origin
+npm run deploy              # Deploy it
 ```
 
 ## 🔦 Check vulnerabilities and update outdated dependencies

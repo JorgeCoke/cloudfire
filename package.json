@@ -5,9 +5,10 @@
 	"type": "module",
 	"scripts": {
 		"dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run db:studio:local\"",
-		"dev:backend": "wrangler pages dev",
+		"dev:backend": "wrangler pages dev true",
 		"dev:frontend": "vite build --watch",
-		"cf:deploy": "tsc -b && vite build && wrangler pages deploy",
+		"build": "npm run format && tsc -b && vite build",
+		"cf:deploy": "npm run build && wrangler pages deploy",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate:local": "wrangler d1 migrations apply cloudfire-prod-db --local",
 		"db:migrate:preview": "wrangler d1 migrations apply --env preview cloudfire-preview-db --remote",
@@ -19,7 +20,7 @@
 		"npm:audit": "npx better-npm-audit audit",
 		"npm:check": "npx npm-check -u",
 		"cz": "npx cz",
-		"release": "branch=$(git branch --show-current); if [[ $branch == 'master' || $branch == 'main' ]]; then commit-and-tag-version; else echo 'Releases allowed from main branch only'; exit 1; fi;",
+		"release": "npm run build && branch=$(git branch --show-current); if [[ $branch == 'master' || $branch == 'main' ]]; then commit-and-tag-version; else echo 'Releases allowed from main branch only'; exit 1; fi;",
 		"prepare": "husky"
 	},
 	"dependencies": {
