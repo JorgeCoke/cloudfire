@@ -1,49 +1,70 @@
 import { createBrowserRouter } from "react-router-dom";
-import GeneralError from "./pages/errors/general-error";
-import NotFoundError from "./pages/errors/not-found-error";
-import MaintenanceError from "./pages/errors/maintenance-error";
-import UnauthorisedError from "./pages/errors/unauthorised-error.tsx";
+import ErrorPage from "./pages/error/error.page";
 
-const router = createBrowserRouter([
-	// Auth routes
+export const ROUTES = {
+	AUTH: {
+		LOG_IN: "/auth/log-in",
+		SIGN_UP: "/auth/sign-up",
+		RESET_PASSWORD: "/auth/reset-password",
+	},
+	PLAYGROUND: "/playground",
+	DASHBOARD: {
+		INDEX: "/dashboard",
+		USERS: "/dashboard/users",
+		SETTINGS: "/dashboard/settings",
+	},
+};
+
+export const router = createBrowserRouter([
+	// Testing Playground
 	{
-		path: "/auth/log-in",
+		path: ROUTES.PLAYGROUND,
 		lazy: async () => ({
-			Component: (await import("./pages/auth/log-in")).default,
+			Component: (await import("./pages/playground/playground.page")).default,
 		}),
 	},
-	// Main routes
+	// Auth routes
 	{
-		path: "/",
-		lazy: async () => {
-			const AppShell = await import("./components/app-shell");
-			return { Component: AppShell.default };
-		},
-		errorElement: <GeneralError />,
+		path: ROUTES.AUTH.LOG_IN,
+		lazy: async () => ({
+			Component: (await import("./pages/auth/log-in.page")).default,
+		}),
+	},
+	{
+		path: ROUTES.AUTH.SIGN_UP,
+		lazy: async () => ({
+			Component: (await import("./pages/auth/sign-up.page")).default,
+		}),
+	},
+	{
+		path: ROUTES.AUTH.RESET_PASSWORD,
+		lazy: async () => ({
+			Component: (await import("./pages/auth/reset-password.page")).default,
+		}),
+	},
+	// Dashboard rutes
+	{
+		path: ROUTES.DASHBOARD.INDEX,
+		errorElement: <ErrorPage />,
+		lazy: async () => ({
+			Component: (await import("./components/layout/app-shell")).default,
+		}),
 		children: [
 			{
-				index: true,
+				path: ROUTES.DASHBOARD.USERS,
 				lazy: async () => ({
-					Component: (await import("./pages/users/users")).default,
+					Component: (await import("./pages/dashboard/users.page")).default,
 				}),
 			},
 			{
-				path: "/tasks",
+				path: ROUTES.DASHBOARD.SETTINGS,
 				lazy: async () => ({
-					Component: (await import("./pages/tasks")).default,
+					Component: (await import("./pages/dashboard/settings.page")).default,
 				}),
 			},
 		],
 	},
-
 	// Error routes
-	{ path: "/500", Component: GeneralError },
-	{ path: "/404", Component: NotFoundError },
-	{ path: "/503", Component: MaintenanceError },
-	{ path: "/401", Component: UnauthorisedError },
-
-	// Fallback 404 route
-	{ path: "*", Component: NotFoundError },
+	{ path: "/error/:errorCode", Component: ErrorPage },
+	{ path: "*", Component: ErrorPage },
 ]);
-
-export default router;

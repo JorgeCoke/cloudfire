@@ -5,18 +5,18 @@ import {
 	PostLogInResponse,
 	PostSignUpBody,
 	PostSignUpResponse,
-} from "../../types/auth.controller.types";
+} from "../../types/auth-controller.types";
 import {
 	openApiErrors,
 	openApiRequest,
 	openApiResponse,
-} from "../utils/zod-to-json-openapi";
-import type { Bindings } from "../utils/bindings";
+} from "../lib/zod-to-json-openapi";
+import type { Bindings } from "../lib/bindings";
 import { drizzle } from "drizzle-orm/d1";
 import { users } from "../lib/db/schemas/users";
 import { eq } from "drizzle-orm";
 import { compareSync, hashSync } from "bcryptjs";
-import { HttpException } from "../utils/custom-http-exception";
+import { HttpException } from "../lib/custom-http-exception";
 import { sign } from "hono/jwt";
 
 export const AuthErrors = {

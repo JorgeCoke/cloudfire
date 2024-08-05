@@ -1,7 +1,7 @@
 import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
-import { GetHealthResponse } from "../../types/health.controller.types";
-import { openApiResponse } from "../utils/zod-to-json-openapi";
-import type { Bindings } from "../utils/bindings";
+import { GetHealthResponse } from "../../types/health-controller.types";
+import { openApiResponse } from "../lib/zod-to-json-openapi";
+import type { Bindings } from "../lib/bindings";
 
 const basePath = "/health";
 

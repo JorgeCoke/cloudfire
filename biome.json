@@ -19,6 +19,9 @@
 			},
 			"correctness": {
 				"useExhaustiveDependencies": "info"
+			},
+			"suspicious": {
+				"noExplicitAny": "info"
 			}
 		}
 	}
