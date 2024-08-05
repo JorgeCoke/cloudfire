@@ -2,6 +2,8 @@
 
 Cloudfire = Hono + Drizzle + React + Cloudflare (Pages & D1)
 
+This boilerplate SASS template stack is **designed for developers** seeking a streamlined, **high-performance** setup with **minimal dependencies**. Perfect for modern web applications 💪🏻
+
 ## ✨ Features
 
 - ☁️ **Serverless deployment** with [Cloudflare Pages](https://pages.cloudflare.com/) and serverless SQLite database with [Cloudflare D1](https://developers.cloudflare.com/d1/)
