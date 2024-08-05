@@ -11,6 +11,7 @@ export const ROUTES = {
 	DASHBOARD: {
 		INDEX: "/dashboard",
 		USERS: "/dashboard/users",
+		TASKS: "/dashboard/tasks",
 		SETTINGS: "/dashboard/settings",
 	},
 };
@@ -54,6 +55,12 @@ export const router = createBrowserRouter([
 				path: ROUTES.DASHBOARD.USERS,
 				lazy: async () => ({
 					Component: (await import("./pages/dashboard/users.page")).default,
+				}),
+			},
+			{
+				path: ROUTES.DASHBOARD.TASKS,
+				lazy: async () => ({
+					Component: (await import("./pages/dashboard/tasks/page")).default,
 				}),
 			},
 			{
