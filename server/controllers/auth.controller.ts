@@ -147,7 +147,7 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 					jwtPayload,
 					"reset-password-secret", // TODO: Move to secrets
 				);
-				console.log("🚀  resetPasswordToken:", resetPasswordToken); // TODO: Send link via email
+				console.log("🚀  resetPasswordToken:", resetPasswordToken); // TODO: Send link via email and prevent ddos
 			}
 			return c.json({ success: true }, 200); // Return always true
 		},

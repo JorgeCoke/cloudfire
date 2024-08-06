@@ -15,11 +15,12 @@ import {
 import { ROUTES } from "../../router";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
-import type { z } from "zod";
+import { useAuthStore } from "./auth.store";
 
 export default function ResetPasswordPage() {
+	const authStore = useAuthStore();
 	const [searchParams] = useSearchParams();
-	const [values] = useState<Partial<z.infer<typeof PostResetPasswordBody>>>({
+	const [values] = useState<Partial<PostResetPasswordBody>>({
 		token: searchParams.get("token") || undefined,
 	});
 
@@ -40,6 +41,7 @@ export default function ResetPasswordPage() {
 				<CardContent className="grid gap-4">
 					{searchParams.get("token") ? (
 						<AutoForm
+							onSubmit={(body) => authStore.doPostResetPassword(body)}
 							formSchema={PostResetPasswordBody}
 							values={values}
 							fieldConfig={{
@@ -61,10 +63,17 @@ export default function ResetPasswordPage() {
 								},
 							}}
 						>
-							<AutoFormSubmit className="w-full">Reset Password</AutoFormSubmit>
+							<AutoFormSubmit
+								className="w-full"
+								disabled={authStore.isLoading}
+								aria-disabled={authStore.isLoading}
+							>
+								Reset Password
+							</AutoFormSubmit>
 						</AutoForm>
 					) : (
 						<AutoForm
+							onSubmit={(body) => authStore.doPostRequestResetPassword(body)}
 							formSchema={PostRequestResetPasswordBody}
 							fieldConfig={{
 								email: {
@@ -74,7 +83,13 @@ export default function ResetPasswordPage() {
 								},
 							}}
 						>
-							<AutoFormSubmit className="w-full">Reset Password</AutoFormSubmit>
+							<AutoFormSubmit
+								className="w-full"
+								disabled={authStore.isLoading}
+								aria-disabled={authStore.isLoading}
+							>
+								Reset Password
+							</AutoFormSubmit>
 						</AutoForm>
 					)}
 				</CardContent>

@@ -10,6 +10,8 @@ import { timeout } from "hono/timeout";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import ApiController from "./controllers/api.controller";
 
+// TODO: Add CSRF
+// TODO: Add rate limiter
 const server = new OpenAPIHono()
 	.use(logger())
 	.use(bodyLimit({ maxSize: 50 * 1024 })) // 50 kb

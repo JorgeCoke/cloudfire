@@ -2,8 +2,11 @@ import AutoForm, { AutoFormSubmit } from "../../components/ui/auto-form";
 import { PostSignUpBody } from "../../../types/auth-controller.types";
 import { ROUTES } from "../../router";
 import { Flame } from "lucide-react";
+import { useAuthStore } from "./auth.store";
 
 export default function SignUpPage() {
+	const authStore = useAuthStore();
+
 	return (
 		<div className="w-full h-[100vh] lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
 			<div className="flex items-center justify-center py-12">
@@ -15,6 +18,7 @@ export default function SignUpPage() {
 						</p>
 					</div>
 					<AutoForm
+						onSubmit={(body) => authStore.doPostSignUp(body)}
 						formSchema={PostSignUpBody}
 						fieldConfig={{
 							email: {
@@ -34,7 +38,11 @@ export default function SignUpPage() {
 							},
 						}}
 					>
-						<AutoFormSubmit className="w-full">
+						<AutoFormSubmit
+							className="w-full"
+							disabled={authStore.isLoading}
+							aria-disabled={authStore.isLoading}
+						>
 							Create an account
 						</AutoFormSubmit>
 					</AutoForm>
