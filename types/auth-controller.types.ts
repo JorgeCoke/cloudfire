@@ -29,18 +29,37 @@ export const PostSignUpResponse = z
 	.openapi("PostSignUpResponse");
 export type PostSignUpResponse = z.infer<typeof PostSignUpResponse>;
 
-export const PostResetPasswordBody = z
+export const PostRequestResetPasswordBody = z
 	.object({
 		email: z.string().email(),
 	})
+	.openapi("PostRequestResetPasswordBody");
+export type PostRequestResetPasswordBody = z.infer<
+	typeof PostRequestResetPasswordBody
+>;
+export const PostRequestResetPasswordResponse = z
+	.object({
+		success: z.boolean(),
+	})
+	.openapi("PostRequestResetPasswordResponse");
+export type PostRequestResetPasswordResponse = z.infer<
+	typeof PostRequestResetPasswordResponse
+>;
+
+export const PostResetPasswordBody = z
+	.object({
+		password: z.string().min(8),
+		repeatPassword: z.string(),
+		token: z.string(),
+	})
 	.openapi("PostResetPasswordBody");
-export type PostForgotPasswordBody = z.infer<typeof PostResetPasswordBody>;
+export type PostResetPasswordBody = z.infer<typeof PostResetPasswordBody>;
 export const PostResetPasswordResponse = z
 	.object({
 		success: z.boolean(),
 	})
 	.openapi("PostResetPasswordResponse");
-export type PostForgotPasswordResponse = z.infer<
+export type PostResetPasswordResponse = z.infer<
 	typeof PostResetPasswordResponse
 >;
 
