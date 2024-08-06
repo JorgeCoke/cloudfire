@@ -1,8 +1,8 @@
 import { Home, LineChart, Package, ShoppingCart, Users } from "lucide-react";
-import { Header } from "./header";
 import { Navbar } from "./navbar";
 import { Outlet } from "react-router-dom";
 import { ROUTES } from "../../router";
+import { Header } from "./header";
 
 export const DashboardItems = [
 	{
@@ -39,13 +39,13 @@ export const DashboardItems = [
 
 export default function AppShell() {
 	return (
-		<div className="grid min-h-screen w-full h-full md:grid-cols-[220px_1fr]">
-			<div className="hidden border-r bg-muted/40 md:block h-full">
+		<div className="relative h-full overflow-hidden">
+			<div className="hidden border-r z-10 bg-zinc-50 md:block fixed left-0 top-0 max-h-svh w-56 h-full">
 				<Navbar />
 			</div>
-			<div className="flex flex-col overflow-auto">
+			<div className="overflow-x-hidden md:overflow-y-hidden h-full md:ml-56">
 				<Header />
-				<main className="flex flex-1 flex-col gap-4 p-4">
+				<main className="p-4 overflow-auto">
 					<Outlet />
 				</main>
 			</div>

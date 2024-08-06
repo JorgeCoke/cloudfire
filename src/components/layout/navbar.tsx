@@ -16,7 +16,7 @@ export const Navbar = () => {
 	const path = useLocation();
 
 	return (
-		<div className="flex h-full max-h-screen flex-col gap-2">
+		<div className="flex h-full flex-col gap-2">
 			<div className="flex items-center border-b px-4 h-16">
 				<a href="/" className="flex items-center gap-2 font-semibold">
 					<Flame className="h-6 w-6" />
@@ -35,7 +35,7 @@ export const Navbar = () => {
 							href={e.href}
 							className={cn(
 								"flex items-center gap-4 rounded-lg px-3 py-3 text-muted-foreground transition-all hover:text-primary",
-								path.pathname === e.href && "bg-muted text-black font-bold",
+								path.pathname === e.href && " bg-zinc-200 text-black font-bold",
 							)}
 						>
 							{e.icon}
