@@ -8,14 +8,14 @@
 		"dev:backend": "wrangler pages dev",
 		"dev:frontend": "vite build --watch",
 		"build": "npm run format && tsc -b && vite build",
-		"cf:deploy": "npm run build && wrangler pages deploy",
+		"deploy": "npm run build && wrangler pages deploy",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate:local": "wrangler d1 migrations apply cloudfire-prod-db --local",
 		"db:migrate:preview": "wrangler d1 migrations apply --env preview cloudfire-preview-db --remote",
 		"db:migrate:prod": "wrangler d1 migrations apply cloudfire-prod-db --remote",
 		"db:studio:local": "cross-env LOCAL_DB_PATH=$(find .wrangler/state/v3/d1/miniflare-D1DatabaseObject -type f -name '*.sqlite' -print -quit) drizzle-kit studio",
-		"db:studio:preview": "source .env && cross-env $(grep -m 2 \"^database_id=\" wrangler.toml | tail -n1) drizzle-kit studio",
-		"db:studio:prod": "source .env && cross-env $(grep -m 1 \"^database_id=\" wrangler.toml) drizzle-kit studio",
+		"db:studio:preview": "cross-env $(grep -v '^#' .dev.vars | xargs) $(grep -m 2 \"^database_id=\" wrangler.toml | tail -n1) drizzle-kit studio",
+		"db:studio:prod": "cross-env $(grep -v '^#' .dev.vars | xargs) $(grep -m 1 \"^database_id=\" wrangler.toml) drizzle-kit studio",
 		"format": "biome format --write src",
 		"npm:audit": "npx better-npm-audit audit",
 		"npm:check": "npx npm-check -u",
@@ -93,8 +93,6 @@
 		}
 	},
 	"commitlint": {
-		"extends": [
-			"@commitlint/config-conventional"
-		]
+		"extends": ["@commitlint/config-conventional"]
 	}
 }

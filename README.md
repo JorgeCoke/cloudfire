@@ -26,11 +26,7 @@ npm i -g wrangler                           # Install Cloudflare Wrangler CLI
 wrangler login                              # Login to Cloudflare
 wrangler d1 create cloudfire-prod-db        # Create Prod database, and don't forget to update [[d1_databases]] section in wrangle.toml with your database_id
 wrangler d1 create cloudfire-preview-db     # Create Preview database, and  don't forget to update [[env.preview.d1_databases]] section in wrangle.toml with your database_id
-```
-
-(Optional) In case you want to use Drizzle studio, You'll need you CloudfoundryAccountId and CloudfoundryToken
-```
-cp .env.example .env      # Create a .env file, and don't forget to fill it with your CloudfoundryAccountId and CloudfoundryToken
+cp .dev.vars.example .dev.vars              # Create a .dev.vars and don't forget to fill it with your secret variables
 ```
 
 Then, simply install dependencies, run the migrations and launch it!

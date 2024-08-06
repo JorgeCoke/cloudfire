@@ -15,13 +15,13 @@ import {
 	openApiRequest,
 	openApiResponse,
 } from "../lib/zod-to-json-openapi";
-import type { Bindings } from "../lib/bindings";
 import { drizzle } from "drizzle-orm/d1";
 import { users } from "../lib/db/schemas/users";
 import { eq } from "drizzle-orm";
 import { compareSync, hashSync } from "bcryptjs";
 import { HttpException } from "../lib/custom-http-exception";
 import { sign, verify } from "hono/jwt";
+import type { Bindings } from "../lib/bindings";
 
 export const AuthErrors = {
 	USER_NOT_FOUND: {
@@ -76,7 +76,7 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 				userId: user.id,
 				exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
 			};
-			const jwt = await sign(jwtPayload, "session-secret"); // TODO: Move to secrets
+			const jwt = await sign(jwtPayload, c.env.AUTH_SESSION_SECRET_KEY);
 			return c.json({ jwt }, 200);
 		},
 	)
@@ -145,7 +145,7 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 				};
 				const resetPasswordToken = await sign(
 					jwtPayload,
-					"reset-password-secret", // TODO: Move to secrets
+					c.env.AUTH_RESET_PASSWORD_SECRET_KEY,
 				);
 				console.log("🚀  resetPasswordToken:", resetPasswordToken); // TODO: Send link via email and prevent ddos
 			}
@@ -176,11 +176,12 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 			if (body.password !== body.repeatPassword) {
 				throw new HttpException(AuthErrors.PASSWORDS_DOES_NOT_MATCH);
 			}
-			const payload = (await verify(body.token, "reset-password-secret").catch(
-				() => {
-					throw new HttpException(AuthErrors.INVALID__OR_EXPIRED_TOKEN);
-				},
-			)) as JwtPayload; // TODO: Move to secrets
+			const payload = (await verify(
+				body.token,
+				c.env.AUTH_RESET_PASSWORD_SECRET_KEY,
+			).catch(() => {
+				throw new HttpException(AuthErrors.INVALID__OR_EXPIRED_TOKEN);
+			})) as JwtPayload;
 			await db
 				.update(users)
 				.set({ password: hashSync(body.password, 10) })
