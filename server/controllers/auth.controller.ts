@@ -16,7 +16,7 @@ import {
 	openApiResponse,
 } from "../lib/zod-to-json-openapi";
 import { drizzle } from "drizzle-orm/d1";
-import { users } from "../lib/db/schemas/users";
+import { usersT } from "../lib/db/schemas/users.table";
 import { eq } from "drizzle-orm";
 import { compareSync, hashSync } from "bcryptjs";
 import { HttpException } from "../lib/custom-http-exception";
@@ -62,9 +62,9 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 			const body = c.req.valid("json");
 			const [user] = await db
 				.select()
-				.from(users)
+				.from(usersT)
 				.limit(1)
-				.where(eq(users.email, body.email));
+				.where(eq(usersT.email, body.email));
 			if (!user) {
 				throw new HttpException(AuthErrors.USER_NOT_FOUND);
 			}
@@ -77,6 +77,10 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 				exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
 			};
 			const jwt = await sign(jwtPayload, c.env.AUTH_SESSION_SECRET_KEY);
+			await db
+				.update(usersT)
+				.set({ lastLogIn: new Date() })
+				.where(eq(usersT.id, user.id));
 			return c.json({ jwt }, 200);
 		},
 	)
@@ -102,13 +106,13 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 			}
 			const [user] = await db
 				.select()
-				.from(users)
+				.from(usersT)
 				.limit(1)
-				.where(eq(users.email, body.email));
+				.where(eq(usersT.email, body.email));
 			if (user) {
 				throw new HttpException(AuthErrors.USER_ALREADY_EXISTS);
 			}
-			const result = await db.insert(users).values({
+			const result = await db.insert(usersT).values({
 				email: body.email,
 				password: hashSync(body.password, 10),
 			});
@@ -135,19 +139,30 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 			const body = c.req.valid("json");
 			const [user] = await db
 				.select()
-				.from(users)
+				.from(usersT)
 				.limit(1)
-				.where(eq(users.email, body.email));
+				.where(eq(usersT.email, body.email));
 			if (user) {
-				const jwtPayload: JwtPayload = {
-					userId: user.id,
-					exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
-				};
-				const resetPasswordToken = await sign(
-					jwtPayload,
-					c.env.AUTH_RESET_PASSWORD_SECRET_KEY,
-				);
-				console.log("🚀  resetPasswordToken:", resetPasswordToken); // TODO: Send link via email and prevent ddos
+				if (
+					!user.lastResetPasswordRequest ||
+					user.lastResetPasswordRequest <
+						new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+				) {
+					// Send one single email every 24h to prevent extra usage
+					const jwtPayload: JwtPayload = {
+						userId: user.id,
+						exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
+					};
+					const resetPasswordToken = await sign(
+						jwtPayload,
+						c.env.AUTH_RESET_PASSWORD_SECRET_KEY,
+					);
+					console.log("🚀  resetPasswordToken:", resetPasswordToken); // TODO: Send link via email
+					await db
+						.update(usersT)
+						.set({ lastResetPasswordRequest: new Date() })
+						.where(eq(usersT.id, user.id));
+				}
 			}
 			return c.json({ success: true }, 200); // Return always true
 		},
@@ -183,9 +198,9 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 				throw new HttpException(AuthErrors.INVALID__OR_EXPIRED_TOKEN);
 			})) as JwtPayload;
 			await db
-				.update(users)
+				.update(usersT)
 				.set({ password: hashSync(body.password, 10) })
-				.where(eq(users.id, payload.userId));
+				.where(eq(usersT.id, payload.userId));
 			return c.json({ success: true }, 200);
 		},
 	);

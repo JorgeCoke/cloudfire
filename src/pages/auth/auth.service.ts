@@ -60,7 +60,7 @@ export const postRequestResetPassword = (
 			const json = await res.json();
 			if (res.ok) {
 				toast({
-					title: "A mail has been sent to your email!",
+					title: "If your user exists, a mail has been sent to your email!",
 					variant: "success",
 				});
 				return json as PostRequestResetPasswordResponse;
