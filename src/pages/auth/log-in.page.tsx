@@ -2,10 +2,15 @@ import AutoForm, { AutoFormSubmit } from "../../components/ui/auto-form";
 import { PostLogInBody } from "../../../types/auth-controller.types";
 import { ROUTES } from "../../router";
 import { Flame } from "lucide-react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuthStore } from "./auth.store";
 
 export default function LogInPage() {
+	if (localStorage.getItem("jwt")) {
+		return <Navigate to={ROUTES.DASHBOARD.TASKS} replace />;
+	}
 	const authStore = useAuthStore();
+	const navigate = useNavigate();
 
 	return (
 		<div className="w-full h-[100vh] lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -18,7 +23,10 @@ export default function LogInPage() {
 						</p>
 					</div>
 					<AutoForm
-						onSubmit={(body) => authStore.doPostLogIn(body)}
+						onSubmit={async (body) => {
+							await authStore.doPostLogIn(body);
+							navigate(ROUTES.DASHBOARD.TASKS);
+						}}
 						formSchema={PostLogInBody}
 						fieldConfig={{
 							email: {
@@ -33,7 +41,7 @@ export default function LogInPage() {
 								description: (
 									<div className="flex items-center">
 										<a
-											href={ROUTES.AUTH.RESET_PASSWORD}
+											href={`${ROUTES.AUTH.RESET_PASSWORD}`}
 											className="ml-auto inline-block text-sm underline"
 										>
 											Forgot your password?
@@ -53,7 +61,7 @@ export default function LogInPage() {
 					</AutoForm>
 					<div className="mt-4 text-center text-sm">
 						Don&apos;t have an account?{" "}
-						<a href={ROUTES.AUTH.SIGN_UP} className="underline">
+						<a href={`${ROUTES.AUTH.SIGN_UP}`} className="underline">
 							Sign up
 						</a>
 					</div>

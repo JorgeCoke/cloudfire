@@ -82,6 +82,7 @@ export const postResetPassword = (body: PostResetPasswordBody) => {
 			if (res.ok) {
 				toast({
 					title: "Password updated successfully!",
+					description: "You can now log in with your new credentials",
 					variant: "success",
 				});
 				return json as PostResetPasswordResponse;

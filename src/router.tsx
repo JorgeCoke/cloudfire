@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import ErrorPage from "./pages/error/error.page";
 
 export const ROUTES = {
@@ -25,6 +25,10 @@ export const router = createBrowserRouter([
 		}),
 	},
 	// Auth routes
+	{
+		path: "/",
+		element: <Navigate to={ROUTES.AUTH.LOG_IN} replace />,
+	},
 	{
 		path: ROUTES.AUTH.LOG_IN,
 		lazy: async () => ({

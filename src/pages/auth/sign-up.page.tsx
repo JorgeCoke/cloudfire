@@ -3,9 +3,11 @@ import { PostSignUpBody } from "../../../types/auth-controller.types";
 import { ROUTES } from "../../router";
 import { Flame } from "lucide-react";
 import { useAuthStore } from "./auth.store";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 export default function SignUpPage() {
 	const authStore = useAuthStore();
+	const navigate = useNavigate();
 
 	return (
 		<div className="w-full h-[100vh] lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -18,7 +20,15 @@ export default function SignUpPage() {
 						</p>
 					</div>
 					<AutoForm
-						onSubmit={(body) => authStore.doPostSignUp(body)}
+						onSubmit={async (body) => {
+							await authStore.doPostSignUp(body);
+							navigate({
+								pathname: ROUTES.AUTH.LOG_IN,
+								search: createSearchParams({
+									email: body.email,
+								}).toString(),
+							});
+						}}
 						formSchema={PostSignUpBody}
 						fieldConfig={{
 							email: {
@@ -48,7 +58,7 @@ export default function SignUpPage() {
 					</AutoForm>
 					<div className="mt-4 text-center text-sm">
 						Already have an account?{" "}
-						<a href={ROUTES.AUTH.LOG_IN} className="underline">
+						<a href={`${ROUTES.AUTH.LOG_IN}`} className="underline">
 							Log in
 						</a>
 					</div>

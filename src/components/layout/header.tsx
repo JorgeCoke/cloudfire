@@ -21,10 +21,11 @@ import { Badge } from "../ui/badge";
 import { ROUTES } from "../../router";
 import { DashboardItems } from "./app-shell";
 import { cn } from "../../lib/utils";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Header = () => {
 	const path = useLocation();
+	const navigate = useNavigate();
 
 	return (
 		<header className="flex items-center gap-4 border-b bg-zinc-50 p-3 h-16">
@@ -106,8 +107,13 @@ export const Header = () => {
 					</DropdownMenuItem>
 					<DropdownMenuItem>Support</DropdownMenuItem>
 					<DropdownMenuSeparator />
-					<DropdownMenuItem asChild>
-						<a href={ROUTES.AUTH.LOG_IN}>Log out</a>
+					<DropdownMenuItem
+						onClick={() => {
+							localStorage.removeItem("jwt");
+							navigate(ROUTES.AUTH.LOG_IN);
+						}}
+					>
+						Log out
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>

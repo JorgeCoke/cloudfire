@@ -1,8 +1,9 @@
 import { Home, LineChart, Package, ShoppingCart, Users } from "lucide-react";
 import { Navbar } from "./navbar";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { ROUTES } from "../../router";
 import { Header } from "./header";
+import { toast } from "../ui/use-toast";
 
 export const DashboardItems = [
 	{
@@ -38,6 +39,14 @@ export const DashboardItems = [
 ];
 
 export default function AppShell() {
+	if (!localStorage.getItem("jwt")) {
+		toast({
+			title: "You must Log In first!",
+			variant: "destructive",
+		});
+		return <Navigate to={ROUTES.AUTH.LOG_IN} replace />;
+	}
+
 	return (
 		<div className="relative h-full overflow-hidden">
 			<div className="hidden border-r z-10 bg-zinc-50 md:block fixed left-0 top-0 max-h-svh w-56 h-full">

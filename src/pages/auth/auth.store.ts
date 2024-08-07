@@ -14,9 +14,8 @@ import {
 	postSignUp,
 } from "./auth.service";
 
-type State = {
-	jwt: string | undefined;
-};
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
+type State = {};
 
 type Actions = {
 	doPostLogIn: (body: PostLogInBody) => Promise<void>;
@@ -27,9 +26,7 @@ type Actions = {
 	doPostResetPassword: (body: PostResetPasswordBody) => Promise<void>;
 };
 
-const initialState: State = {
-	jwt: undefined,
-};
+const initialState: State = {};
 
 export const useAuthStore = create<
 	State & Actions & QueryStore<typeof initialState>
@@ -41,9 +38,7 @@ export const useAuthStore = create<
 				queryFn: () => postLogIn(body),
 				queryKey: "doPostLogIn",
 				onSuccess: (res) => {
-					set((state) => {
-						state.jwt = res.jwt;
-					});
+					localStorage.setItem("jwt", res.jwt);
 				},
 			}),
 		doPostSignUp: (body) =>

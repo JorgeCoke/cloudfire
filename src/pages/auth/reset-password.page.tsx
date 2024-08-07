@@ -13,15 +13,22 @@ import {
 	CardTitle,
 } from "../../components/ui/card";
 import { ROUTES } from "../../router";
-import { useSearchParams } from "react-router-dom";
+import {
+	createSearchParams,
+	useNavigate,
+	useSearchParams,
+} from "react-router-dom";
 import { useState } from "react";
 import { useAuthStore } from "./auth.store";
 
 export default function ResetPasswordPage() {
 	const authStore = useAuthStore();
+	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
-	const [values] = useState<Partial<PostResetPasswordBody>>({
-		token: searchParams.get("token") || undefined,
+	const [requestValues, setRequestValues] = useState<
+		Partial<PostRequestResetPasswordBody>
+	>({
+		email: searchParams.get("email") || undefined,
 	});
 
 	return (
@@ -41,9 +48,16 @@ export default function ResetPasswordPage() {
 				<CardContent className="grid gap-4">
 					{searchParams.get("token") ? (
 						<AutoForm
-							onSubmit={(body) => authStore.doPostResetPassword(body)}
+							onSubmit={async (body) => {
+								await authStore.doPostResetPassword(body);
+								navigate({
+									pathname: ROUTES.AUTH.LOG_IN,
+									search: createSearchParams({
+										email: requestValues.email || "",
+									}).toString(),
+								});
+							}}
 							formSchema={PostResetPasswordBody}
-							values={values}
 							fieldConfig={{
 								password: {
 									inputProps: {
@@ -74,6 +88,8 @@ export default function ResetPasswordPage() {
 					) : (
 						<AutoForm
 							onSubmit={(body) => authStore.doPostRequestResetPassword(body)}
+							values={requestValues}
+							onParsedValuesChange={setRequestValues}
 							formSchema={PostRequestResetPasswordBody}
 							fieldConfig={{
 								email: {
@@ -96,7 +112,7 @@ export default function ResetPasswordPage() {
 				<CardFooter>
 					<div className="mt-4 text-center text-sm">
 						Do you want to create a new account?{" "}
-						<a href={ROUTES.AUTH.SIGN_UP} className="underline">
+						<a href={`${ROUTES.AUTH.SIGN_UP}`} className="underline">
 							Sign up here
 						</a>
 					</div>
