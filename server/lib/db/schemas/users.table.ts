@@ -3,7 +3,7 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
 import type { z } from "zod";
-import { ROLES } from "../../../../types/roles.types";
+import { ROLES } from "../../../../types/enums";
 
 // Prefix tables with "T"
 export const usersT = sqliteTable("user", {
@@ -12,6 +12,7 @@ export const usersT = sqliteTable("user", {
 		.$defaultFn(() => nanoid()),
 	email: text("email").notNull().unique(),
 	password: text("password").notNull(),
+	enabled: integer("enabled", { mode: "boolean" }).notNull().default(true),
 	role: text("role", { enum: [ROLES.ADMIN, ROLES.USER] })
 		.notNull()
 		.default(ROLES.USER),
@@ -19,6 +20,7 @@ export const usersT = sqliteTable("user", {
 		mode: "timestamp_ms",
 	}),
 	lastLogIn: integer("last_log_in", { mode: "timestamp_ms" }),
+	lastLogInTries: integer("last_log_in_tries").notNull().default(0),
 	createdAt: integer("created_at", { mode: "timestamp_ms" })
 		.notNull()
 		.default(sql`(unixepoch() * 1000)`),

@@ -186,4 +186,11 @@ function useToast() {
 	};
 }
 
-export { useToast, toast };
+function successToast({ ...props }: Toast) {
+	return toast({ ...props, variant: "success" });
+}
+function destructiveToast({ ...props }: Toast) {
+	return toast({ ...props, variant: "destructive" });
+}
+
+export { useToast, toast, successToast, destructiveToast };

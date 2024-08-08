@@ -15,6 +15,13 @@
       "when": 1723025256539,
       "tag": "0001_wise_human_cannonball",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1723108031481,
+      "tag": "0002_awesome_silver_fox",
+      "breakpoints": true
     }
   ]
 }

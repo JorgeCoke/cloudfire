@@ -1,9 +1,11 @@
 import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
-import { GetHealthResponse } from "../../types/health-controller.types";
+import { GetHealthResponse } from "../../types/api/health-controller.types";
 import { openApiResponse } from "../lib/zod-to-json-openapi";
 import type { Bindings } from "../lib/bindings";
 
 const basePath = "/health";
+
+export const HealthErrors = {} as const;
 
 const HealthController = new OpenAPIHono<{ Bindings: Bindings }>().openapi(
 	createRoute({

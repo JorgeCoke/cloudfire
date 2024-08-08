@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import { Toaster } from "./components/ui/toaster";
 
+// TODO: Add i18n
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<RouterProvider router={router} />

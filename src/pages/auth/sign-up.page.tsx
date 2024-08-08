@@ -1,5 +1,5 @@
 import AutoForm, { AutoFormSubmit } from "../../components/ui/auto-form";
-import { PostSignUpBody } from "../../../types/auth-controller.types";
+import { PostSignUpBody } from "../../../types/api/auth-controller.types";
 import { ROUTES } from "../../router";
 import { Flame } from "lucide-react";
 import { useAuthStore } from "./auth.store";
@@ -13,7 +13,10 @@ export default function SignUpPage() {
 		<div className="w-full h-[100vh] lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
 			<div className="flex items-center justify-center py-12">
 				<div className="mx-auto grid w-[350px] gap-6">
-					<div className="grid gap-2 text-center">
+					<div className="flex flex-col gap-2 lg:text-center">
+						<div className="flex lg:hidden justify-center">
+							<Flame className="w-12 h-12" />
+						</div>
 						<h1 className="text-3xl font-bold">Sign Up</h1>
 						<p className="text-balance text-muted-foreground">
 							Enter your information to create an account

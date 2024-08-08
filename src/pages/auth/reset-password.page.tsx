@@ -2,7 +2,7 @@ import { Flame } from "lucide-react";
 import {
 	PostRequestResetPasswordBody,
 	PostResetPasswordBody,
-} from "../../../types/auth-controller.types";
+} from "../../../types/api/auth-controller.types";
 import AutoForm, { AutoFormSubmit } from "../../components/ui/auto-form";
 import {
 	Card,
@@ -25,6 +25,9 @@ export default function ResetPasswordPage() {
 	const authStore = useAuthStore();
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
+	const [values, setValues] = useState<Partial<PostResetPasswordBody>>({
+		token: searchParams.get("token") || undefined,
+	});
 	const [requestValues, setRequestValues] = useState<
 		Partial<PostRequestResetPasswordBody>
 	>({
@@ -48,6 +51,8 @@ export default function ResetPasswordPage() {
 				<CardContent className="grid gap-4">
 					{searchParams.get("token") ? (
 						<AutoForm
+							values={values}
+							onParsedValuesChange={setValues}
 							onSubmit={async (body) => {
 								await authStore.doPostResetPassword(body);
 								navigate({

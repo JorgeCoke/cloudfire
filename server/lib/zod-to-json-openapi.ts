@@ -1,6 +1,7 @@
 import type { ZodType, ZodTypeAny } from "zod";
-import { HTTPExceptionZod } from "../../types/custom-http-exception.types";
+import { HttpExceptionZod } from "../../types/api/custom-http-exception.types";
 
+// Convert Zod schema to OpenApi Body Request specification
 export const openApiRequest = <T extends ZodTypeAny>(zod: T) => {
 	return {
 		body: {
@@ -13,6 +14,7 @@ export const openApiRequest = <T extends ZodTypeAny>(zod: T) => {
 	};
 };
 
+// Convert Zod schema to OpenApi response specification
 export const openApiResponse = <T extends ZodTypeAny>(
 	zod: T,
 	status: number,
@@ -30,6 +32,7 @@ export const openApiResponse = <T extends ZodTypeAny>(
 	};
 };
 
+// Convert custom errors to OpenApi response specification
 export const openApiErrors = (
 	errors: { status: number; message: string }[],
 ) => {
@@ -38,7 +41,7 @@ export const openApiErrors = (
 			description: string;
 			content: {
 				"application/json": {
-					schema: ZodType<HTTPExceptionZod>;
+					schema: ZodType<HttpExceptionZod>;
 				};
 			};
 		};
@@ -48,7 +51,7 @@ export const openApiErrors = (
 			description: e.message,
 			content: {
 				"application/json": {
-					schema: HTTPExceptionZod,
+					schema: HttpExceptionZod,
 				},
 			},
 		};

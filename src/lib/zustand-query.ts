@@ -1,3 +1,5 @@
+import type { HttpExceptionZod } from "../../types/api/custom-http-exception.types";
+
 export type QueryStore<I> = QueryStoreState & QueryStoreActions<I>;
 
 // NOTE: Best practice -> Prefix all states with "is"
@@ -12,6 +14,9 @@ type QueryStoreActions<I> = {
 		queryFn: () => Promise<R>;
 		queryKey?: string;
 		onSuccess?: (result: R) => void | Promise<void>;
+		onError?: (
+			error: HttpExceptionZod & { status: number },
+		) => void | Promise<void>;
 	}) => Promise<void>;
 	reset: () => void;
 	set: (fn: (a: I) => void) => void;
@@ -31,7 +36,7 @@ export const queryStore: <I extends object>(
 	return {
 		...initialState,
 		...initialQueryStoreState,
-		query: async ({ queryFn, queryKey, onSuccess }) => {
+		query: async ({ queryFn, queryKey, onSuccess, onError }) => {
 			if (!queryKey || (queryKey && !get().queryKeys.includes(queryKey))) {
 				set((state) => {
 					state.isError = false;
@@ -41,18 +46,29 @@ export const queryStore: <I extends object>(
 					}
 				});
 				// await new Promise((r) => setTimeout(r, 2000)); // Simulate slow HTTP request
-				const result = await queryFn().catch((err: Error) => {
-					set((state) => {
-						state.isError = true;
-						state.isLoading = state.queryKeys.length > 1;
-						if (queryKey) {
-							state.queryKeys = [
-								...state.queryKeys.filter((e) => e !== queryKey),
-							];
+				const result = await queryFn().catch(
+					async (err: { message: string }) => {
+						const error: HttpExceptionZod & { status: number } = JSON.parse(
+							err.message,
+						);
+						if (onError) {
+							await onError(error);
 						}
-					});
-					throw err;
-				});
+						set((state) => {
+							state.isError = true;
+							state.isLoading = state.queryKeys.length > 1;
+							if (queryKey) {
+								state.queryKeys = [
+									...state.queryKeys.filter((e) => e !== queryKey),
+								];
+							}
+						});
+						throw err;
+					},
+				);
+				if (onSuccess) {
+					await onSuccess(result);
+				}
 				set((state) => {
 					state.isError = false;
 					state.isLoading = state.queryKeys.length > 1;
@@ -62,9 +78,6 @@ export const queryStore: <I extends object>(
 						];
 					}
 				});
-				if (onSuccess) {
-					await onSuccess(result);
-				}
 			}
 		},
 		reset: () =>

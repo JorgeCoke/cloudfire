@@ -5,6 +5,7 @@ export const PostLogInBody = z
 		email: z.string().email(),
 		password: z.string().min(8),
 	})
+	.strict()
 	.openapi("PostLogInBody");
 export type PostLogInBody = z.infer<typeof PostLogInBody>;
 export const PostLogInResponse = z
@@ -20,6 +21,7 @@ export const PostSignUpBody = z
 		password: z.string().min(8),
 		repeatPassword: z.string(),
 	})
+	.strict()
 	.openapi("PostSignUpBody");
 export type PostSignUpBody = z.infer<typeof PostSignUpBody>;
 export const PostSignUpResponse = z
@@ -33,6 +35,7 @@ export const PostRequestResetPasswordBody = z
 	.object({
 		email: z.string().email(),
 	})
+	.strict()
 	.openapi("PostRequestResetPasswordBody");
 export type PostRequestResetPasswordBody = z.infer<
 	typeof PostRequestResetPasswordBody
@@ -52,6 +55,7 @@ export const PostResetPasswordBody = z
 		repeatPassword: z.string(),
 		token: z.string(),
 	})
+	.strict()
 	.openapi("PostResetPasswordBody");
 export type PostResetPasswordBody = z.infer<typeof PostResetPasswordBody>;
 export const PostResetPasswordResponse = z

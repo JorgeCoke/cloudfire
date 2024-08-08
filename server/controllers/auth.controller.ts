@@ -9,7 +9,7 @@ import {
 	PostResetPasswordResponse,
 	PostSignUpBody,
 	PostSignUpResponse,
-} from "../../types/auth-controller.types";
+} from "../../types/api/auth-controller.types";
 import {
 	openApiErrors,
 	openApiRequest,
@@ -19,9 +19,11 @@ import { drizzle } from "drizzle-orm/d1";
 import { usersT } from "../lib/db/schemas/users.table";
 import { eq } from "drizzle-orm";
 import { compareSync, hashSync } from "bcryptjs";
-import { HttpException } from "../lib/custom-http-exception";
 import { sign, verify } from "hono/jwt";
 import type { Bindings } from "../lib/bindings";
+import { HttpException } from "../lib/utils";
+
+const basePath = "/auth";
 
 export const AuthErrors = {
 	USER_NOT_FOUND: {
@@ -36,14 +38,12 @@ export const AuthErrors = {
 		status: 400,
 		message: "Passwords does not match",
 	},
-	INVALID__OR_EXPIRED_TOKEN: {
+	INVALID_OR_EXPIRED_TOKEN: {
 		status: 409,
 		message:
 			"Token is not valid or has expired, please request another password reset",
 	},
 } as const;
-
-const basePath = "/auth";
 
 const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 	.openapi(
@@ -65,11 +65,19 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 				.from(usersT)
 				.limit(1)
 				.where(eq(usersT.email, body.email));
-			if (!user) {
+			if (!user || !user.enabled) {
 				throw new HttpException(AuthErrors.USER_NOT_FOUND);
 			}
 			const success = compareSync(body.password, user.password);
 			if (!success) {
+				// Increment lastLogInTries and disable user in case anomalous login tries
+				await db
+					.update(usersT)
+					.set({
+						lastLogInTries: user.lastLogInTries + 1,
+						enabled: user.lastLogInTries < 99,
+					})
+					.where(eq(usersT.id, user.id));
 				throw new HttpException(AuthErrors.USER_NOT_FOUND);
 			}
 			const jwtPayload: JwtPayload = {
@@ -77,9 +85,10 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 				exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
 			};
 			const jwt = await sign(jwtPayload, c.env.AUTH_SESSION_SECRET_KEY);
+			// Update lastLogIn and reset lastLogInTries
 			await db
 				.update(usersT)
-				.set({ lastLogIn: new Date() })
+				.set({ lastLogIn: new Date(), lastLogInTries: 0 })
 				.where(eq(usersT.id, user.id));
 			return c.json({ jwt }, 200);
 		},
@@ -181,7 +190,7 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 				),
 				...openApiErrors([
 					AuthErrors.PASSWORDS_DOES_NOT_MATCH,
-					AuthErrors.INVALID__OR_EXPIRED_TOKEN,
+					AuthErrors.INVALID_OR_EXPIRED_TOKEN,
 				]),
 			},
 		}),
@@ -195,7 +204,7 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 				body.token,
 				c.env.AUTH_RESET_PASSWORD_SECRET_KEY,
 			).catch(() => {
-				throw new HttpException(AuthErrors.INVALID__OR_EXPIRED_TOKEN);
+				throw new HttpException(AuthErrors.INVALID_OR_EXPIRED_TOKEN);
 			})) as JwtPayload;
 			await db
 				.update(usersT)
