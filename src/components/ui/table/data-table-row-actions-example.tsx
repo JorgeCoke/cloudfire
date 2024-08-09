@@ -1,5 +1,5 @@
 import type { Row } from "@tanstack/react-table";
-import { Button } from "../../../../components/ui/button";
+import { Button } from "../button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -12,15 +12,15 @@ import {
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
-} from "../../../../components/ui/dropdown-menu";
+} from "../dropdown-menu";
 import { Ellipsis } from "lucide-react";
-import { ROLES } from "../../../../../types/enums";
+import { ROLES } from "../../../../types/enums";
 
 interface DataTableRowActionsProps<TData> {
 	row: Row<TData>;
 }
 
-export function DataTableRowActions<TData>({
+export function DataTableRowActionsExample<TData>({
 	row,
 }: DataTableRowActionsProps<TData>) {
 	return (

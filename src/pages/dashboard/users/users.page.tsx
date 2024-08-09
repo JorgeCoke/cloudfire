@@ -1,11 +1,6 @@
-import { Button } from "../../../components/ui/button";
-import { DataTable } from "../../../components/ui/table/data-table";
-import { columns } from "./columns";
-import { useUsersStore } from "./users.store";
+import { UsersTable } from "./components/users.table";
 
 export default function UsersPage() {
-	const { table, doSearchUsers } = useUsersStore();
-
 	return (
 		<div className="space-y-4">
 			<div className="space-y-2">
@@ -15,9 +10,8 @@ export default function UsersPage() {
 				<p className="text-muted-foreground">
 					Here&apos;s a list of your users
 				</p>
-				<Button onClick={() => doSearchUsers()}>Search users</Button>
 			</div>
-			<DataTable data={table.users.items} columns={columns} />
+			<UsersTable />
 		</div>
 	);
 }

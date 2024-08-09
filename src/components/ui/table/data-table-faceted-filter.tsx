@@ -14,24 +14,30 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 import { Separator } from "../separator";
 import { cn } from "../../../lib/utils";
+import type {
+	Comparator,
+	FilterFieldOption,
+} from "../../../../types/query.types";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
 	column?: Column<TData, TValue>;
 	title?: string;
-	options: {
-		label: string;
-		value: string;
-		icon?: React.ComponentType<{ className?: string }>;
-	}[];
+	options: FilterFieldOption[];
+	isMultiple?: boolean;
 }
 
 export function DataTableFacetedFilter<TData, TValue>({
 	column,
 	title,
 	options,
+	isMultiple,
 }: DataTableFacetedFilterProps<TData, TValue>) {
-	const facets = column?.getFacetedUniqueValues();
-	const selectedValues = new Set(column?.getFilterValue() as string[]);
+	const selectedValues = new Set(
+		column?.getFilterValue() as {
+			value: string;
+			comparator: Comparator;
+		}[],
+	);
 
 	return (
 		<Popover>
@@ -46,7 +52,7 @@ export function DataTableFacetedFilter<TData, TValue>({
 								variant="secondary"
 								className="rounded-sm px-1 font-normal lg:hidden"
 							>
-								{selectedValues.size}
+								1
 							</Badge>
 							<div className="hidden space-x-1 lg:flex">
 								{selectedValues.size > 2 ? (
@@ -58,7 +64,11 @@ export function DataTableFacetedFilter<TData, TValue>({
 									</Badge>
 								) : (
 									options
-										.filter((option) => selectedValues.has(option.value))
+										.filter((option) =>
+											Array.from(selectedValues).some(
+												(e) => e.value === option.value,
+											),
+										)
 										.map((option) => (
 											<Badge
 												variant="secondary"
@@ -81,15 +91,31 @@ export function DataTableFacetedFilter<TData, TValue>({
 						<CommandEmpty>No results found.</CommandEmpty>
 						<CommandGroup>
 							{options.map((option) => {
-								const isSelected = selectedValues.has(option.value);
+								const isSelected = Array.from(selectedValues).some(
+									(e) => e.value === option.value,
+								);
 								return (
 									<CommandItem
 										key={option.value}
 										onSelect={() => {
-											if (isSelected) {
-												selectedValues.delete(option.value);
+											if (isMultiple) {
+												if (isSelected) {
+													selectedValues.delete({
+														value: option.value,
+														comparator: option.comparator,
+													});
+												} else {
+													selectedValues.add({
+														value: option.value,
+														comparator: option.comparator,
+													});
+												}
 											} else {
-												selectedValues.add(option.value);
+												selectedValues.clear();
+												selectedValues.add({
+													value: option.value,
+													comparator: option.comparator,
+												});
 											}
 											const filterValues = Array.from(selectedValues);
 											column?.setFilterValue(
@@ -111,11 +137,6 @@ export function DataTableFacetedFilter<TData, TValue>({
 											<option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
 										)}
 										<span>{option.label}</span>
-										{facets?.get(option.value) && (
-											<span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-												{facets.get(option.value)}
-											</span>
-										)}
 									</CommandItem>
 								);
 							})}

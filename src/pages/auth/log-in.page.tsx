@@ -7,7 +7,7 @@ import { useAuthStore } from "./auth.store";
 
 export default function LogInPage() {
 	if (localStorage.getItem("jwt")) {
-		return <Navigate to={ROUTES.DASHBOARD.TASKS} replace />;
+		return <Navigate to={ROUTES.DASHBOARD.USERS} replace />;
 	}
 	const authStore = useAuthStore();
 	const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function LogInPage() {
 					<AutoForm
 						onSubmit={async (body) => {
 							await authStore.doPostLogIn(body);
-							navigate(ROUTES.DASHBOARD.TASKS);
+							navigate(ROUTES.DASHBOARD.USERS);
 						}}
 						formSchema={PostLogInBody}
 						fieldConfig={{

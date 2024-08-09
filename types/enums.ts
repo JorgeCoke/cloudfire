@@ -1,4 +1,4 @@
 export const ROLES = {
 	ADMIN: "ADMIN",
 	USER: "USER",
-} as const;
+} as const; // Object.keys(ROLES)

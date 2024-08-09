@@ -5,7 +5,6 @@ import {
 	ChevronRightIcon,
 } from "lucide-react";
 import type { Table } from "@tanstack/react-table";
-
 import { Button } from "../button";
 import {
 	Select,

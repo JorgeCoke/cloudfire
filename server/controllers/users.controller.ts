@@ -32,7 +32,7 @@ const UsersController = new OpenAPIHono<{ Bindings: Bindings }>().openapi(
 			.from(usersT)
 			.limit(body.limit)
 			.offset(body.offset)
-			.where(convertToQuery(usersT, body.filter));
+			.where(convertToQuery(usersT, body.filter)); // TODO: Add orderBy
 		const total = await db
 			.select({ count: count() })
 			.from(usersT)
