@@ -10,8 +10,8 @@ export const SearchUsersFilter = z
 		role: Query,
 		enabled: Query,
 		lastLogInTries: Query,
-		lastResetPasswordRequest: Query,
-		lastLogIn: Query,
+		lastResetPasswordRequestAt: Query,
+		lastLogInAt: Query,
 		createdAt: Query,
 		updatedAt: Query,
 	})
@@ -22,7 +22,7 @@ export type SearchUsersFilter = z.infer<typeof SearchUsersFilter>;
 export const PostSearchUsersBody = z
 	.object({
 		filter: SearchUsersFilter.optional(),
-		limit: z.number(),
+		limit: z.number().default(10),
 		offset: z.number(),
 		orderBy: z
 			.object({

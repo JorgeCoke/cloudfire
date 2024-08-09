@@ -58,7 +58,8 @@ export const router = createBrowserRouter([
 			{
 				path: ROUTES.DASHBOARD.USERS,
 				lazy: async () => ({
-					Component: (await import("./pages/dashboard/users.page")).default,
+					Component: (await import("./pages/dashboard/users/users.page"))
+						.default,
 				}),
 			},
 			{

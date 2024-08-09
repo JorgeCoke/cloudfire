@@ -85,10 +85,10 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 				exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
 			};
 			const jwt = await sign(jwtPayload, c.env.AUTH_SESSION_SECRET_KEY);
-			// Update lastLogIn and reset lastLogInTries
+			// Update lastLogInAt and reset lastLogInTries
 			await db
 				.update(usersT)
-				.set({ lastLogIn: new Date(), lastLogInTries: 0 })
+				.set({ lastLogInAt: new Date(), lastLogInTries: 0 })
 				.where(eq(usersT.id, user.id));
 			return c.json({ jwt }, 200);
 		},
@@ -153,8 +153,8 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 				.where(eq(usersT.email, body.email));
 			if (user) {
 				if (
-					!user.lastResetPasswordRequest ||
-					user.lastResetPasswordRequest <
+					!user.lastResetPasswordRequestAt ||
+					user.lastResetPasswordRequestAt <
 						new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
 				) {
 					// Send one single email every 24h to prevent extra usage
@@ -169,7 +169,7 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 					console.log("🚀  resetPasswordToken:", resetPasswordToken); // TODO: Send link via email
 					await db
 						.update(usersT)
-						.set({ lastResetPasswordRequest: new Date() })
+						.set({ lastResetPasswordRequestAt: new Date() })
 						.where(eq(usersT.id, user.id));
 				}
 			}

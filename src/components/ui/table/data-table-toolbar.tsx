@@ -1,9 +1,9 @@
 import type { Table } from "@tanstack/react-table";
 
-import { Button } from "../../../../components/ui/button";
-import { Input } from "../../../../components/ui/input";
+import { Button } from "../button";
+import { Input } from "../input";
 
-import { priorities, statuses } from "../data/data";
+import { priorities, statuses } from "../../../pages/dashboard/tasks/data/data";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { DataTableViewOptions } from "./data-table-view-options";
 import { Eraser } from "lucide-react";

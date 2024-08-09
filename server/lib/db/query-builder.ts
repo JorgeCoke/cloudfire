@@ -63,7 +63,7 @@ export const convertToQuery = <
 };
 
 // Transform input values to Drizzle types
-const convertValueToType = (value?: string | number | boolean) => {
+const convertValueToType = (value?: string | number | boolean | null) => {
 	if (!value) {
 		return null;
 	}

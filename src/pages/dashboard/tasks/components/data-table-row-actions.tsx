@@ -13,9 +13,8 @@ import {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "../../../../components/ui/dropdown-menu";
-import { labels } from "../data/data";
-import { taskSchema } from "../data/schema";
 import { Ellipsis } from "lucide-react";
+import { ROLES } from "../../../../../types/enums";
 
 interface DataTableRowActionsProps<TData> {
 	row: Row<TData>;
@@ -24,8 +23,6 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
 	row,
 }: DataTableRowActionsProps<TData>) {
-	const task = taskSchema.parse(row.original);
-
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -43,12 +40,12 @@ export function DataTableRowActions<TData>({
 				<DropdownMenuItem>Favorite</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuSub>
-					<DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
+					<DropdownMenuSubTrigger>Role</DropdownMenuSubTrigger>
 					<DropdownMenuSubContent>
-						<DropdownMenuRadioGroup value={task.label}>
-							{labels.map((label) => (
-								<DropdownMenuRadioItem key={label.value} value={label.value}>
-									{label.label}
+						<DropdownMenuRadioGroup value={row.getValue("role")}>
+							{Object.keys(ROLES).map((role) => (
+								<DropdownMenuRadioItem key={role} value={role}>
+									{role}
 								</DropdownMenuRadioItem>
 							))}
 						</DropdownMenuRadioGroup>

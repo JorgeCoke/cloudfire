@@ -1,15 +1,15 @@
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import type { Table } from "@tanstack/react-table";
 
-import { Button } from "../../../../components/ui/button";
+import { Button } from "../button";
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
 	DropdownMenuContent,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
-} from "../../../../components/ui/dropdown-menu";
-import { Blend } from "lucide-react";
+} from "../dropdown-menu";
+import { ScanEye } from "lucide-react";
 
 interface DataTableViewOptionsProps<TData> {
 	table: Table<TData>;
@@ -26,7 +26,7 @@ export function DataTableViewOptions<TData>({
 					size="sm"
 					className="ml-auto hidden h-8 lg:flex"
 				>
-					<Blend className="mr-2 h-4 w-4" />
+					<ScanEye className="mr-2 h-4 w-4" />
 					View
 				</Button>
 			</DropdownMenuTrigger>

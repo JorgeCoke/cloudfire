@@ -1,5 +1,5 @@
 import { columns } from "./components/columns";
-import { DataTable } from "./components/data-table";
+import { DataTable } from "../../../components/ui/table/data-table";
 import { tasks } from "./data/seed";
 
 export default function TaskPage() {

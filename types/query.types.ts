@@ -18,7 +18,7 @@ export const Query = z
 		z
 			.object({
 				comparator: z.enum(["null", "notnull"]),
-				value: z.undefined(),
+				value: z.null(),
 			})
 			.strict(),
 	);

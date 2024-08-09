@@ -1,7 +1,7 @@
 import { CheckIcon, CircleFadingPlusIcon } from "lucide-react";
 import type { Column } from "@tanstack/react-table";
-import { Badge } from "../../../../components/ui/badge";
-import { Button } from "../../../../components/ui/button";
+import { Badge } from "../badge";
+import { Button } from "../button";
 import {
 	Command,
 	CommandEmpty,
@@ -10,14 +10,10 @@ import {
 	CommandItem,
 	CommandList,
 	CommandSeparator,
-} from "../../../../components/ui/command";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "../../../../components/ui/popover";
-import { Separator } from "../../../../components/ui/separator";
-import { cn } from "../../../../lib/utils";
+} from "../command";
+import { Popover, PopoverContent, PopoverTrigger } from "../popover";
+import { Separator } from "../separator";
+import { cn } from "../../../lib/utils";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
 	column?: Column<TData, TValue>;
