@@ -2,7 +2,7 @@ import { Flame } from "lucide-react";
 import {
 	PostRequestResetPasswordBody,
 	PostResetPasswordBody,
-} from "../../../types/api/auth-controller.types";
+} from "../../../types/controllers/auth-controller.types";
 import AutoForm, { AutoFormSubmit } from "../../components/ui/auto-form";
 import {
 	Card,

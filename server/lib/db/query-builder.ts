@@ -1,5 +1,7 @@
 import {
 	and,
+	asc,
+	desc,
 	eq,
 	gt,
 	gte,
@@ -11,57 +13,66 @@ import {
 	sql,
 	type SQL,
 } from "drizzle-orm";
-import type { z } from "zod";
 import type { SQLiteTableWithColumns } from "drizzle-orm/sqlite-core";
-import type { Query } from "../../../types/query.types";
+import type { OrderBy, Query } from "../../../types/generic-search-query";
 
-// Convert Query Zdo schemas to Drizzle queries
-export const convertToQuery = <
-	T extends { [keys: string]: z.infer<typeof Query> },
->(
+// Convert OrderBy Zod schemas to Drizzle orderBy
+export const convertToOrderBy = (
 	table: SQLiteTableWithColumns<any>,
-	filter?: T,
+	orderBy?: OrderBy,
+) => {
+	if (!orderBy) {
+		return asc(table.id);
+	}
+	return orderBy.sort === "asc"
+		? asc(table[orderBy.param])
+		: desc(table[orderBy.param]);
+};
+
+// Convert Query Zod schemas to Drizzle queries
+export const convertToQuery = (
+	table: SQLiteTableWithColumns<any>,
+	query?: Query,
 ) => {
 	const queries: SQL[] = [sql`1 == 1`];
-	if (filter) {
-		for (const k in filter) {
-			const key = k as keyof T;
-			if (filter[key]) {
-				const comparator = filter[key].comparator;
-				const value = convertValueToType(filter[key].value);
-				console.log(`Query ${k}: `, value);
-				switch (comparator) {
-					case "eq":
-						queries.push(eq(table[key], value));
-						break;
-					case "gt":
-						queries.push(gt(table[key], value));
-						break;
-					case "lt":
-						queries.push(lt(table[key], value));
-						break;
-					case "gte":
-						queries.push(gte(table[key], value));
-						break;
-					case "lte":
-						queries.push(lte(table[key], value));
-						break;
-					case "inc":
-						queries.push(like(table[key], `${value}`));
-						break;
-					case "null":
-						queries.push(isNull(table[key]));
-						break;
-					case "notnull":
-						queries.push(isNotNull(table[key]));
-						break;
-				}
+	if (query) {
+		query.forEach((q) => {
+			const param = q.param;
+			const comparator = q.comparator;
+			const value = convertValueToType(q.value);
+			console.log(`Query: ${param} - ${comparator} : `, value);
+			switch (comparator) {
+				case "eq":
+					queries.push(eq(table[param], value));
+					break;
+				case "gt":
+					queries.push(gt(table[param], value));
+					break;
+				case "lt":
+					queries.push(lt(table[param], value));
+					break;
+				case "gte":
+					queries.push(gte(table[param], value));
+					break;
+				case "lte":
+					queries.push(lte(table[param], value));
+					break;
+				case "inc":
+					queries.push(like(table[param], `${value}`));
+					break;
+				case "null":
+					queries.push(isNull(table[param]));
+					break;
+				case "notnull":
+					queries.push(isNotNull(table[param]));
+					break;
 			}
-		}
+		});
 	}
 	return and(...queries);
 };
 
+// TODO: Get Keys from User & Add test for every type: string, number & "number", boolean & "bolean", enum, timestamp & "timestamp" & "IsoDate", null, notnull
 // Transform input values to Drizzle types
 const convertValueToType = (value?: string | number | boolean | null) => {
 	if (!value) {

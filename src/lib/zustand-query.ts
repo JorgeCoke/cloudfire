@@ -1,4 +1,4 @@
-import type { HttpExceptionZod } from "../../types/api/custom-http-exception.types";
+import type { HttpExceptionZod } from "../../types/custom-http-exception.types";
 
 export type QueryStore<I> = QueryStoreState & QueryStoreActions<I>;
 

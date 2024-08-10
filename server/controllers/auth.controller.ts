@@ -9,7 +9,7 @@ import {
 	PostResetPasswordResponse,
 	PostSignUpBody,
 	PostSignUpResponse,
-} from "../../types/api/auth-controller.types";
+} from "../../types/controllers/auth-controller.types";
 import {
 	openApiErrors,
 	openApiRequest,
@@ -166,7 +166,7 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 						jwtPayload,
 						c.env.AUTH_RESET_PASSWORD_SECRET_KEY,
 					);
-					console.log("🚀  resetPasswordToken:", resetPasswordToken); // TODO: Send link via email
+					console.log("🚀  resetPasswordToken:", resetPasswordToken); // TODO: Send link via email https://www.useplunk.com/
 					await db
 						.update(usersT)
 						.set({ lastResetPasswordRequestAt: new Date() })

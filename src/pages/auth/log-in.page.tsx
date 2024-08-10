@@ -1,5 +1,5 @@
 import AutoForm, { AutoFormSubmit } from "../../components/ui/auto-form";
-import { PostLogInBody } from "../../../types/api/auth-controller.types";
+import { PostLogInBody } from "../../../types/controllers/auth-controller.types";
 import { ROUTES } from "../../router";
 import { Flame } from "lucide-react";
 import { Navigate, useNavigate } from "react-router-dom";

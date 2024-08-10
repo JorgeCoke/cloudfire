@@ -17,7 +17,7 @@ import { cn } from "../../../lib/utils";
 import type {
 	Comparator,
 	FilterFieldOption,
-} from "../../../../types/query.types";
+} from "../../../../types/generic-search-query";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
 	column?: Column<TData, TValue>;
@@ -33,10 +33,12 @@ export function DataTableFacetedFilter<TData, TValue>({
 	isMultiple,
 }: DataTableFacetedFilterProps<TData, TValue>) {
 	const selectedValues = new Set(
-		column?.getFilterValue() as {
-			value: string;
-			comparator: Comparator;
-		}[],
+		column?.getFilterValue()
+			? (JSON.parse(column?.getFilterValue() as string) as {
+					value: string;
+					comparator: Comparator;
+				}[])
+			: [],
 	);
 
 	return (
@@ -100,9 +102,12 @@ export function DataTableFacetedFilter<TData, TValue>({
 										onSelect={() => {
 											if (isMultiple) {
 												if (isSelected) {
-													selectedValues.delete({
-														value: option.value,
-														comparator: option.comparator,
+													const filterValues = Array.from(
+														selectedValues,
+													).filter((e) => e.value !== option.value);
+													selectedValues.clear();
+													filterValues.forEach((e) => {
+														selectedValues.add(e);
 													});
 												} else {
 													selectedValues.add({
@@ -119,7 +124,9 @@ export function DataTableFacetedFilter<TData, TValue>({
 											}
 											const filterValues = Array.from(selectedValues);
 											column?.setFilterValue(
-												filterValues.length ? filterValues : undefined,
+												filterValues.length
+													? JSON.stringify(filterValues)
+													: undefined,
 											);
 										}}
 									>

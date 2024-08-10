@@ -14,6 +14,7 @@ interface DataTableViewOptionsProps<TData> {
 	table: Table<TData>;
 }
 
+// TODO: ADD bulk operations on "Select checkbox" and "export to CSV"
 export function DataTableViewOptions<TData>({
 	table,
 }: DataTableViewOptionsProps<TData>) {

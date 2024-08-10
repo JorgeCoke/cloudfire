@@ -13,6 +13,8 @@ import { HttpException } from "./lib/utils";
 import { HTTPException } from "hono/http-exception";
 
 // TODO: Add rate limiter
+// TODO: Add body uglyfier in Production, remove Swagger UI in production
+// TODO: Add seeder + JWT Admin role middleware
 const server = new OpenAPIHono<{ Bindings: Bindings }>()
 	// Global middlewares here
 	.use(logger())

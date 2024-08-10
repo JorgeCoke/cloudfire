@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import type { PostSearchUsersResponse } from "../../../../types/api/users-controller.types";
+import type { PostSearchUsersResponse } from "../../../../types/controllers/users-controller.types";
 import { queryStore, type QueryStore } from "../../../lib/zustand-query";
 import { fetcher, rpc } from "../../../lib/rpc";
 import { destructiveToast } from "../../../components/ui/use-toast";
 import type { TableState } from "@tanstack/react-table";
-import { convertTanStackTableState } from "../../../../types/query.types";
+import { convertTanStackTableState } from "../../../../types/generic-search-query";
 
 type State = {
-	tableData: PostSearchUsersResponse;
+	tableData: Omit<PostSearchUsersResponse, "password">;
 	tableState: TableState | undefined;
 };
 

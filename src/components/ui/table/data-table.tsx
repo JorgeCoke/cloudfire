@@ -9,7 +9,7 @@ import {
 	Table,
 } from "../table";
 import { DataTablePagination } from "./data-table-pagination";
-import type { FilterField } from "../../../../types/query.types";
+import type { FilterField } from "../../../../types/generic-search-query";
 
 type DataTableProps<TData> = {
 	table: TableType<TData>;

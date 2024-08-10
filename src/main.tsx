@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import { Toaster } from "./components/ui/toaster";
 
-// TODO: Add i18n
+// TODO: Add i18n, send/store keys from Backend/Frontend
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<RouterProvider router={router} />

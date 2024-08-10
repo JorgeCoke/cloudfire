@@ -10,7 +10,7 @@ import type {
 	PostResetPasswordResponse,
 	PostSignUpBody,
 	PostSignUpResponse,
-} from "../../../types/api/auth-controller.types";
+} from "../../../types/controllers/auth-controller.types";
 import { fetcher, rpc } from "../../lib/rpc";
 import { destructiveToast, successToast } from "../../components/ui/use-toast";
 

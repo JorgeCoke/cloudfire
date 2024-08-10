@@ -3,11 +3,12 @@ import type { Table } from "@tanstack/react-table";
 import { Button } from "../button";
 
 import { DataTableViewOptions } from "./data-table-view-options";
-import type { FilterField } from "../../../../types/query.types";
+import type { FilterField } from "../../../../types/generic-search-query";
 import { cn } from "../../../lib/utils";
 import { Eraser } from "lucide-react";
 import { Input } from "../input";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { DataTableDateFilter } from "./data-table-date-filter";
 
 interface DataTableToolbarProps<TData>
 	extends React.HTMLAttributes<HTMLDivElement> {
@@ -35,40 +36,29 @@ export function DataTableToolbar<TData>({
 			<div className="flex flex-1 items-center space-x-2">
 				{filterFields.map((filter) => (
 					<div key={String(filter.accessorKey)}>
-						{filter.type === "string" && (
+						{(filter.type === "string" || filter.type === "number") && (
 							<Input
 								title={filter.title}
-								type="text"
+								type={filter.type === "number" ? "number" : "string"}
 								placeholder={filter.title}
 								value={
-									(table
-										.getColumn(String(filter.accessorKey))
-										?.getFilterValue() as string) ?? ""
+									table.getColumn(String(filter.accessorKey))?.getFilterValue()
+										? JSON.parse(
+												table
+													.getColumn(String(filter.accessorKey))
+													?.getFilterValue() as string,
+											).value
+										: ""
 								}
 								onChange={(event) =>
-									table
-										.getColumn(String(filter.accessorKey))
-										?.setFilterValue(event.target.value)
+									table.getColumn(String(filter.accessorKey))?.setFilterValue(
+										JSON.stringify({
+											value: event.target.value,
+											comparator: filter.comparator,
+										}),
+									)
 								}
-								className="h-8"
-							/>
-						)}
-						{filter.type === "number" && (
-							<Input
-								title={filter.title}
-								type="number"
-								placeholder={filter.title}
-								value={
-									(table
-										.getColumn(String(filter.accessorKey))
-										?.getFilterValue() as string) ?? ""
-								}
-								onChange={(event) =>
-									table
-										.getColumn(String(filter.accessorKey))
-										?.setFilterValue(event.target.value)
-								}
-								className="h-8"
+								className="h-8 min-w-28"
 							/>
 						)}
 						{filter.type === "selector" && (
@@ -79,6 +69,14 @@ export function DataTableToolbar<TData>({
 								title={filter.title}
 								options={filter.options ?? []}
 								isMultiple={filter.isMultiple}
+							/>
+						)}
+						{filter.type === "date" && (
+							<DataTableDateFilter
+								column={table.getColumn(
+									filter.accessorKey ? String(filter.accessorKey) : "",
+								)}
+								title={filter.title}
 							/>
 						)}
 					</div>

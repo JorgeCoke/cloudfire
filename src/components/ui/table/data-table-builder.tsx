@@ -55,8 +55,9 @@ export const columnBuilder = <TData extends RowData>({
 }: {
 	enableSelect: boolean;
 	columns: {
-		title: string;
 		accessorKey: keyof TData;
+		hidden?: boolean;
+		title?: string;
 		enableSorting?: boolean;
 		enableHiding?: boolean;
 		className?: string;
@@ -96,11 +97,14 @@ export const columnBuilder = <TData extends RowData>({
 			accessorKey: e.accessorKey,
 			enableSorting: e.enableSorting || false,
 			enableHiding: e.enableHiding || false,
-			header: ({ column }) => (
-				<DataTableColumnHeader column={column} title={e.title} />
-			),
-			cell:
-				e.cell != null
+			header: e.hidden
+				? undefined
+				: ({ column }) => (
+						<DataTableColumnHeader column={column} title={e.title || ""} />
+					),
+			cell: e.hidden
+				? undefined
+				: e.cell != null
 					? e.cell
 					: ({ row }) => {
 							return (

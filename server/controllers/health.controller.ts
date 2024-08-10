@@ -1,5 +1,5 @@
 import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
-import { GetHealthResponse } from "../../types/api/health-controller.types";
+import { GetHealthResponse } from "../../types/controllers/health-controller.types";
 import { openApiResponse } from "../lib/zod-to-json-openapi";
 import type { Bindings } from "../lib/bindings";
 

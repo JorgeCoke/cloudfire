@@ -4,7 +4,7 @@ import type { User } from "../../../../../server/lib/db/schemas/users.table";
 import { Badge } from "../../../../components/ui/badge";
 import { ROLES } from "../../../../../types/enums";
 import { Check, X } from "lucide-react";
-import type { FilterField } from "../../../../../types/query.types";
+import type { FilterField } from "../../../../../types/generic-search-query";
 import { DataTable } from "../../../../components/ui/table/data-table";
 import { DataTableRowActionsExample } from "../../../../components/ui/table/data-table-row-actions-example";
 import {
@@ -27,7 +27,7 @@ export const UsersTable = () => {
 	return <DataTable table={table} filterFields={usersFilterFields} />;
 };
 
-export const usersColumns = columnBuilder<User>({
+export const usersColumns = columnBuilder<Omit<User, "password">>({
 	enableSelect: true,
 	columns: [
 		{ title: "#", accessorKey: "id" },
@@ -74,6 +74,15 @@ export const usersColumns = columnBuilder<User>({
 			accessorKey: "lastLogInAt",
 			enableSorting: true,
 			enableHiding: true,
+			cell: ({ row }) => (
+				<span>
+					{row.getValue("lastLogInAt") != null && (
+						<span>
+							{new Date(row.getValue("lastLogInAt")).toLocaleString()}
+						</span>
+					)}
+				</span>
+			),
 		},
 		{
 			title: "LastLogInTries",
@@ -81,11 +90,15 @@ export const usersColumns = columnBuilder<User>({
 			enableSorting: true,
 			enableHiding: true,
 		},
+		{
+			accessorKey: "createdAt",
+			hidden: true,
+		},
 	],
 	actions: ({ row }) => <DataTableRowActionsExample row={row} />,
 });
 
-export const usersFilterFields: FilterField<User>[] = [
+export const usersFilterFields: FilterField<Omit<User, "password">>[] = [
 	{
 		type: "string",
 		title: "Email",
@@ -102,6 +115,7 @@ export const usersFilterFields: FilterField<User>[] = [
 		type: "selector",
 		title: "Role",
 		accessorKey: "role",
+		isMultiple: true,
 		options: Object.keys(ROLES).map((role) => ({
 			comparator: "eq",
 			label: role,
@@ -116,5 +130,19 @@ export const usersFilterFields: FilterField<User>[] = [
 			{ label: "true", comparator: "eq", value: "true", icon: Check },
 			{ label: "false", comparator: "eq", value: "false", icon: X },
 		],
+	},
+	{
+		type: "selector",
+		title: "Has logged in",
+		accessorKey: "lastLogInAt",
+		options: [
+			{ label: "Yes", comparator: "notnull", value: "notnull", icon: Check },
+			{ label: "no", comparator: "null", value: "null", icon: X },
+		],
+	},
+	{
+		type: "date",
+		title: "Created at",
+		accessorKey: "createdAt",
 	},
 ];

@@ -7,7 +7,6 @@ export const ROUTES = {
 		SIGN_UP: "/auth/sign-up",
 		RESET_PASSWORD: "/auth/reset-password",
 	},
-	PLAYGROUND: "/playground",
 	DASHBOARD: {
 		INDEX: "/dashboard",
 		USERS: "/dashboard/users",
@@ -16,13 +15,6 @@ export const ROUTES = {
 };
 
 export const router = createBrowserRouter([
-	// Testing Playground
-	{
-		path: ROUTES.PLAYGROUND,
-		lazy: async () => ({
-			Component: (await import("./pages/playground/playground.page")).default,
-		}),
-	},
 	// Auth routes
 	{
 		path: "/",
