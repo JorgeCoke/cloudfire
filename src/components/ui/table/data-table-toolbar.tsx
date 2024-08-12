@@ -3,7 +3,7 @@ import type { Table } from "@tanstack/react-table";
 import { Button } from "../button";
 
 import { DataTableViewOptions } from "./data-table-view-options";
-import type { FilterField } from "../../../../types/generic-search-query";
+import type { FilterField } from "../../../lib/generic-search-query";
 import { cn } from "../../../lib/utils";
 import { Eraser } from "lucide-react";
 import { Input } from "../input";

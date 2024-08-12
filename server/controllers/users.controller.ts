@@ -1,19 +1,25 @@
 import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
 import { openApiRequest, openApiResponse } from "../lib/zod-to-json-openapi";
-import type { Bindings } from "../lib/bindings";
+import type { Env } from "../lib/env";
 import { PostSearchUsersResponse } from "../../types/controllers/users-controller.types";
 import { drizzle } from "drizzle-orm/d1";
 import { usersT } from "../lib/db/schemas/users.table";
 import { count } from "drizzle-orm";
 import { convertToOrderBy, convertToQuery } from "../lib/db/query-builder";
-import { GenericSearch } from "../../types/generic-search-query";
+import { hasAnyRoleGuard } from "../lib/utils";
+import { GenericSearch } from "../../types/controllers/_shared";
 
 const basePath = "/users";
 
 export const UsersErrors = {} as const;
 
-const UsersController = new OpenAPIHono<{ Bindings: Bindings }>().openapi(
+const UsersController = new OpenAPIHono<{ Bindings: Env }>().openapi(
 	createRoute({
+		security: [
+			{
+				Bearer: [],
+			},
+		],
 		tags: [basePath],
 		method: "post",
 		path: `${basePath}/search`,
@@ -23,6 +29,7 @@ const UsersController = new OpenAPIHono<{ Bindings: Bindings }>().openapi(
 		},
 	}),
 	async (c) => {
+		await hasAnyRoleGuard(c, ["ADMIN"]);
 		const db = drizzle(c.env.DB);
 		const body = c.req.valid("json");
 		const users = await db

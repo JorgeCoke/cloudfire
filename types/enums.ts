@@ -1,4 +1,5 @@
 export const ROLES = {
 	ADMIN: "ADMIN",
 	USER: "USER",
-} as const; // Object.keys(ROLES)
+} as const;
+export type ROLE = "ADMIN" | "USER";

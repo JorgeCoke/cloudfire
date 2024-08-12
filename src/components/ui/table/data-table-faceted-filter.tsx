@@ -14,10 +14,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 import { Separator } from "../separator";
 import { cn } from "../../../lib/utils";
-import type {
-	Comparator,
-	FilterFieldOption,
-} from "../../../../types/generic-search-query";
+import type { FilterFieldOption } from "../../../lib/generic-search-query";
+import type { Comparator } from "../../../../types/controllers/_shared";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
 	column?: Column<TData, TValue>;

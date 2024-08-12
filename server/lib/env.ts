@@ -1,4 +1,4 @@
-export type Bindings = {
+export type Env = {
 	DB: D1Database;
 	AUTH_SESSION_SECRET_KEY: string;
 	AUTH_RESET_PASSWORD_SECRET_KEY: string;
@@ -6,4 +6,6 @@ export type Bindings = {
 	DOCS_USER: string;
 	DOCS_PASSWORD: string;
 	DOCS_REALM: string;
+	ADMIN_USER: string;
+	ADMIN_PASSWORD: string;
 };

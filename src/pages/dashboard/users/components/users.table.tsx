@@ -4,7 +4,7 @@ import type { User } from "../../../../../server/lib/db/schemas/users.table";
 import { Badge } from "../../../../components/ui/badge";
 import { ROLES } from "../../../../../types/enums";
 import { Check, X } from "lucide-react";
-import type { FilterField } from "../../../../../types/generic-search-query";
+import type { FilterField } from "../../../../lib/generic-search-query";
 import { DataTable } from "../../../../components/ui/table/data-table";
 import { DataTableRowActionsExample } from "../../../../components/ui/table/data-table-row-actions-example";
 import {

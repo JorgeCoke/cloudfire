@@ -20,7 +20,7 @@ import { usersT } from "../lib/db/schemas/users.table";
 import { eq } from "drizzle-orm";
 import { compareSync, hashSync } from "bcryptjs";
 import { sign, verify } from "hono/jwt";
-import type { Bindings } from "../lib/bindings";
+import type { Env } from "../lib/env";
 import { HttpException } from "../lib/utils";
 
 const basePath = "/auth";
@@ -45,7 +45,7 @@ export const AuthErrors = {
 	},
 } as const;
 
-const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
+const AuthController = new OpenAPIHono<{ Bindings: Env }>()
 	.openapi(
 		createRoute({
 			tags: [basePath],
@@ -83,6 +83,7 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 			const jwtPayload: JwtPayload = {
 				userId: user.id,
 				exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
+				role: user.role,
 			};
 			const jwt = await sign(jwtPayload, c.env.AUTH_SESSION_SECRET_KEY);
 			// Update lastLogInAt and reset lastLogInTries
@@ -161,6 +162,7 @@ const AuthController = new OpenAPIHono<{ Bindings: Bindings }>()
 					const jwtPayload: JwtPayload = {
 						userId: user.id,
 						exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
+						role: user.role,
 					};
 					const resetPasswordToken = await sign(
 						jwtPayload,

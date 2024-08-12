@@ -5,7 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 import { cn } from "../../../lib/utils";
 import { Calendar } from "../calendar";
 import { date } from "zod";
-import type { Comparator } from "../../../../types/generic-search-query";
+import type { Comparator } from "../../../../types/controllers/_shared";
 
 interface DataTableDateFilterProps<TData, TValue> {
 	column?: Column<TData, TValue>;

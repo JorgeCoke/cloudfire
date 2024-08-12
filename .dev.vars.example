@@ -12,7 +12,11 @@ DOCS_USER="root"
 DOCS_PASSWORD="toor"
 DOCS_REALM="cloudfire-swagger"
 
-# [Only needed for Drizzle studio] Get yours from: https://dash.cloudflare.com/ > Workers & Pages
+# [Seed] Admin User
+ADMIN_USER="admin@admin.com"
+ADMIN_PASSWORD="adminadmin"
+
+# [Only needed in local environment for Drizzle studio] Get yours from: https://dash.cloudflare.com/ > Workers & Pages
 CF_ACCOUNT_ID=""
-# [Only needed for Drizzle studio] Get yours from: https://dash.cloudflare.com/profile/api-tokens (add D1 edit permissions)
+# [Only needed in local environment for Drizzle studio] Get yours from: https://dash.cloudflare.com/profile/api-tokens (add D1 edit permissions)
 CF_TOKEN=""

@@ -1,5 +1,5 @@
 import type { ZodType, ZodTypeAny } from "zod";
-import { HttpExceptionZod } from "../../types/custom-http-exception.types";
+import { HttpExceptionZod } from "../../types/controllers/_shared";
 
 // Convert Zod schema to OpenApi Body Request specification
 export const openApiRequest = <T extends ZodTypeAny>(zod: T) => {

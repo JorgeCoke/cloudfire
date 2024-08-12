@@ -1,7 +1,7 @@
 import { hc } from "hono/client";
 import type { ServerType } from "../../server/server";
 import type { ClientResponse } from "hono/client";
-import type { HttpExceptionZod } from "../../types/custom-http-exception.types";
+import type { HttpExceptionZod } from "../../types/controllers/_shared";
 
 // NOTE: See https://hono.dev/docs/guides/rpc
 export const rpc = hc<ServerType>("/");

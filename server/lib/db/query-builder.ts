@@ -14,7 +14,7 @@ import {
 	type SQL,
 } from "drizzle-orm";
 import type { SQLiteTableWithColumns } from "drizzle-orm/sqlite-core";
-import type { OrderBy, Query } from "../../../types/generic-search-query";
+import type { OrderBy, Query } from "../../../types/controllers/_shared";
 
 // Convert OrderBy Zod schemas to Drizzle orderBy
 export const convertToOrderBy = (

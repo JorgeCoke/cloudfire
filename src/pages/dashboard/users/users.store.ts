@@ -5,7 +5,7 @@ import { queryStore, type QueryStore } from "../../../lib/zustand-query";
 import { fetcher, rpc } from "../../../lib/rpc";
 import { destructiveToast } from "../../../components/ui/use-toast";
 import type { TableState } from "@tanstack/react-table";
-import { convertTanStackTableState } from "../../../../types/generic-search-query";
+import { convertTanStackTableState } from "../../../lib/generic-search-query";
 
 type State = {
 	tableData: Omit<PostSearchUsersResponse, "password">;
