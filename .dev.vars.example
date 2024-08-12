@@ -1,7 +1,7 @@
 # Do not forget to add also your variables in your Cloudflare web console
 
-# "preview" | "production"
-ENV="preview"
+# "dev" | "preview" | "production"
+ENV="dev"
 
 # Auth Private Keys
 AUTH_SESSION_SECRET_KEY="session_secret_key"
@@ -15,6 +15,9 @@ DOCS_REALM="cloudfire-swagger"
 # [Seed] Admin User
 ADMIN_USER="admin@admin.com"
 ADMIN_PASSWORD="adminadmin"
+
+# [Plunk] Mailer
+PLUNK_API_KEY="sk_"
 
 # [Only needed in local environment for Drizzle studio] Get yours from: https://dash.cloudflare.com/ > Workers & Pages
 CF_ACCOUNT_ID=""

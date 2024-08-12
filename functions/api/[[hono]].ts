@@ -1,4 +1,4 @@
 import { handle } from "hono/cloudflare-pages";
-import server from "../../server/server";
+import { server } from "../../src/server/server";
 
 export const onRequest = handle(server);

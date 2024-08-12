@@ -7,7 +7,7 @@ binding="DB" # i.e. available in your Worker on env.DB
 database_name="cloudfire-prod-db"
 database_id="496d869e-c40c-4638-8a49-e3364a6f50f8"
 preview_database_id="DB"
-migrations_dir="./server/lib/db/migrations"
+migrations_dir="./src/server/lib/db/migrations"
 
 [env.preview]
 name="preview"
@@ -15,7 +15,8 @@ name="preview"
 binding="DB"
 database_name="cloudfire-preview-db"
 database_id="d6705e69-13de-4c7d-8252-30f354066758"
-migrations_dir="./server/lib/db/migrations"
+migrations_dir="./src/server/lib/db/migrations"
+
 
 
 # Automatically place your workloads in an optimal location to minimize latency.

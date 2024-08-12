@@ -2,8 +2,8 @@
 import { defineConfig } from "drizzle-kit";
 
 const local = !!process.env.LOCAL_DB_PATH;
-const schema = "./server/lib/db/schemas/*";
-const out = "./server/lib/db/migrations";
+const schema = "./src/server/lib/db/schemas/*";
+const out = "./src/server/lib/db/migrations";
 const dialect = "sqlite";
 
 export default local

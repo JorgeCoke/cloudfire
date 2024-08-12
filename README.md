@@ -6,11 +6,13 @@ This boilerplate SASS template stack is **designed for developers** seeking a st
 
 ## ✨ Features
 
-- ☁️ **Serverless deployment** with [Cloudflare Pages](https://pages.cloudflare.com/) and serverless SQLite database with [Cloudflare D1](https://developers.cloudflare.com/d1/)
+- ☁️ **Serverless** deployment with [Cloudflare Pages](https://pages.cloudflare.com/) and serverless **SQLite** database with [Cloudflare D1](https://developers.cloudflare.com/d1/)
 - 🔥 The **fastest JS framework**: [Hono](https://hono.dev/) 
-- ⚛️ Simple [React](https://react.dev/) SPA **dashboard**, with [Zustand](https://github.com/pmndrs/zustand) state management
+- ⚛️ Simple [React](https://react.dev/) SPA **dashboard**, with [Zustand](https://github.com/pmndrs/zustand) **store** management
 - 🌧 [Drizzle](https://orm.drizzle.team/) as **SQLite ORM**
-- 🦄 [Tailwind](https://tailwindcss.com/) + [Shadcn](https://ui.shadcn.com/) styles
+- 🛡 [Zod](https://zod.dev/) **validator**
+- 📚 **Automatic** [Swagger](https://swagger.io/) and [OpenApi](https://www.openapis.org/) spec generated based on your Zod schemas
+- 🦄 [Tailwind](https://tailwindcss.com/) + [Shadcn](https://ui.shadcn.com/) **styles**
 - 🎨 The best **linter** and **formatter**, [BiomeJS](https://biomejs.dev/)
 - 🐶 Pre-Commit and Commit [Husky](https://github.com/typicode/husky) **hooks**, runs linter and formatter before any commit!
 - 💄 **Commit nomenclature** rules following [Conventional Commit Format](https://commitlint.js.org/) and [Commitizen CLI](https://github.com/commitizen/cz-cli) (emoji [powered](https://github.com/folke/devmoji))
@@ -54,7 +56,8 @@ npm run cz           # Commit with Commitizen CLI
 ```
 npm run release             # Bump version and generate CHANGELOG.md
 git push --follow-tags      # Push changes and GitTag to origin
-npm run deploy              # Deploy it
+npm run deploy:preview      # Deploy to preview environment
+npm run deploy:prod         # Deploy to prod environment
 ```
 
 ## 🔦 Check vulnerabilities and update outdated dependencies
