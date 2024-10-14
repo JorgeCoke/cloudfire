@@ -10,13 +10,16 @@ export const DatePicker = forwardRef<
 	HTMLDivElement,
 	{
 		date?: Date;
+		disabled: boolean;
 		setDate: (date?: Date) => void;
 	}
->(function DatePickerCmp({ date, setDate }, ref) {
+>(function DatePickerCmp({ date, setDate, disabled }, ref) {
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
 				<Button
+					disabled={disabled}
+					aria-disabled={disabled}
 					variant={"outline"}
 					className={cn(
 						"w-full justify-start text-left font-normal",

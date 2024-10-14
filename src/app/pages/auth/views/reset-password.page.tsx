@@ -65,7 +65,6 @@ export default function ResetPasswordPage() {
 								token: {
 									inputProps: {
 										type: "hidden",
-										showLabel: false,
 									},
 								},
 							}}

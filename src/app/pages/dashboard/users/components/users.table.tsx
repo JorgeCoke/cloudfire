@@ -1,20 +1,23 @@
 import { useUsersStore } from "../users.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { User } from "../../../../../server/lib/db/schemas/users.table";
 import { Badge } from "../../../../components/ui/badge";
-import { Check, X } from "lucide-react";
+import { Check, Edit, X } from "lucide-react";
 import type { FilterField } from "../../../../lib/generic-search-query";
 import { DataTable } from "../../../../components/ui/table/data-table";
-import { DataTableRowActionsExample } from "../../../../components/ui/table/data-table-row-actions-example";
 import {
 	columnBuilder,
 	tableBuilder,
 } from "../../../../components/ui/table/data-table-builder";
 import { useEffectOnce } from "../../../../lib/hooks/use-effect-once";
 import { ROLE } from "../../../../../types/enums";
+import { useDebounce } from "../../../../lib/hooks/use-debounce";
+import { UserSheet } from "./user.sheet";
+import { Button } from "../../../../components/ui/button";
 
 export const UsersTable = () => {
 	const { tableData, tableState, doSearchUsers, set } = useUsersStore();
+	const debounceTableState = useDebounce(tableState, 500);
 	useEffectOnce(() => {
 		if (tableData.items.length === 0) {
 			doSearchUsers();
@@ -22,7 +25,7 @@ export const UsersTable = () => {
 	});
 	useEffect(() => {
 		doSearchUsers();
-	}, [tableState]);
+	}, [debounceTableState]);
 	const table = tableBuilder(tableData, tableState, usersColumns, set);
 	return <DataTable table={table} filterFields={usersFilterFields} />;
 };
@@ -95,7 +98,28 @@ export const usersColumns = columnBuilder<Omit<User, "password">>({
 			hidden: true,
 		},
 	],
-	actions: ({ row }) => <DataTableRowActionsExample row={row} />,
+	actions: ({ row }) => {
+		const [open, setOpen] = useState<boolean>(false);
+		return (
+			<>
+				{/* // TODO: FIX ANY */}
+				<UserSheet
+					open={open}
+					onOpenChange={setOpen}
+					user={row.original as any}
+				/>
+				<Button
+					onClick={() => setOpen(true)}
+					type="button"
+					size="sm"
+					variant="ghost"
+					title="Edit"
+				>
+					<Edit className="h-4 w-4" />
+				</Button>
+			</>
+		);
+	},
 });
 
 export const usersFilterFields: FilterField<Omit<User, "password">>[] = [

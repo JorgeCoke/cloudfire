@@ -47,10 +47,11 @@ export const queryStore: <I extends object>(
 				});
 				// await new Promise((r) => setTimeout(r, 2000)); // Simulate slow HTTP request
 				const result = await queryFn().catch(
-					async (err: { message: string }) => {
-						const error: HttpExceptionZod & { status: number } = JSON.parse(
-							err.message,
-						);
+					async (err: { data: { message: string }; status: number }) => {
+						const error: HttpExceptionZod & { status: number } = {
+							message: err.data.message,
+							status: err.status,
+						};
 						if (onError) {
 							await onError(error);
 						}

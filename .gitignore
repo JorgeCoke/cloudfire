@@ -27,3 +27,4 @@ dist-ssr
 .wrangler
 .dev.*
 !.dev.example
+TODOS.md
