@@ -1,5 +1,5 @@
 import type { Context } from "hono";
-import type { CfEnv } from "../cf-env";
+import type { CfEnv } from "../../../types/cf-env";
 import { ActionButtonTemplate } from "./templates/action-button.template";
 import { render } from "@react-email/components";
 

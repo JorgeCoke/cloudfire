@@ -5,7 +5,7 @@ import { logger } from "hono/logger";
 import { secureHeaders } from "hono/secure-headers";
 import { timeout } from "hono/timeout";
 import { trimTrailingSlash } from "hono/trailing-slash";
-import type { CfEnv } from "./lib/cf-env";
+import type { CfEnv } from "../types/cf-env";
 import { csrf } from "hono/csrf";
 import { HTTPException } from "hono/http-exception";
 import { count } from "drizzle-orm";

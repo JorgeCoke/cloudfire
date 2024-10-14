@@ -4,12 +4,12 @@ import {
 	openApiRequest,
 	openApiResponse,
 } from "../lib/zod-to-json-openapi";
-import type { CfEnv } from "../lib/cf-env";
+import type { CfEnv } from "../../types/cf-env";
 import { PostSearchUsersResponse } from "../../types/controllers/users-controller.types";
 import { drizzle } from "drizzle-orm/d1";
 import { usersT } from "../lib/db/schemas/users.table";
 import { queryGenericSearch } from "../lib/db/query-builder";
-import { hasAnyRoleGuard } from "../lib/guards/hasAnyRole.guard";
+import { hasAnyRoleGuard } from "../lib/guards";
 import { GenericSearch } from "../../types/controllers/shared";
 import { ROLE } from "../../types/enums";
 

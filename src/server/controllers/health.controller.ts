@@ -1,7 +1,7 @@
 import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
 import { GetHealthResponse } from "../../types/controllers/health-controller.types";
 import { openApiResponse } from "../lib/zod-to-json-openapi";
-import type { CfEnv } from "../lib/cf-env";
+import type { CfEnv } from "../../types/cf-env";
 
 const basePath = "/health";
 

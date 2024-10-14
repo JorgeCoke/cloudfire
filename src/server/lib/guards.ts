@@ -1,12 +1,12 @@
 import { verify } from "hono/jwt";
-import type { ROLE } from "../../../types/enums";
+import type { ROLE } from "../../types/enums";
 import type { Context } from "hono";
-import type { CfEnv } from "../cf-env";
-import type { JwtPayload } from "../../../types/controllers/auth-controller.types";
-import { HttpException } from "../../../types/controllers/shared";
+import type { CfEnv } from "../../types/cf-env";
+import type { JwtPayload } from "../../types/controllers/auth-controller.types";
+import { HttpException } from "../../types/controllers/shared";
 
 // Check user is logged in
-export const hasSession = async (
+export const hasSessionGuard = async (
 	c: Context<{
 		Bindings: CfEnv;
 	}>,
@@ -31,7 +31,7 @@ export const hasAnyRoleGuard = async (
 	}>,
 	roles: ROLE[],
 ) => {
-	const session = await hasSession(c);
+	const session = await hasSessionGuard(c);
 	if (!roles.includes(session.role)) {
 		throw new HttpException({ status: 401, message: "Unauthorized" });
 	}

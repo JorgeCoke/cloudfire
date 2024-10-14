@@ -2,7 +2,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { AuthController } from "./controllers/auth.controller";
 import { HealthController } from "./controllers/health.controller";
 import { UsersController } from "./controllers/users.controller";
-import type { CfEnv } from "./lib/cf-env";
+import type { CfEnv } from "../types/cf-env";
 
 export const SwaggerUrl = "/api/v1/swagger";
 

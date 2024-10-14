@@ -1,5 +1,5 @@
 import type { Context } from "hono";
-import type { CfEnv } from "../cf-env";
+import type { CfEnv } from "../../../types/cf-env";
 import { drizzle } from "drizzle-orm/d1";
 import { usersT } from "./schemas/users.table";
 import { hashSync } from "bcryptjs";

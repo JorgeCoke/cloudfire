@@ -1,7 +1,7 @@
 # Do not forget to add also your variables in your Cloudflare web console
 
-# "dev" | "preview" | "production"
-ENV="dev"
+# "preview" | "production"
+ENV="preview"
 
 # Auth Private Keys
 AUTH_SESSION_SECRET_KEY="session_secret_key"
@@ -10,7 +10,7 @@ AUTH_RESET_PASSWORD_SECRET_KEY="reset_password_secret_key"
 # Swagger docs Basic Auth
 DOCS_USER="root"
 DOCS_PASSWORD="toor"
-DOCS_REALM="cloudfire-swagger"
+DOCS_REALM="cloudfire-swagger-preview"
 
 # [Seed] Admin User
 ADMIN_USER="admin@admin.com"

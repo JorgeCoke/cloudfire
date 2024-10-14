@@ -20,7 +20,7 @@ import { usersT } from "../lib/db/schemas/users.table";
 import { eq } from "drizzle-orm";
 import { compareSync, hashSync } from "bcryptjs";
 import { sign, verify } from "hono/jwt";
-import type { CfEnv } from "../lib/cf-env";
+import type { CfEnv } from "../../types/cf-env";
 import { sendResetPasswordMail } from "../lib/mail/plunk";
 import { HttpException } from "../../types/controllers/shared";
 
