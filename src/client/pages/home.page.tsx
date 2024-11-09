@@ -1,12 +1,33 @@
 import { useState } from "react";
+import { useStore } from "@nanostores/react";
+import { router } from "../router";
+import { openPage } from "@nanostores/router";
+import { $addMessage, $getMessage } from "../facades/messages.facade";
 
-function App() {
+export const HomePage = () => {
   const [count, setCount] = useState(0);
+  const getMessage = useStore($getMessage);
+  const addMessage = useStore($addMessage);
 
   return (
-    <section className="container">
+    <section className="container bg-slate-800">
       <div>
         <h1 className="text-3xl font-bold underline">Hello world!</h1>
+        <p>{JSON.stringify(getMessage.data)}</p>
+        <button
+          onClick={() =>
+            addMessage.mutate({ message: getMessage.data?.message! })
+          }
+        >
+          BUTTON
+        </button>
+        <button
+          onClick={() => {
+            openPage(router, "ERROR", { code: 400 });
+          }}
+        >
+          GO TO ERROR
+        </button>
         <a href="https://react.dev" target="_blank">
           <img
             src="/static/react.svg"
@@ -29,6 +50,4 @@ function App() {
       </p>
     </section>
   );
-}
-
-export default App;
+};
