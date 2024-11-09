@@ -1,12 +1,12 @@
 import { useState } from "react";
-import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <>
+    <section className="container">
       <div>
+        <h1 className="text-3xl font-bold underline">Hello world!</h1>
         <a href="https://react.dev" target="_blank">
           <img
             src="/static/react.svg"
@@ -27,7 +27,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </section>
   );
 }
 
