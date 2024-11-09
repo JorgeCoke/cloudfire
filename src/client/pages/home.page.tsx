@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useStore } from "@nanostores/react";
 import { router } from "../router";
 import { openPage } from "@nanostores/router";
-import { $addMessage, $getMessage } from "../facades/messages.facade";
+import { $addMessage, $getMessage } from "../services/messages.service";
+import { H0 } from "../components/ui/typography";
 
 export const HomePage = () => {
   const [count, setCount] = useState(0);
@@ -12,7 +13,7 @@ export const HomePage = () => {
   return (
     <section className="container bg-slate-800">
       <div>
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
+        <H0>Hello World</H0>
         <p>{JSON.stringify(getMessage.data)}</p>
         <button
           onClick={() =>
