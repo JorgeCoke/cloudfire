@@ -1,0 +1,19 @@
+# "preview" | "production"
+ENV="preview"
+
+# Auth Private Keys
+AUTH_SESSION_SECRET_KEY="auth_session_secret_key"
+
+# Swagger docs Basic Auth
+DOCS_USER="docs_user"
+DOCS_PASSWORD="docs_password"
+DOCS_REALM="cloudfire-swagger"
+
+# [Seed] Admin User
+ADMIN_USER="admin_user@example.com"
+ADMIN_PASSWORD="admin_password"
+
+# [Only needed in local environment for Drizzle studio] Get yours from: https://dash.cloudflare.com/ > Workers & Pages
+CF_ACCOUNT_ID=""
+# [Only needed in local environment for Drizzle studio] Get yours from: https://dash.cloudflare.com/profile/api-tokens (add D1 edit permissions)
+CF_TOKEN=""
