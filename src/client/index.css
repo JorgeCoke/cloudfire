@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Hide the default date picker icon in Chrome, Safari, and Edge */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+	opacity: 0;
+	position: absolute;
+	left: 0; /* Ensures the calendar still shows up */
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+/* Hide the default date picker icon in Firefox */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+	-moz-appearance: textfield;
+	position: relative;
+	z-index: 2;
+	background: transparent;
+}
+
+/* Hide the default arrow icons in Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Hide the default arrow icons in Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
+}

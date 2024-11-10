@@ -1,6 +1,12 @@
-# 🔥 CLOUDFIRE
+<h1 align="center">
+🔥 CLOUDFIRE 🔥
+</h1>
 
-##### ... a Hono + React + Cloudflare (Pages & D1 SQLite) + DrizzleORM template
+<h5 align="center">
+a Hono + React + Cloudflare (Pages & D1 SQLite) + DrizzleORM template
+</h5>
+
+---
 
 This boilerplate SaaS template stack is **designed for developers** seeking a streamlined, **high-performance** setup with **minimal dependencies**, and **super lightweight**. Perfect for modern web applications 🚀
 
@@ -13,7 +19,7 @@ This boilerplate SaaS template stack is **designed for developers** seeking a st
 - 🌧 [Drizzle](https://orm.drizzle.team/) as **SQLite ORM**
 - 🛡 [Zod](https://zod.dev/) **validator**
 - 🦄 [Tailwind](https://tailwindcss.com/) **styles**
-- 🔐 Username + password **auth example**
+- 🔐 Username + password **JWT Auth Example**
 
 ## 🛠 Getting Started
 
