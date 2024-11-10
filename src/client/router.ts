@@ -1,7 +1,10 @@
 import { createRouter } from "@nanostores/router";
 
-const ROUTES = {
+export const ROUTES = {
   HOME: "/",
+  AUTH_LOGIN: "/auth/login",
+  AUTH_SIGNUP: "/auth/signup",
+  DASHBOARD: "/dashboard",
   ERROR: "/error/:code",
 } as const;
 

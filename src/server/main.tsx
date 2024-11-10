@@ -52,11 +52,8 @@ const server = new OpenAPIHono<{ Bindings: Env }>()
     if (login === c.env.DOCS_USER && password === c.env.DOCS_PASSWORD) {
       // Run seed if no users found
       const db = drizzle(c.env.DB);
-      const totalUsers = await db
-        .select({ count: count() })
-        .from(usersT)
-        .then((res) => res[0].count);
-      if (totalUsers === 0) {
+      const [users] = await db.select({ count: count() }).from(usersT);
+      if (users.count === 0) {
         await seed(c);
       }
       return next();
@@ -71,7 +68,7 @@ const server = new OpenAPIHono<{ Bindings: Env }>()
   .route("/", Router);
 
 // TODO: Remove from PROD. Code duplicated here and index.html
-server.get("/", (c) => {
+server.get("*", (c) => {
   return c.html(
     renderToString(
       <html lang="en">

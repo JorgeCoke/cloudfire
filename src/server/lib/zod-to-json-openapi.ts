@@ -22,17 +22,25 @@ export const openApiBearerGuard = () => {
 };
 
 // Convert Zod schema to OpenApi Body Request specification
-export const openApiRequest = <T extends ZodTypeAny>(opts: { body: T }) => {
+export const openApiRequest = <
+  T extends ZodTypeAny,
+  Y extends ZodTypeAny,
+  Z extends ZodTypeAny
+>(opts: {
+  body: T;
+  params: Y;
+  query: Z;
+}) => {
   return {
-    ...(opts.body && {
-      body: {
-        content: {
-          "application/json": {
-            schema: opts.body,
-          },
+    body: {
+      content: {
+        "application/json": {
+          schema: opts.body,
         },
       },
-    }),
+    },
+    params: opts.params,
+    query: opts.query,
   };
 };
 

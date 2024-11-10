@@ -1,4 +1,4 @@
-import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
+import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { Env } from "../../env";
 import {
   HttpException,
@@ -9,7 +9,6 @@ import {
 import {
   PostLogInDto,
   PostLogInResponseDto,
-  PostSignUpDto,
   PostSignUpResponseDto,
 } from "./auth.dtos";
 import { sign } from "hono/jwt";
@@ -38,8 +37,12 @@ export const AuthController = new OpenAPIHono<{ Bindings: Env }>()
     createRoute({
       tags: [basePath],
       method: "post",
-      path: `${basePath}/log-in`,
-      request: openApiRequest({ body: PostLogInDto }),
+      path: `${basePath}/login`,
+      request: openApiRequest({
+        body: PostLogInDto,
+        params: z.object({}),
+        query: z.object({}),
+      }),
       responses: {
         ...openApiResponse(PostLogInResponseDto, 200, "JWT Session"),
         ...openApiErrors([AuthErrors.USER_NOT_FOUND]),
@@ -48,6 +51,7 @@ export const AuthController = new OpenAPIHono<{ Bindings: Env }>()
     async (c) => {
       const db = drizzle(c.env.DB);
       const body = c.req.valid("json");
+
       const [user] = await db
         .select()
         .from(usersT)
@@ -86,8 +90,12 @@ export const AuthController = new OpenAPIHono<{ Bindings: Env }>()
     createRoute({
       tags: [basePath],
       method: "post",
-      path: `${basePath}/sign-up`,
-      request: openApiRequest({ body: PostLogInDto }),
+      path: `${basePath}/signup`,
+      request: openApiRequest({
+        body: PostLogInDto,
+        params: z.object({}),
+        query: z.object({}),
+      }),
       responses: {
         ...openApiResponse(PostSignUpResponseDto, 200, "Sign up result"),
         ...openApiErrors([AuthErrors.USER_NOT_FOUND, AuthErrors.ERROR_SIGN_UP]),
