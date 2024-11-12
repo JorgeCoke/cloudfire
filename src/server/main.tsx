@@ -76,7 +76,9 @@ const server = new OpenAPIHono<{ Bindings: Env }>()
 		});
 	});
 
-server.get("/app/*", (c) => {
+// TODO: Serve app under /app domain
+// TODO: Serve static HTML under "/" (static HTML landing page with astro or similar)
+server.get("*", (c) => {
 	if (!import.meta.env) {
 		// Disable from cloudlfare enviroments
 		throw new HttpException({
@@ -89,7 +91,6 @@ server.get("/app/*", (c) => {
 		renderToString(
 			<html lang="en">
 				<head>
-					<base href="/app" />
 					<meta charSet="utf-8" />
 					<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
 					<meta

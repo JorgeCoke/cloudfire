@@ -7,11 +7,6 @@ export default defineConfig({
 	ssr: {
 		external: ["react", "react-dom"],
 	},
-	publicDir: "public",
-	build: {
-		emptyOutDir: true,
-		outDir: "dist/app",
-	},
 	plugins: [
 		build(),
 		devServer({

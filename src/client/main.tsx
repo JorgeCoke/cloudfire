@@ -16,7 +16,6 @@ const DashboardPage = lazy(() => import("./pages/dashboard.page.tsx"));
 const PlaygroundPage = lazy(() => import("./pages/shared/playground.page.tsx"));
 
 const Routes = () => {
-	// TODO: Serve static HTML under "/" (static HTML landing page with astro or similar)
 	const page = useStore(router);
 
 	const hasSessionGuard = (page: JSX.Element) => {
