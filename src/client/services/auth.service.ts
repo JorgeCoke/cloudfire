@@ -1,16 +1,16 @@
 import type {
 	GetMeResponseDto,
-	PostLogInBodyDto,
-	PostLogInResponseDto,
-	PostSignUpBodyDto,
-	PostSignUpResponseDto,
+	PostLoginBodyDto,
+	PostLoginResponseDto,
+	PostSignupBodyDto,
+	PostSignupResponseDto,
 } from "../../server/routes/auth/auth.dtos";
 import { http } from "../lib/http";
 import { createFetcherStore, createMutatorStore } from "../lib/nanoquery";
 
 export const $doLogin = createMutatorStore<
-	PostLogInBodyDto,
-	PostLogInResponseDto
+	PostLoginBodyDto,
+	PostLoginResponseDto
 >(async ({ data }) =>
 	http("/auth/login", {
 		method: "POST",
@@ -19,8 +19,8 @@ export const $doLogin = createMutatorStore<
 );
 
 export const $doSignup = createMutatorStore<
-	PostSignUpBodyDto,
-	PostSignUpResponseDto
+	PostSignupBodyDto,
+	PostSignupResponseDto
 >(async ({ data }) =>
 	http("/auth/signup", {
 		method: "POST",

@@ -7,13 +7,13 @@ export const http = ofetch.create({
 	timeout: 15000, // ms
 	ignoreResponseError: true,
 	baseURL: "/api/v1",
-	async onRequest({ request, options }) {
+	async onRequest({ options }) {
 		const jwt = localStorage.getItem("jwt");
 		if (jwt) {
 			options.headers.set("Authorization", `Bearer ${jwt}`);
 		}
 	},
-	async onResponse({ request, options, response, error }) {
+	async onResponse({ response }) {
 		if (!response.ok && response._data.message) {
 			toast.error(response._data.message);
 		}

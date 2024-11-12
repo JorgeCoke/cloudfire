@@ -64,7 +64,7 @@ export const PlaygroundPage = () => {
 						label="Email"
 						placeholder="Email..."
 						icon
-						error={formState.errors.email?.message}
+						errorLabel={formState.errors.email?.message}
 						{...register("email", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -74,7 +74,7 @@ export const PlaygroundPage = () => {
 						label="Search"
 						placeholder="Search..."
 						icon
-						error={formState.errors.search?.message}
+						errorLabel={formState.errors.search?.message}
 						{...register("search", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -83,7 +83,7 @@ export const PlaygroundPage = () => {
 						type="text"
 						label="Text"
 						placeholder="text..."
-						error={formState.errors.text?.message}
+						errorLabel={formState.errors.text?.message}
 						{...register("text", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -95,7 +95,7 @@ export const PlaygroundPage = () => {
 						required
 						description="This field is required"
 						icon
-						error={formState.errors.textRequired?.message}
+						errorLabel={formState.errors.textRequired?.message}
 						{...register("textRequired", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -104,7 +104,7 @@ export const PlaygroundPage = () => {
 						type="password"
 						label="Password"
 						placeholder="****"
-						error={formState.errors.password?.message}
+						errorLabel={formState.errors.password?.message}
 						{...register("password", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -116,7 +116,7 @@ export const PlaygroundPage = () => {
 						required
 						description="This field is required"
 						icon
-						error={formState.errors.passwordRequired?.message}
+						errorLabel={formState.errors.passwordRequired?.message}
 						{...register("passwordRequired", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -124,7 +124,7 @@ export const PlaygroundPage = () => {
 					<Input
 						type="number"
 						label="Number"
-						error={formState.errors.number?.message}
+						errorLabel={formState.errors.number?.message}
 						{...register("number", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -135,7 +135,7 @@ export const PlaygroundPage = () => {
 						required
 						description="This field is required"
 						icon
-						error={formState.errors.numberRequired?.message}
+						errorLabel={formState.errors.numberRequired?.message}
 						{...register("numberRequired", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -143,7 +143,7 @@ export const PlaygroundPage = () => {
 					<Input
 						type="checkbox"
 						label="Checkbox"
-						error={formState.errors.checkbox?.message}
+						errorLabel={formState.errors.checkbox?.message}
 						{...register("checkbox", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -154,7 +154,7 @@ export const PlaygroundPage = () => {
 						required
 						description="This field is required"
 						icon
-						error={formState.errors.checkboxRequired?.message}
+						errorLabel={formState.errors.checkboxRequired?.message}
 						{...register("checkboxRequired", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -162,7 +162,7 @@ export const PlaygroundPage = () => {
 					<Input
 						type="date"
 						label="Date"
-						error={formState.errors.date?.message}
+						errorLabel={formState.errors.date?.message}
 						{...register("date", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -173,7 +173,7 @@ export const PlaygroundPage = () => {
 						required
 						description="This field is required"
 						icon
-						error={formState.errors.dateRequired?.message}
+						errorLabel={formState.errors.dateRequired?.message}
 						{...register("dateRequired", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -181,7 +181,7 @@ export const PlaygroundPage = () => {
 					<Input
 						type="datetime-local"
 						label="Datetime"
-						error={formState.errors.datetime?.message}
+						errorLabel={formState.errors.datetime?.message}
 						{...register("datetime", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -192,7 +192,7 @@ export const PlaygroundPage = () => {
 						required
 						description="This field is required"
 						icon
-						error={formState.errors.datetimeRequired?.message}
+						errorLabel={formState.errors.datetimeRequired?.message}
 						{...register("datetimeRequired", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -203,7 +203,7 @@ export const PlaygroundPage = () => {
 							{ label: "NONE", value: "" },
 							...Object.values(ROLE).map((e) => ({ label: e, value: e })),
 						]}
-						error={formState.errors.select?.message}
+						errorLabel={formState.errors.select?.message}
 						{...register("select", {
 							setValueAs: (value) => value || undefined,
 						})}
@@ -216,7 +216,7 @@ export const PlaygroundPage = () => {
 							{ label: "NONE", value: "" },
 							...Object.values(ROLE).map((e) => ({ label: e, value: e })),
 						]}
-						error={formState.errors.selectRequired?.message}
+						errorLabel={formState.errors.selectRequired?.message}
 						{...register("selectRequired", {
 							setValueAs: (value) => value || undefined,
 						})}

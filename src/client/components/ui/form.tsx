@@ -31,13 +31,13 @@ const Description = (props: {
 }) => <p className="text-sm text-neutral-500">{props.description}</p>;
 
 const ErrorLabel = (props: {
-	error: string;
-}) => <p className="text-sm text-red-500">{props.error}</p>;
+	errorLabel: string;
+}) => <p className="text-sm text-red-500">{props.errorLabel}</p>;
 
 const InputWrapper = (props: {
 	label?: string;
 	description?: string;
-	error?: string;
+	errorLabel?: string;
 	disabled?: boolean;
 	name?: string;
 	required?: boolean;
@@ -70,7 +70,7 @@ const InputWrapper = (props: {
 					{props.children}
 					{props.iconElement}
 				</div>
-				{props.error && <ErrorLabel error={props.error} />}
+				{props.errorLabel && <ErrorLabel errorLabel={props.errorLabel} />}
 			</div>
 			{props.description && <Description description={props.description} />}
 		</div>
@@ -83,8 +83,8 @@ const InputIconClass = "rounded-r-none w-40";
 type InputProps = {
 	label?: string;
 	description?: string;
-	error?: string;
 	icon?: boolean;
+	errorLabel?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 	props: InputProps,
@@ -113,7 +113,7 @@ type SelectProps = {
 	options: { label: string; value: string }[];
 	label?: string;
 	description?: string;
-	error?: string;
+	errorLabel?: string;
 } & SelectHTMLAttributes<HTMLSelectElement>;
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
 	function Select(props: SelectProps, ref) {

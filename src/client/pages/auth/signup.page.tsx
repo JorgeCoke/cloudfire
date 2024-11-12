@@ -4,7 +4,7 @@ import { redirectPage } from "@nanostores/router";
 import { Flame, MoveLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { PostSignUpBodyDto } from "../../../server/routes/auth/auth.dtos";
+import { PostSignupBodyDto } from "../../../server/routes/auth/auth.dtos";
 import { AnchorButton, Button } from "../../components/ui/buttons";
 import { Input } from "../../components/ui/form";
 import { ROUTES, router } from "../../router";
@@ -12,8 +12,8 @@ import { $doSignup } from "../../services/auth.service";
 
 export const SignupPage = () => {
 	const signup = useStore($doSignup);
-	const { register, handleSubmit, formState } = useForm<PostSignUpBodyDto>({
-		resolver: zodResolver(PostSignUpBodyDto),
+	const { register, handleSubmit, formState } = useForm<PostSignupBodyDto>({
+		resolver: zodResolver(PostSignupBodyDto),
 	});
 
 	return (
@@ -61,7 +61,7 @@ export const SignupPage = () => {
 							placeholder="example@mail.com"
 							required
 							icon
-							error={formState.errors.email?.message}
+							errorLabel={formState.errors.email?.message}
 							{...register("email")}
 						/>
 						<Input
@@ -70,7 +70,7 @@ export const SignupPage = () => {
 							placeholder="********"
 							required
 							icon
-							error={formState.errors.password?.message}
+							errorLabel={formState.errors.password?.message}
 							{...register("password")}
 						/>
 						<Input
@@ -79,7 +79,7 @@ export const SignupPage = () => {
 							placeholder="********"
 							required
 							icon
-							error={formState.errors.repeatPassword?.message}
+							errorLabel={formState.errors.repeatPassword?.message}
 							{...register("repeatPassword")}
 						/>
 						<Button type="submit" className="w-full" disabled={signup.loading}>

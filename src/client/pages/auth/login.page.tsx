@@ -4,7 +4,7 @@ import { redirectPage } from "@nanostores/router";
 import { Flame, MoveLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { PostLogInBodyDto } from "../../../server/routes/auth/auth.dtos";
+import { PostLoginBodyDto } from "../../../server/routes/auth/auth.dtos";
 import { AnchorButton, Button } from "../../components/ui/buttons";
 import { Input } from "../../components/ui/form";
 import { revalidateKeys } from "../../lib/nanoquery";
@@ -13,8 +13,8 @@ import { $doLogin } from "../../services/auth.service";
 
 export const LoginPage = () => {
 	const login = useStore($doLogin);
-	const { register, handleSubmit, formState } = useForm<PostLogInBodyDto>({
-		resolver: zodResolver(PostLogInBodyDto),
+	const { register, handleSubmit, formState } = useForm<PostLoginBodyDto>({
+		resolver: zodResolver(PostLoginBodyDto),
 	});
 	return (
 		<main className="w-full h-[100vh] lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -61,7 +61,7 @@ export const LoginPage = () => {
 							placeholder="example@mail.com"
 							required
 							icon
-							error={formState.errors.email?.message}
+							errorLabel={formState.errors.email?.message}
 							{...register("email")}
 						/>
 						<Input
@@ -70,7 +70,7 @@ export const LoginPage = () => {
 							placeholder="********"
 							required
 							icon
-							error={formState.errors.password?.message}
+							errorLabel={formState.errors.password?.message}
 							{...register("password")}
 						/>
 						<Button type="submit" className="w-full" disabled={login.loading}>

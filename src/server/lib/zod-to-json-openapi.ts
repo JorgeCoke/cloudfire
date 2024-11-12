@@ -1,6 +1,15 @@
+import type { RouteConfig, RouteHandler } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 import type { StatusCode } from "hono/utils/http-status";
 import { type ZodType, type ZodTypeAny, z } from "zod";
+import type { Env } from "../env";
+
+export type AppRouteHandler<R extends RouteConfig> = RouteHandler<
+	R,
+	{
+		Bindings: Env;
+	}
+>;
 
 export class HttpException extends HTTPException {
 	constructor(error: { status: StatusCode; message: string }) {
