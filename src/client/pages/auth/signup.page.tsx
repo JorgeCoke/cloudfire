@@ -10,7 +10,7 @@ import { Input } from "../../components/ui/form";
 import { ROUTES, router } from "../../router";
 import { $doSignup } from "../../services/auth.service";
 
-export const SignupPage = () => {
+export default function SignupPage() {
 	const signup = useStore($doSignup);
 	const { register, handleSubmit, formState } = useForm<PostSignupBodyDto>({
 		resolver: zodResolver(PostSignupBodyDto),
@@ -96,4 +96,4 @@ export const SignupPage = () => {
 			</div>
 		</main>
 	);
-};
+}

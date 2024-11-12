@@ -11,7 +11,7 @@ import { revalidateKeys } from "../../lib/nanoquery";
 import { ROUTES, router } from "../../router";
 import { $doLogin } from "../../services/auth.service";
 
-export const LoginPage = () => {
+export default function LoginPage() {
 	const login = useStore($doLogin);
 	const { register, handleSubmit, formState } = useForm<PostLoginBodyDto>({
 		resolver: zodResolver(PostLoginBodyDto),
@@ -87,4 +87,4 @@ export const LoginPage = () => {
 			</div>
 		</main>
 	);
-};
+}

@@ -1,7 +1,7 @@
 import { AnchorButton } from "../components/ui/buttons";
 import { ROUTES } from "../router";
 
-export const HomePage = () => {
+export default function HomePage() {
 	return (
 		<main className="container">
 			<AnchorButton href={ROUTES.AUTH_LOGIN}>LOGIN</AnchorButton>
@@ -9,4 +9,4 @@ export const HomePage = () => {
 			<AnchorButton href={ROUTES.PLAYGROUND}>PLAYGROUND</AnchorButton>
 		</main>
 	);
-};
+}

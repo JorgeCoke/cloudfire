@@ -2,12 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LucideRefreshCcw, MoveLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ROLE } from "../../models/enums";
-import { AnchorButton, Button } from "../components/ui/buttons";
-import { Card } from "../components/ui/card";
-import { Input, Select } from "../components/ui/form";
-import { H0, H1, H2, H3, H4 } from "../components/ui/typography";
-import { ROUTES } from "../router";
+import { ROLE } from "../../../models/enums";
+import { AnchorButton, Button } from "../../components/ui/buttons";
+import { Card } from "../../components/ui/card";
+import { Input, Select } from "../../components/ui/form";
+import { H0, H1, H2, H3, H4 } from "../../components/ui/typography";
+import { ROUTES } from "../../router";
 
 const PlaygroundFormSchema = z.object({
 	email: z.string().nullish(),
@@ -30,7 +30,7 @@ const PlaygroundFormSchema = z.object({
 });
 type PlaygroundFormSchema = z.infer<typeof PlaygroundFormSchema>;
 
-export const PlaygroundPage = () => {
+export default function PlaygroundPage() {
 	const { register, handleSubmit, formState, watch } =
 		useForm<PlaygroundFormSchema>({
 			resolver: zodResolver(PlaygroundFormSchema),
@@ -267,4 +267,4 @@ export const PlaygroundPage = () => {
 			</Card>
 		</main>
 	);
-};
+}

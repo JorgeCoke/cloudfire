@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { sign } from "hono/jwt";
 import type { JwtPayload } from "../../../models/types/jwt-payload";
+import { getSession } from "../../lib/auth";
 import { usersT } from "../../lib/db/schemas/users";
 import {
 	type AppRouteHandler,
@@ -14,7 +15,6 @@ import {
 	type PostLoginRoute,
 	type PostSignupRoute,
 } from "./auth.controller";
-import { getSession } from "../../lib/auth";
 const { hashSync, compareSync } = bcryptjs;
 
 export const PostLoginHandler: AppRouteHandler<typeof PostLoginRoute> = async (

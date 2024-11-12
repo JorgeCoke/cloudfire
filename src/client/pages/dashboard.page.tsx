@@ -6,7 +6,7 @@ import { H1, H4 } from "../components/ui/typography";
 import { ROUTES, router } from "../router";
 import { $doGetMe } from "../services/auth.service";
 
-export const DashboardPage = () => {
+export default function DashboardPage() {
 	const getMe = useStore($doGetMe);
 
 	return (
@@ -28,4 +28,4 @@ export const DashboardPage = () => {
 			</div>
 		</main>
 	);
-};
+}
