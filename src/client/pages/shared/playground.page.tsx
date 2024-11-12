@@ -26,7 +26,6 @@ const PlaygroundFormSchema = z.object({
 	datetimeRequired: z.coerce.date(),
 	select: z.nativeEnum(ROLE).nullish(),
 	selectRequired: z.nativeEnum(ROLE),
-	// TODO: radiogroup (enum), searchbox (combobox)
 });
 type PlaygroundFormSchema = z.infer<typeof PlaygroundFormSchema>;
 

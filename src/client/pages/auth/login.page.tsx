@@ -34,12 +34,12 @@ export default function LoginPage() {
 					Homepage
 				</AnchorButton>
 				<div className="mx-auto grid w-[350px] gap-6 p-2">
-					<div className="flex flex-col gap-2 text-center">
+					<div className="flex flex-col gap-4 text-center">
 						<div className="flex lg:hidden justify-center py-6">
 							<Flame className="w-12 h-12" />
 						</div>
-						<h1 className="text-3xl font-bold">Log In</h1>
-						<p className="text-balance text-muted-foreground">
+						<h1 className="text-3xl font-bold">Login</h1>
+						<p className="text-balance text-neutral-500">
 							Enter your email below to login to your account
 						</p>
 					</div>

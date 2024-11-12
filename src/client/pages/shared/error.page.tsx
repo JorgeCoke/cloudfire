@@ -1,4 +1,19 @@
+import { AnchorButton } from "../../components/ui/buttons";
+import { H1, H4 } from "../../components/ui/typography";
+import { ROUTES } from "../../router";
+
 export default function ErrorPage({ code = "500" }: { code?: string }) {
-	// TODO:
-	return <h1>ERROR {code}</h1>;
+	return (
+		<section className="container h-dvh flex flex-col space-y-12 justify-center items-center">
+			<H1 className="text-center">
+				<span className="font-thin">Error</span> {code}
+			</H1>
+			<H4 className="text-neutral-500 font-thin">
+				Oops... something went wrong!
+			</H4>
+			<AnchorButton className="mx-auto" href={ROUTES.DASHBOARD}>
+				Go Back
+			</AnchorButton>
+		</section>
+	);
 }
