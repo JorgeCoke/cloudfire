@@ -14,7 +14,11 @@ export const http = ofetch.create({
 		}
 	},
 	async onResponse({ response }) {
-		if (!response.ok && response._data.message) {
+		if (
+			!response.ok &&
+			response._data.message &&
+			!response.url.includes("/auth/me")
+		) {
 			toast.error(response._data.message);
 		}
 	},

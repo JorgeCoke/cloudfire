@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import HomePage from "./pages/home.page.tsx";
 import ErrorPage from "./pages/shared/error.page.tsx";
 import LoadingPage from "./pages/shared/loading.page.tsx";
+import { NavBar } from "./components/layout/navbar.tsx";
 
 const LoginPage = lazy(() => import("./pages/auth/login.page.tsx"));
 const SignupPage = lazy(() => import("./pages/auth/signup.page.tsx"));
@@ -61,6 +62,7 @@ const Routes = () => {
 // biome-ignore lint/style/noNonNullAssertion: root will never be null
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
+		<NavBar />
 		<Suspense fallback={<LoadingPage />}>
 			<Routes />
 		</Suspense>

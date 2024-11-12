@@ -4,7 +4,7 @@ import { http } from "./http";
 export const [
 	createFetcherStore,
 	createMutatorStore,
-	{ invalidateKeys, revalidateKeys },
+	{ invalidateKeys, revalidateKeys, mutateCache },
 ] = nanoquery({
 	fetcher: (...keys) => http(keys.join("")),
 });

@@ -1,30 +1,25 @@
 import { useStore } from "@nanostores/react";
-import { redirectPage } from "@nanostores/router";
-import toast from "react-hot-toast";
-import { AnchorButton, Button } from "../components/ui/buttons";
-import { H1, H4 } from "../components/ui/typography";
-import { ROUTES, router } from "../router";
+import { AnchorButton } from "../components/ui/buttons";
+import { ROUTES } from "../router";
 import { $doGetMe } from "../services/auth.service";
+import { H2, H4 } from "../components/ui/typography";
 
 export default function DashboardPage() {
 	const getMe = useStore($doGetMe);
 
 	return (
-		<main className="container space-y-6">
-			<H1>Dashboard</H1>
-			<H4>Hello: {getMe.loading ? "loading..." : getMe.data?.user?.email}</H4>
-			<div className="flex gap-6">
+		<main className="container flex flex-col space-y-6 py-32">
+			<H2 className="font-thin text-center">
+				Hello{" "}
+				<span className="font-normal">
+					{getMe.loading ? "loading..." : getMe.data?.user?.email}
+				</span>
+			</H2>
+			<H4 className="text-center text-neutral-500">
+				Welcome to your dashboard
+			</H4>
+			<div className="flex gap-6 mx-auto">
 				<AnchorButton href={ROUTES.HOME}>HOME</AnchorButton>
-				<Button
-					color="danger"
-					onClick={() => {
-						toast.success("Bye!");
-						localStorage.removeItem("jwt");
-						redirectPage(router, "AUTH_LOGIN");
-					}}
-				>
-					Logout
-				</Button>
 			</div>
 		</main>
 	);

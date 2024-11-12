@@ -2,6 +2,7 @@ import { AnchorButton } from "../components/ui/buttons";
 import { ROUTES } from "../router";
 
 export default function HomePage() {
+	// TODO: Import home page from next-auth project
 	return (
 		<main className="container">
 			<img
