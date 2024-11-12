@@ -5,7 +5,8 @@ import { ErrorPage } from "./pages/error.page.tsx";
 import { HomePage } from "./pages/home.page.tsx";
 import { router } from "./router.ts";
 import "./index.css";
-import { Toaster } from "react-hot-toast";
+import { redirectPage } from "@nanostores/router";
+import toast, { Toaster } from "react-hot-toast";
 import { LoginPage } from "./pages/auth/login.page.tsx";
 import { SignupPage } from "./pages/auth/signup.page.tsx";
 import { DashboardPage } from "./pages/dashboard.page.tsx";
@@ -17,16 +18,37 @@ const Routes = () => {
 	// TODO: Serve static HTML under "/" (static HTML landing page with astro or similar)
 	const page = useStore(router);
 
+	const hasSessionGuard = (page: JSX.Element) => {
+		if (!localStorage.getItem("jwt")) {
+			redirectPage(router, "AUTH_LOGIN");
+			setTimeout(() => {
+				toast.error("Please, login first", { id: "logInFirst" });
+			}, 100);
+			return null;
+		}
+		return page;
+	};
+
+	const hasNotSessionGuard = (page: JSX.Element) => {
+		if (localStorage.getItem("jwt")) {
+			redirectPage(router, "DASHBOARD");
+			setTimeout(() => {
+				toast.success("Welcome back", { id: "logInFirst" });
+			}, 100);
+			return null;
+		}
+		return page;
+	};
+
 	switch (page?.route) {
 		case "HOME":
 			return <HomePage />;
 		case "AUTH_LOGIN":
-			return <LoginPage />;
+			return hasNotSessionGuard(<LoginPage />);
 		case "AUTH_SIGNUP":
-			return <SignupPage />;
+			return hasNotSessionGuard(<SignupPage />);
 		case "DASHBOARD":
-			// TODO: Redirect to login if no valid session (use UserProvider o nanostores)
-			return <DashboardPage />;
+			return hasSessionGuard(<DashboardPage />);
 		case "PLAYGROUND":
 			return <PlaygroundPage />;
 		case "ERROR":
@@ -36,7 +58,7 @@ const Routes = () => {
 	}
 };
 
-// biome-ignore lint/style/noNonNullAssertion: <explanation>
+// biome-ignore lint/style/noNonNullAssertion: root will never be null
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<Routes />

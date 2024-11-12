@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { PostLogInBodyDto } from "../../../server/routes/auth/auth.dtos";
 import { AnchorButton, Button } from "../../components/ui/buttons";
 import { Input } from "../../components/ui/form";
+import { revalidateKeys } from "../../lib/nanoquery";
 import { ROUTES, router } from "../../router";
 import { $doLogin } from "../../services/auth.service";
 
@@ -49,7 +50,8 @@ export const LoginPage = () => {
 							if (res.jwt) {
 								toast.success("Welcome back!");
 								localStorage.setItem("jwt", res.jwt);
-								return redirectPage(router, "DASHBOARD");
+								revalidateKeys("/auth/me");
+								redirectPage(router, "DASHBOARD");
 							}
 						})}
 					>

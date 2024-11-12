@@ -6,6 +6,7 @@ export const http = ofetch.create({
 	retryDelay: 1000, // ms
 	timeout: 15000, // ms
 	ignoreResponseError: true,
+	baseURL: "/api/v1",
 	async onRequest({ request, options }) {
 		const jwt = localStorage.getItem("jwt");
 		if (jwt) {

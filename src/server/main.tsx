@@ -19,15 +19,16 @@ import { AuthController } from "./routes/auth/auth.controller";
 import { HealthController } from "./routes/health/health.controller";
 import { UsersController } from "./routes/users/users.controller";
 
-const BaseSwaggerUrl = "/api/v1/swagger";
+const ApiVersion = "/api/v1";
+const BaseSwaggerUrl = `${ApiVersion}/swagger`;
 const SpecSwaggerUrl = `${BaseSwaggerUrl}/spec`;
 const UiSwaggerUrl = `${BaseSwaggerUrl}/docs`;
 
 export const Router = new OpenAPIHono<{ Bindings: Env }>()
 	// Add other controllers here
-	.route("/api/v1", AuthController)
-	.route("/api/v1", UsersController)
-	.route("/api/v1", HealthController)
+	.route(ApiVersion, AuthController)
+	.route(ApiVersion, UsersController)
+	.route(ApiVersion, HealthController)
 	.doc31(SpecSwaggerUrl, {
 		openapi: "3.1.0",
 		info: { title: "Cloudfire API spec", version: "1.0.0" },
@@ -68,7 +69,7 @@ const server = new OpenAPIHono<{ Bindings: Env }>()
 	})
 	.get(UiSwaggerUrl, swaggerUI({ url: SpecSwaggerUrl })) // Serve SwaggerUI
 	.route("/", Router)
-	.all("/api/v1/*", async () => {
+	.all(`${ApiVersion}/*`, async () => {
 		throw new HttpException({
 			status: 404,
 			message: "Endpoint or method not found",
@@ -127,5 +128,6 @@ server.onError((err, c) => {
 			);
 });
 
-export type ServerType = typeof server;
 export default server;
+
+// TODO: Add integration tests

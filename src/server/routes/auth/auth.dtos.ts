@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { User } from "../../lib/db/schemas/users";
 
 export const PostSignUpBodyDto = z
 	.object({
@@ -41,3 +42,8 @@ export const PostLogInResponseDto = z.object({
 	jwt: z.string(),
 });
 export type PostLogInResponseDto = z.infer<typeof PostLogInResponseDto>;
+
+export const GetMeResponseDto = z.object({
+	user: User,
+});
+export type GetMeResponseDto = z.infer<typeof GetMeResponseDto>;

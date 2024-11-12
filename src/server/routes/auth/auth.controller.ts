@@ -5,14 +5,17 @@ import { drizzle } from "drizzle-orm/d1";
 import { sign } from "hono/jwt";
 import type { JwtPayload } from "../../../models/types/jwt-payload";
 import type { Env } from "../../env";
+import { getSession } from "../../lib/auth";
 import { usersT } from "../../lib/db/schemas/users";
 import {
 	HttpException,
+	openApiBearerGuard,
 	openApiBody,
 	openApiErrors,
 	openApiResponse,
 } from "../../lib/zod-to-json-openapi";
 import {
+	GetMeResponseDto,
 	PostLogInBodyDto,
 	PostLogInResponseDto,
 	PostSignUpBodyDto,
@@ -116,5 +119,30 @@ export const AuthController = new OpenAPIHono<{ Bindings: Env }>()
 				password: hashSync(body.password, 10),
 			});
 			return c.json({ success: !!result }, 200);
+		},
+	)
+	.openapi(
+		createRoute({
+			tags: [basePath],
+			method: "get",
+			path: `${basePath}/me`,
+			security: openApiBearerGuard(),
+			responses: {
+				...openApiResponse(GetMeResponseDto, 200, "Session user"),
+				...openApiErrors([AuthErrors.USER_NOT_FOUND]),
+			},
+		}),
+		async (c) => {
+			const db = drizzle(c.env.DB);
+			const session = await getSession(c);
+			const [user] = await db
+				.select()
+				.from(usersT)
+				.limit(1)
+				.where(eq(usersT.id, session.userId));
+			if (!user) {
+				throw new HttpException(AuthErrors.USER_NOT_FOUND);
+			}
+			return c.json({ user }, 200);
 		},
 	);
