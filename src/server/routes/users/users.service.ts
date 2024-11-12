@@ -23,6 +23,7 @@ export const GetUserByIdHandler: AppRouteHandler<
 		.from(usersT)
 		.where(eq(usersT.id, params.id))
 		.limit(1);
+	user.password = "";
 	if (!user) {
 		throw new HttpException(UsersErrors.USER_NOT_FOUND);
 	}

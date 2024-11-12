@@ -3,7 +3,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "npm run biome && tsc --noEmit && vite build && rm -rf dist && vite build --mode client && cp -r static dist",
+		"build": "npm run biome && tsc --noEmit && vite build && rm -rf dist && vite build --mode client --base=/app && cp -r static dist",
 		"preview": "wrangler pages dev",
 		"biome": "biome check --write src",
 		"cf-typegen": "wrangler types src/server/env.d.ts",

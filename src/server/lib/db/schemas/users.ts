@@ -10,7 +10,7 @@ export const usersT = sqliteTable("users", {
 		.primaryKey()
 		.$defaultFn(() => nanoid()),
 	email: text().unique().notNull(),
-	password: text().notNull(), // TODO: Remove passwords from queries
+	password: text().notNull(),
 	enabled: integer({ mode: "boolean" }).notNull().default(true),
 	role: text("role", { enum: [ROLE.ADMIN, ROLE.USER] })
 		.notNull()

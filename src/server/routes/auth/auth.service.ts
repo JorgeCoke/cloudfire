@@ -84,6 +84,7 @@ export const GetMeHandler: AppRouteHandler<typeof GetMeRoute> = async (c) => {
 		.from(usersT)
 		.limit(1)
 		.where(eq(usersT.id, session.userId));
+	user.password = "";
 	if (!user) {
 		throw new HttpException(AuthErrors.USER_NOT_FOUND);
 	}
