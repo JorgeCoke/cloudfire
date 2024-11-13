@@ -78,7 +78,7 @@ const InputWrapper = (props: {
 };
 
 const InputClass =
-	"appearance-none grow rounded-md bg-white p-2.5 leading-4 text-neutral-800 ring-1 ring-inset ring-neutral-200 text-sm placeholder-neutral-500";
+	"appearance-none focus:outline-none focus:border-l-4 focus:border-neutral-900 focus:px-2 grow rounded-md bg-white px-3 py-2 leading-4 text-neutral-800 ring-1 ring-inset ring-neutral-200 text-sm placeholder-neutral-500";
 const InputIconClass = "rounded-r-none w-40";
 type InputProps = {
 	label?: string;
