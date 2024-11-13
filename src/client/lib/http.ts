@@ -1,6 +1,5 @@
 import { ofetch } from "ofetch";
 import toast from "react-hot-toast";
-import { AuthServiceKeys } from "../services/auth.service";
 
 export const http = ofetch.create({
 	retry: 3,
@@ -9,8 +8,9 @@ export const http = ofetch.create({
 	ignoreResponseError: true,
 	baseURL: "/api/v1",
 	async onRequest({ options }) {
-		const jwt = localStorage.getItem("jwt");
-		if (jwt) {
+		const session = localStorage.getItem("session");
+		if (session) {
+			const jwt = JSON.parse(session).jwt;
 			options.headers.set("Authorization", `Bearer ${jwt}`);
 		}
 	},
@@ -18,7 +18,7 @@ export const http = ofetch.create({
 		if (
 			!response.ok &&
 			response._data.message &&
-			!response.url.includes(AuthServiceKeys.GET_ME)
+			!response.url.includes("/auth/me")
 		) {
 			toast.error(response._data.message);
 		}

@@ -1,3 +1,5 @@
+import { persistentAtom } from "@nanostores/persistent";
+import type { JwtPayload } from "../../models/types/jwt-payload";
 import type {
 	GetMeResponseDto,
 	PostLoginBodyDto,
@@ -34,10 +36,16 @@ export const $doSignup = createMutatorStore<
 	}),
 );
 
-// TODO: Add dependecy with JWT (save JWT with https://github.com/nanostores/persistent)
 export const $doGetMe = createFetcherStore<GetMeResponseDto>(
 	[AuthServiceKeys.GET_ME],
 	{
 		dedupeTime: Number.POSITIVE_INFINITY,
 	},
 );
+
+export const $jwt = persistentAtom<
+	{ payload: JwtPayload; jwt: string } | undefined
+>("session", undefined, {
+	encode: JSON.stringify,
+	decode: JSON.parse,
+});

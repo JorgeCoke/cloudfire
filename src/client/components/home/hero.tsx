@@ -30,7 +30,7 @@ export const Hero = () => {
 							href={ROUTES.AUTH_LOGIN}
 							className="w-5/6 md:w-1/4 font-bold group/arrow"
 						>
-							Log In
+							Access
 							<ArrowRight className="size-5 ml-2 group-hover/arrow:translate-x-1 transition-transform" />
 						</AnchorButton>
 						<AnchorButton
@@ -43,6 +43,7 @@ export const Hero = () => {
 						<AnchorButton
 							href="https://github.com/JorgeCoke/cloudfire"
 							className="w-5/6 md:w-1/4 font-bold group/github"
+							target="_blank"
 						>
 							Github
 							<Github className="size-5 ml-2 group-hover/github:translate-x-1 transition-transform" />

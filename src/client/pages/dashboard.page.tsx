@@ -2,7 +2,7 @@ import { useStore } from "@nanostores/react";
 import { AnchorButton } from "../components/ui/buttons";
 import { H2, H4 } from "../components/ui/typography";
 import { ROUTES } from "../router";
-import { $doGetMe } from "../services/auth.service";
+import { $doGetMe, $jwt } from "../services/auth.service";
 
 export default function DashboardPage() {
 	const getMe = useStore($doGetMe);
@@ -18,6 +18,10 @@ export default function DashboardPage() {
 			<H4 className="text-center text-neutral-500">
 				Welcome to your dashboard
 			</H4>
+			<p className="text-center">
+				You are an <strong>{$jwt.get()?.payload.role}</strong> and your userId
+				is: <strong>{$jwt.get()?.payload.userId}</strong>
+			</p>
 			<div className="flex gap-6 mx-auto">
 				<AnchorButton href={ROUTES.HOME}>HOME</AnchorButton>
 			</div>

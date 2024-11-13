@@ -31,6 +31,7 @@
 		"@hono/zod-openapi": "^0.17.0",
 		"@hono/zod-validator": "^0.4.1",
 		"@hookform/resolvers": "^3.9.1",
+		"@nanostores/persistent": "^0.10.2",
 		"@nanostores/query": "^0.3.4",
 		"@nanostores/react": "^0.8.0",
 		"@nanostores/router": "^0.16.1",
@@ -78,7 +79,9 @@
 		}
 	},
 	"commitlint": {
-		"extends": ["@commitlint/config-conventional"]
+		"extends": [
+			"@commitlint/config-conventional"
+		]
 	},
 	"release-it": {
 		"$schema": "https://unpkg.com/release-it@17/schema/release-it.json",

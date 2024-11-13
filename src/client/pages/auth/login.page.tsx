@@ -9,7 +9,7 @@ import { AnchorButton, Button } from "../../components/ui/buttons";
 import { Input } from "../../components/ui/form";
 import { revalidateKeys } from "../../lib/nanoquery";
 import { ROUTES, router } from "../../router";
-import { $doLogin, AuthServiceKeys } from "../../services/auth.service";
+import { $doLogin, $jwt, AuthServiceKeys } from "../../services/auth.service";
 
 export default function LoginPage() {
 	const login = useStore($doLogin);
@@ -49,7 +49,10 @@ export default function LoginPage() {
 							const res = await login.mutate(data);
 							if (res.jwt) {
 								toast.success("Welcome back!");
-								localStorage.setItem("jwt", res.jwt);
+								$jwt.set({
+									jwt: res.jwt,
+									payload: JSON.parse(atob(res.jwt.split(".")[1])),
+								});
 								revalidateKeys(AuthServiceKeys.GET_ME);
 								redirectPage(router, "DASHBOARD");
 							}

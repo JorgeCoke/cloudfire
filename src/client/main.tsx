@@ -10,6 +10,7 @@ import { NavBar } from "./components/layout/navbar.tsx";
 import HomePage from "./pages/home.page.tsx";
 import ErrorPage from "./pages/shared/error.page.tsx";
 import LoadingPage from "./pages/shared/loading.page.tsx";
+import { $jwt } from "./services/auth.service.ts";
 
 const LoginPage = lazy(() => import("./pages/auth/login.page.tsx"));
 const SignupPage = lazy(() => import("./pages/auth/signup.page.tsx"));
@@ -20,7 +21,7 @@ const Routes = () => {
 	const page = useStore(router);
 
 	const hasSessionGuard = (page: ReactNode) => {
-		if (!localStorage.getItem("jwt")) {
+		if (!$jwt.get()?.jwt) {
 			redirectPage(router, "AUTH_LOGIN");
 			setTimeout(() => {
 				toast.error("Please, login first", { id: "logInFirst" });
@@ -31,7 +32,7 @@ const Routes = () => {
 	};
 
 	const hasNotSessionGuard = (page: ReactNode) => {
-		if (localStorage.getItem("jwt")) {
+		if ($jwt.get()?.jwt) {
 			redirectPage(router, "DASHBOARD");
 			setTimeout(() => {
 				toast.success("Welcome back", { id: "logInFirst" });
