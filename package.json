@@ -67,6 +67,7 @@
 		"devmoji": "^2.3.0",
 		"drizzle-kit": "^0.28.0",
 		"husky": "^9.1.6",
+		"lint-staged": "^15.2.10",
 		"postcss": "^8.4.47",
 		"release-it": "^17.10.0",
 		"tailwindcss": "^3.4.14",
@@ -79,9 +80,7 @@
 		}
 	},
 	"commitlint": {
-		"extends": [
-			"@commitlint/config-conventional"
-		]
+		"extends": ["@commitlint/config-conventional"]
 	},
 	"release-it": {
 		"$schema": "https://unpkg.com/release-it@17/schema/release-it.json",
@@ -95,5 +94,8 @@
 		"npm": {
 			"publish": false
 		}
+	},
+	"lint-staged": {
+		"*": ["biome check --no-errors-on-unmatched --files-ignore-unknown=true"]
 	}
 }
