@@ -14,12 +14,19 @@ This boilerplate SaaS template stack is **designed for developers** seeking a st
 
 - ☁️ [Cloudflare Pages](https://pages.cloudflare.com/) and [Cloudflare D1](https://developers.cloudflare.com/d1/) SQLite **serverless** deployment with
 - 🔥 [Hono](https://hono.dev/), the **fastest JS** server framework
-- ⚛️ [React](https://react.dev/) 18 **SPA**
+- ⚛️ [React](https://react.dev/) 18 **SPA** ( <80kb gzip! )
 - 🪛 [Nanostores](https://github.com/nanostores/nanostores) State Management, Router and Query **lightweight multitool**
 - 🌧 [Drizzle](https://orm.drizzle.team/) as **SQLite ORM**
 - 🛡 [Zod](https://zod.dev/) **validator**
 - 🦄 [Tailwind](https://tailwindcss.com/) **styles**
 - 🔐 Username + password **JWT Auth Example**
+- 🎨 The best **linter** and **formatter**, [BiomeJS](https://biomejs.dev/)
+- 💄 **Commit nomenclature** rules following [Conventional Commit Format](https://commitlint.js.org/) and [Commitizen CLI](https://github.com/commitizen/cz-cli) (emoji [powered](https://github.com/folke/devmoji))
+- 🚀 **Release management policy** with [release-it](https://github.com/release-it/release-it), including automagically CHANGELOG.md generation, GitTags, and version bumping
+- 🐶 Pre-Commit [Husky](https://github.com/typicode/husky) **hooks**
+- 🔦 Included [npm-check](https://www.npmjs.com/package/npm-check) to check for **outdated, incorrect, and unused** dependencies.
+- 🥷🏻 Included [better-npm-audit](https://www.npmjs.com/package/better-npm-audit) to check for dependency **vulnerabilities**
+
 
 ## 🛠 Getting Started
 
@@ -41,22 +48,56 @@ npm run db:migrate:local        # Run database migrations locally
 npm run dev                     # Launch project locally
 ```
 
+## ⛩ Git Commit with Commitizen
+
+```
+git add .            # Add files
+npm run cz           # Commit with Commitizen CLI
+```
+
+## 🎨 Linter & Formatter
+
+```
+npm run biome         # Run BiomeJS
+```
+
 ## 🚀 Release and deploy a new version
 
-Add environment variables vía dashboard [(docs)](https://developers.cloudflare.com/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard), run migrations and then, deploy it:
+1. (optional) First, generate a new release:
+
+```
+npm run release             # Bump version, generate CHANGELOG.md and push GitTag to origin
+```
+
+2. Then, add environment variables vía dashboard [(docs)](https://developers.cloudflare.com/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard), run migrations and deploy it:
 
 ```
 npm run db:migrate:preview  # Run database migrations (preview environment)
-npm run deploy:preview      # Deploy to preview environment
+npm run deploy:preview      # Deploy (preview environment)
 
 npm run db:migrate:prod     # Run database migrations (prod environment)
-npm run deploy:prod         # Deploy to prod environment
+npm run deploy:prod         # Deploy (prod environment)
 ```
 
-## 🖥 Database Drizzle Studio
+## 🖥 Drizzle Migrations & Studio
+
+Generate new migrations:
+
+```
+npm run db:generate
+```
+
+Launch database studio:
 
 ```
 npm run db:studo:local
 npm run db:studo:preview
 npm run db:studo:prod
+```
+
+## 🔦 Check vulnerabilities and update outdated dependencies
+
+```
+npm run npm:audit     # Check dependency vulnerabilities
+npm run npm:check     # Check outdated dependencies
 ```

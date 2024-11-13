@@ -8,11 +8,17 @@ import type {
 import { http } from "../lib/http";
 import { createFetcherStore, createMutatorStore } from "../lib/nanoquery";
 
+export const AuthServiceKeys = {
+	LOGIN: "/auth/login",
+	SIGNUP: "/auth/signup",
+	GET_ME: "/auth/me",
+} as const;
+
 export const $doLogin = createMutatorStore<
 	PostLoginBodyDto,
 	PostLoginResponseDto
 >(async ({ data }) =>
-	http("/auth/login", {
+	http(AuthServiceKeys.LOGIN, {
 		method: "POST",
 		body: data,
 	}),
@@ -22,12 +28,16 @@ export const $doSignup = createMutatorStore<
 	PostSignupBodyDto,
 	PostSignupResponseDto
 >(async ({ data }) =>
-	http("/auth/signup", {
+	http(AuthServiceKeys.SIGNUP, {
 		method: "POST",
 		body: data,
 	}),
 );
 
-export const $doGetMe = createFetcherStore<GetMeResponseDto>(["/auth/me"], {
-	dedupeTime: Number.POSITIVE_INFINITY,
-});
+// TODO: Add dependecy with JWT (save JWT with https://github.com/nanostores/persistent)
+export const $doGetMe = createFetcherStore<GetMeResponseDto>(
+	[AuthServiceKeys.GET_ME],
+	{
+		dedupeTime: Number.POSITIVE_INFINITY,
+	},
+);

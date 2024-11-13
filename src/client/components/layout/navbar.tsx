@@ -4,7 +4,7 @@ import { Flame } from "lucide-react";
 import toast from "react-hot-toast";
 import { mutateCache } from "../../lib/nanoquery";
 import { ROUTES, router } from "../../router";
-import { $doGetMe } from "../../services/auth.service";
+import { $doGetMe, AuthServiceKeys } from "../../services/auth.service";
 import { AnchorButton, Button } from "../ui/buttons";
 
 export const NavBar = () => {
@@ -33,7 +33,7 @@ export const NavBar = () => {
 					onClick={() => {
 						toast.success("Bye!");
 						localStorage.removeItem("jwt");
-						mutateCache("/auth/me", null);
+						mutateCache(AuthServiceKeys.GET_ME, null);
 						redirectPage(router, "AUTH_LOGIN");
 					}}
 				>

@@ -1,6 +1,7 @@
 {
 	"name": "my-hono-app-official",
 	"type": "module",
+	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite",
 		"build": "npm run biome && tsc --noEmit && vite build && rm -rf dist && vite build --mode client && cp -r static dist",
@@ -8,7 +9,7 @@
 		"biome": "biome check --write src",
 		"cf-typegen": "wrangler types src/server/env.d.ts",
 		"deploy:preview": "npm run build && wrangler pages deploy --branch=preview",
-		"deploy:prod": "branch=$(git branch --show-current); if [[ $branch == 'main' || $branch == 'master' ]]; then npm run build && wrangler pages deploy --branch=main; else echo 'Prod deployments allowed from main branch only'; exit 1; fi;",
+		"deploy:prod": "npm run build && wrangler pages deploy --branch=main",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate:local": "wrangler d1 migrations apply cloudfire-prod-db --local",
 		"db:migrate:preview": "wrangler d1 migrations apply --env preview cloudfire-preview-db --remote",
@@ -20,7 +21,10 @@
 		"db:reset:preview": "wrangler d1 execute --env preview cloudfire-preview-db --remote --file=./src/server/lib/db/reset.sql && npm run db:migrate:preview",
 		"db:reset:prod": "wrangler d1 execute cloudfire-prod-db --remote --file=./src/server/lib/db/reset.sql && npm run db:migrate:prod",
 		"npm:audit": "npx better-npm-audit audit",
-		"npm:check": "npx npm-check -u"
+		"npm:check": "npx npm-check -u",
+		"cz": "npx cz",
+		"release": "branch=$(git branch --show-current); if [[ $branch == 'master' || $branch == 'main' ]]; then release-it -- --ci; else echo 'Releases allowed from main branch only'; exit 1; fi;",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@hono/swagger-ui": "^0.4.1",
@@ -49,6 +53,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@cloudflare/workers-types": "^4.20240529.0",
+		"@commitlint/cli": "^19.5.0",
+		"@commitlint/config-conventional": "^19.5.0",
 		"@hono/vite-build": "^1.0.0",
 		"@hono/vite-dev-server": "^0.15.1",
 		"@types/bcryptjs": "^2.4.6",
@@ -56,10 +62,35 @@
 		"@types/react-dom": "^18.3.1",
 		"autoprefixer": "^10.4.20",
 		"better-sqlite3": "^11.5.0",
+		"cz-conventional-changelog": "^3.3.0",
+		"devmoji": "^2.3.0",
 		"drizzle-kit": "^0.28.0",
+		"husky": "^9.1.6",
 		"postcss": "^8.4.47",
+		"release-it": "^17.10.0",
 		"tailwindcss": "^3.4.14",
 		"vite": "^5.2.12",
 		"wrangler": "^3.57.2"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	},
+	"commitlint": {
+		"extends": ["@commitlint/config-conventional"]
+	},
+	"release-it": {
+		"$schema": "https://unpkg.com/release-it@17/schema/release-it.json",
+		"git": {
+			"commitMessage": "chore: release v${version}",
+			"commit": true,
+			"tag": true,
+			"push": true,
+			"changelog": true
+		},
+		"npm": {
+			"publish": false
+		}
 	}
 }

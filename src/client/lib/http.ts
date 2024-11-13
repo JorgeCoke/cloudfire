@@ -1,5 +1,6 @@
 import { ofetch } from "ofetch";
 import toast from "react-hot-toast";
+import { AuthServiceKeys } from "../services/auth.service";
 
 export const http = ofetch.create({
 	retry: 3,
@@ -17,7 +18,7 @@ export const http = ofetch.create({
 		if (
 			!response.ok &&
 			response._data.message &&
-			!response.url.includes("/auth/me")
+			!response.url.includes(AuthServiceKeys.GET_ME)
 		) {
 			toast.error(response._data.message);
 		}

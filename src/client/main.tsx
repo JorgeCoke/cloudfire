@@ -1,5 +1,5 @@
 import { useStore } from "@nanostores/react";
-import { StrictMode, Suspense } from "react";
+import { type ReactNode, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { router } from "./router.ts";
 import "./index.css";
@@ -19,7 +19,7 @@ const PlaygroundPage = lazy(() => import("./pages/shared/playground.page.tsx"));
 const Routes = () => {
 	const page = useStore(router);
 
-	const hasSessionGuard = (page: JSX.Element) => {
+	const hasSessionGuard = (page: ReactNode) => {
 		if (!localStorage.getItem("jwt")) {
 			redirectPage(router, "AUTH_LOGIN");
 			setTimeout(() => {
@@ -30,7 +30,7 @@ const Routes = () => {
 		return page;
 	};
 
-	const hasNotSessionGuard = (page: JSX.Element) => {
+	const hasNotSessionGuard = (page: ReactNode) => {
 		if (localStorage.getItem("jwt")) {
 			redirectPage(router, "DASHBOARD");
 			setTimeout(() => {
