@@ -1,18 +1,17 @@
-import { AnchorButton } from "../components/ui/buttons";
-import { ROUTES } from "../router";
+import { Benefits } from "../components/home/benefits";
+import { Footer } from "../components/home/footer";
+import { Hero } from "../components/home/hero";
+import { HeroBg } from "../components/home/hero-bg";
 
 export default function HomePage() {
-	// TODO: Import home page from next-auth project
 	return (
-		<main className="container">
-			<img
-				src="/static/favicon.svg"
-				alt="Favicon example"
-				className="bg-neutral-500 p-4 rounded-md"
-			/>
-			<AnchorButton href={ROUTES.AUTH_LOGIN}>LOGIN</AnchorButton>
-			<AnchorButton href={ROUTES.DASHBOARD}>DASHBOARD</AnchorButton>
-			<AnchorButton href={ROUTES.PLAYGROUND}>PLAYGROUND</AnchorButton>
-		</main>
+		<>
+			<HeroBg />
+			<main className="container pt-20">
+				<Hero />
+				<Benefits />
+			</main>
+			<Footer />
+		</>
 	);
 }

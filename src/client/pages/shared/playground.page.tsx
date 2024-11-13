@@ -36,7 +36,7 @@ export default function PlaygroundPage() {
 		});
 
 	return (
-		<main className="container space-y-6 py-6">
+		<main className="container pt-24 space-y-6">
 			<AnchorButton href={ROUTES.HOME}>
 				<MoveLeft className="w-4 h-4" />
 				Homepage

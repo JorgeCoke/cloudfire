@@ -6,10 +6,10 @@ import "./index.css";
 import { redirectPage } from "@nanostores/router";
 import { lazy } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { NavBar } from "./components/layout/navbar.tsx";
 import HomePage from "./pages/home.page.tsx";
 import ErrorPage from "./pages/shared/error.page.tsx";
 import LoadingPage from "./pages/shared/loading.page.tsx";
-import { NavBar } from "./components/layout/navbar.tsx";
 
 const LoginPage = lazy(() => import("./pages/auth/login.page.tsx"));
 const SignupPage = lazy(() => import("./pages/auth/signup.page.tsx"));

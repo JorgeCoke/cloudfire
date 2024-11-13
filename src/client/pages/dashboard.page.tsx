@@ -1,8 +1,8 @@
 import { useStore } from "@nanostores/react";
 import { AnchorButton } from "../components/ui/buttons";
+import { H2, H4 } from "../components/ui/typography";
 import { ROUTES } from "../router";
 import { $doGetMe } from "../services/auth.service";
-import { H2, H4 } from "../components/ui/typography";
 
 export default function DashboardPage() {
 	const getMe = useStore($doGetMe);

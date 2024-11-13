@@ -1,18 +1,17 @@
 import type { HTMLAttributes } from "react";
 import { cn } from "../../lib/utils";
 
-export const Card = (props: HTMLAttributes<HTMLDivElement>) => {
+export const Badge = (props: HTMLAttributes<HTMLDivElement>) => {
 	const { children, className, ...attributes } = props;
 	return (
-		<div
+		<span
 			className={cn(
-				"rounded-md border border-neutral-200 bg-white px-3 py-2 shadow-sm",
-				props.onClick && "cursor-pointer",
+				"bg-white shadow-md border-neutral-100 border text-xs font-medium me-2 px-3 py-2 rounded-full inline-flex items-center justify-center",
 				className,
 			)}
 			{...attributes}
 		>
 			{children}
-		</div>
+		</span>
 	);
 };
