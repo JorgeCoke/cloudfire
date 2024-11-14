@@ -31,7 +31,9 @@ export const Benefits = () => {
 		<section id="benefits" className="container py-24 sm:py-32 ">
 			<div className="grid md:grid-cols-2 place-items-center md:gap-12">
 				<div>
-					<h2 className="text-xl mb-2 tracking-widest">Benefits</h2>
+					<h2 className="text-xl mb-2 tracking-widest text-gradient">
+						Benefits
+					</h2>
 
 					<h2 className="text-3xl md:text-4xl font-bold mb-4 py-4">
 						What&apos;s included?
@@ -47,15 +49,15 @@ export const Benefits = () => {
 					{benefitList.map(({ icon, title }, index) => (
 						<Card
 							key={title}
-							className="bg-white hover:bg-background transition-all delay-75 group/number p-4 duration-200 hover:scale-105 hover:border-neutral-400 hover:border-2"
+							className="bg-white hover:bg-background transition-all delay-75 group/number p-6 duration-200 hover:scale-105 hover:border-primary/50 border-violet-900/15"
 						>
 							<div className="flex justify-between">
 								{icon}
-								<span className="opacity-50 text-5xl font-medium transition-all delay-75 text-neutral-200 group-hover/number:text-neutral-500/50">
+								<span className="opacity-50 text-5xl font-medium transition-all delay-75 text-neutral-200 group-hover/number:text-primary/50 text-gradient">
 									0{index + 1}
 								</span>
 							</div>
-							<p className="text-lg font-semibold">{title}</p>
+							<p className="text-2xl">{title}</p>
 						</Card>
 					))}
 				</div>

@@ -16,16 +16,19 @@ export const NavBar = () => {
 	}
 
 	return (
-		<header className="md:max-w-screen-md md:top-5 backdrop-blur-sm z-10 p-3 px-4 left-0 right-0 m-auto fixed w-full shadow-sm md:rounded-full border-b md:border border-neutral-200 bg-white/[.9] flex justify-between items-center">
+		<header className="md:max-w-screen-md md:top-5 backdrop-blur-sm z-10 p-3 px-4 left-0 right-0 m-auto fixed w-full shadow-sm md:rounded-full border-b md:border border-neutral-200 bg-white/90 flex justify-between items-center">
 			<a
-				className="flex items-center gap-3 font-bold text-lg cursor-pointer"
+				className="flex items-center gap-3 font-bold text-lg cursor-pointer hover:scale-105 transition-all duration-300"
 				href="/"
 			>
 				<Flame className="h-6 w-6" />
 				Cloudfire
 			</a>
 			{!getMe.data?.user && (
-				<AnchorButton className="rounded-full" href={ROUTES.AUTH_LOGIN}>
+				<AnchorButton
+					className="rounded-full btn-gradient"
+					href={ROUTES.AUTH_LOGIN}
+				>
 					Login
 				</AnchorButton>
 			)}

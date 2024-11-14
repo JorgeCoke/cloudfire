@@ -18,8 +18,9 @@ export default function LoginPage() {
 	});
 	return (
 		<main className="w-full h-[100vh] lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-			<div className="hidden bg-neutral-950 lg:flex justify-center">
-				<div className="flex flex-col gap-4 items-center justify-center text-white text-3xl font-bold">
+			<div className="hidden bg-neutral-950  lg:flex justify-center relative">
+				<div className="bg-gradient-to-br from-primary/10 via-neutral-950 to-violet-950/50 w-full h-full absolute" />
+				<div className="flex flex-col gap-4 items-center justify-center text-white text-3xl font-bold z-10">
 					<Flame className="w-24 h-24 " />
 					Cloudfire
 				</div>
@@ -76,7 +77,11 @@ export default function LoginPage() {
 							errorLabel={formState.errors.password?.message}
 							{...register("password")}
 						/>
-						<Button type="submit" className="w-full" disabled={login.loading}>
+						<Button
+							type="submit"
+							className="w-full btn-gradient"
+							disabled={login.loading}
+						>
 							Login
 						</Button>
 					</form>

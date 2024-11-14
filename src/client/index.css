@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.btn-gradient {
+	@apply bg-gradient-to-tl from-primary to-violet-900 border-primary/70;
+}
+
+.text-gradient {
+	@apply from-primary to-violet-500 text-transparent bg-clip-text bg-gradient-to-b;
+}
+
 /* Hide the default date picker icon in Chrome, Safari, and Edge */
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator,

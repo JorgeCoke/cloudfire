@@ -47,8 +47,10 @@ export default function PlaygroundPage() {
 				<H2>H2 title</H2>
 				<H3>H3 title</H3>
 				<H4>H4 title</H4>
-				{/* TODO */}
-				{/* <Gradient>Gradient</Gradient> */}
+				<H1 className="text-gradient">Gradient</H1>
+				<H1 className="animate-text-gradient bg-gradient-to-r from-primary via-violet-900 to-primary bg-[200%_auto] text-transparent bg-clip-text">
+					Gradient Animation
+				</H1>
 			</Card>
 			<Card className="p-6">
 				<form
@@ -250,9 +252,7 @@ export default function PlaygroundPage() {
 						Text with Icon
 					</Button>
 					<AnchorButton href="#">Anchor</AnchorButton>
-					<Button className="bg-gradient-to-tl from-blue-600 to-violet-600 dark:text-white">
-						Styled
-					</Button>
+					<Button className="btn-gradient">Styled</Button>
 				</div>
 				<div className="flex gap-4">
 					<Button className="grow">Grow</Button>

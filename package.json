@@ -22,7 +22,7 @@
 		"db:reset:prod": "wrangler d1 execute cloudfire-prod-db --remote --file=./src/server/lib/db/reset.sql && npm run db:migrate:prod",
 		"npm:audit": "npx better-npm-audit audit",
 		"npm:check": "npx npm-check -u",
-		"cz": "npx cz",
+		"cz": "npm run biome && npx cz",
 		"release": "branch=$(git branch --show-current); if [[ $branch == 'master' || $branch == 'main' ]]; then release-it -- --ci; else echo 'Releases allowed from main branch only'; exit 1; fi;",
 		"prepare": "husky"
 	},
