@@ -34,7 +34,7 @@ export const NavBar = () => {
 			)}
 			{getMe.data?.user && (
 				<Button
-					className="rounded-full"
+					className="rounded-full bg-gradient-to-tl from-red-800 to-red-500 border-red-500"
 					color="danger"
 					onClick={() => {
 						toast.success("Bye!");

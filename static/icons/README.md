@@ -1,0 +1,1 @@
+Generated with: https://pwa-icon-generator.vercel.app/

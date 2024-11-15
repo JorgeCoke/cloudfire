@@ -22,7 +22,7 @@ This boilerplate SaaS template stack is **designed for developers** seeking a st
 - 🔐 Username + password **JWT Auth Example**
 - 🎨 The best **linter** and **formatter**, [BiomeJS](https://biomejs.dev/)
 - 💄 **Commit nomenclature** rules following [Conventional Commit Format](https://commitlint.js.org/) and [Commitizen CLI](https://github.com/commitizen/cz-cli) (emoji [powered](https://github.com/folke/devmoji))
-- 🚀 **Release management policy** with [release-it](https://github.com/release-it/release-it), including automagically CHANGELOG.md generation, GitTags, and version bumping
+- 🚀 **Release management policy** with [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version), including automagically CHANGELOG.md generation, GitTags, and version bumping
 - 🐶 Pre-Commit [Husky](https://github.com/typicode/husky) **hooks**
 - 🔦 Included [npm-check](https://www.npmjs.com/package/npm-check) to check for **outdated, incorrect, and unused** dependencies.
 - 🥷🏻 Included [better-npm-audit](https://www.npmjs.com/package/better-npm-audit) to check for dependency **vulnerabilities**
@@ -66,7 +66,8 @@ npm run biome         # Run BiomeJS
 1. (optional) First, generate a new release:
 
 ```
-npm run release             # Bump version, generate CHANGELOG.md and push GitTag to origin
+npm run release                                             # (default) Bump version, generate CHANGELOG.md and push GitTag to origin
+commit-and-tag-version --first-release --release-as 1.0.0   # First release and Release as a Target Type Imperatively
 ```
 
 2. Then, add environment variables vía dashboard [(docs)](https://developers.cloudflare.com/workers/configuration/environment-variables/#add-environment-variables-via-the-dashboard), run migrations and deploy it:
