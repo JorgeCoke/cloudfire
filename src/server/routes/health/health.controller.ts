@@ -1,5 +1,5 @@
 import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
-import type { Env } from "../../env";
+import type { CfEnv } from "../../env";
 import { openApiResponse } from "../../lib/zod-to-json-openapi";
 import { GetHealthResponseDto } from "./health.dtos";
 import { GetHealthHandler } from "./health.service";
@@ -15,7 +15,7 @@ export const GetHealthRoute = createRoute({
 	},
 });
 
-export const HealthController = new OpenAPIHono<{ Bindings: Env }>().openapi(
+export const HealthController = new OpenAPIHono<{ Bindings: CfEnv }>().openapi(
 	GetHealthRoute,
 	GetHealthHandler,
 );

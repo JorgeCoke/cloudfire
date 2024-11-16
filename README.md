@@ -14,6 +14,7 @@ This boilerplate SaaS template stack is **designed for developers** seeking a st
 
 - ☁️ [Cloudflare Pages](https://pages.cloudflare.com/) and [Cloudflare D1](https://developers.cloudflare.com/d1/) SQLite **serverless** deployment with
 - 🔥 [Hono](https://hono.dev/), the **fastest JS** server framework
+- 📚 Automagically generated [SwaggerUI + OpenApi v3](https://swagger.io/specification/) spec
 - ⚛️ [React](https://react.dev/) 18 **SPA** ( <80kb gzip! )
 - 🪛 [Nanostores](https://github.com/nanostores/nanostores) State Management, Router and Query **lightweight multitool**
 - 🌧 [Drizzle](https://orm.drizzle.team/) as **SQLite ORM**

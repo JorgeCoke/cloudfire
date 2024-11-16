@@ -7,7 +7,7 @@
 		"build": "npm run biome && tsc --noEmit && vite build && rm -rf dist && vite build --mode client && cp -r static dist",
 		"preview": "wrangler pages dev",
 		"biome": "biome check --write src",
-		"cf-typegen": "wrangler types src/server/env.d.ts",
+		"cf-typegen": "wrangler types src/server/env.d.ts --env-interface CfEnv",
 		"deploy:preview": "npm run build && wrangler pages deploy --branch=preview",
 		"deploy:prod": "npm run build && wrangler pages deploy --branch=main",
 		"db:generate": "drizzle-kit generate",

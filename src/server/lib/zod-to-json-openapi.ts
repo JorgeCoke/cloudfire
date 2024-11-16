@@ -1,26 +1,14 @@
 import type { RouteConfig, RouteHandler } from "@hono/zod-openapi";
-import { HTTPException } from "hono/http-exception";
-import type { StatusCode } from "hono/utils/http-status";
-import { type ZodType, type ZodTypeAny, z } from "zod";
-import type { Env } from "../env";
+import type { ZodType, ZodTypeAny } from "zod";
+import type { CfEnv } from "../env";
+import { HttpExceptionSchema } from "./http-exceptions";
 
 export type AppRouteHandler<R extends RouteConfig> = RouteHandler<
 	R,
 	{
-		Bindings: Env;
+		Bindings: CfEnv;
 	}
 >;
-
-export class HttpException extends HTTPException {
-	constructor(error: { status: StatusCode; message: string }) {
-		super(error.status, { message: error.message });
-	}
-}
-
-const HttpExceptionZod = z.object({
-	message: z.string(),
-});
-type HttpExceptionZod = z.infer<typeof HttpExceptionZod>;
 
 export const openApiBearerGuard = () => {
 	return [
@@ -68,7 +56,7 @@ export const openApiErrors = (
 			description: string;
 			content: {
 				"application/json": {
-					schema: ZodType<HttpExceptionZod>;
+					schema: ZodType<HttpExceptionSchema>;
 				};
 			};
 		};
@@ -78,7 +66,7 @@ export const openApiErrors = (
 			description: e.message,
 			content: {
 				"application/json": {
-					schema: HttpExceptionZod,
+					schema: HttpExceptionSchema,
 				},
 			},
 		};

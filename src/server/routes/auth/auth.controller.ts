@@ -1,5 +1,5 @@
 import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
-import type { Env } from "../../env";
+import type { CfEnv } from "../../env";
 import {
 	openApiBearerGuard,
 	openApiBody,
@@ -69,7 +69,7 @@ export const GetMeRoute = createRoute({
 	},
 });
 
-export const AuthController = new OpenAPIHono<{ Bindings: Env }>()
+export const AuthController = new OpenAPIHono<{ Bindings: CfEnv }>()
 	.openapi(PostLoginRoute, PostLoginHandler)
 	.openapi(PostSignupRoute, PostSignupHandler)
 	.openapi(GetMeRoute, GetMeHandler);

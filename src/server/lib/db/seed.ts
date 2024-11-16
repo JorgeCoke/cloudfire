@@ -2,13 +2,13 @@ import bcryptjs from "bcryptjs";
 import { drizzle } from "drizzle-orm/d1";
 import type { Context } from "hono";
 import { ROLE } from "../../../models/enums";
-import type { Env } from "../../env";
+import type { CfEnv } from "../../env";
 import { usersT } from "./schemas/users";
 const { hashSync } = bcryptjs;
 
 export const seed = async (
 	c: Context<{
-		Bindings: Env;
+		Bindings: CfEnv;
 	}>,
 ) => {
 	const db = drizzle(c.env.DB);

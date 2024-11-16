@@ -3,10 +3,8 @@ import { drizzle } from "drizzle-orm/d1";
 import { ROLE } from "../../../models/enums";
 import { getSession } from "../../lib/auth";
 import { usersT } from "../../lib/db/schemas/users";
-import {
-	type AppRouteHandler,
-	HttpException,
-} from "../../lib/zod-to-json-openapi";
+import { ForbiddenException, HttpException } from "../../lib/http-exceptions";
+import type { AppRouteHandler } from "../../lib/zod-to-json-openapi";
 import { type GetUserByIdRoute, UsersErrors } from "./users.controller";
 
 export const GetUserByIdHandler: AppRouteHandler<
@@ -16,7 +14,7 @@ export const GetUserByIdHandler: AppRouteHandler<
 	const params = c.req.valid("param");
 	const session = await getSession(c);
 	if (session.role !== ROLE.ADMIN && params.id !== session.userId) {
-		throw new HttpException({ status: 403, message: "Forbidden" });
+		throw new ForbiddenException();
 	}
 	const [user] = await db
 		.select()

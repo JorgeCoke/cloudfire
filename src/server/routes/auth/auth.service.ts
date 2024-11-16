@@ -5,10 +5,8 @@ import { sign } from "hono/jwt";
 import type { JwtPayload } from "../../../models/types/jwt-payload";
 import { getSession } from "../../lib/auth";
 import { usersT } from "../../lib/db/schemas/users";
-import {
-	type AppRouteHandler,
-	HttpException,
-} from "../../lib/zod-to-json-openapi";
+import { HttpException } from "../../lib/http-exceptions";
+import type { AppRouteHandler } from "../../lib/zod-to-json-openapi";
 import {
 	AuthErrors,
 	type GetMeRoute,
