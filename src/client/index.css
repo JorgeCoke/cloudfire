@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+	@apply flex flex-col w-full bg-neutral-50;
+}
+
 .btn-gradient {
 	@apply bg-gradient-to-tl from-primary to-violet-900 border-primary/70;
 }

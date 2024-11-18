@@ -52,7 +52,7 @@ if (import.meta.env) {
 						/>
 						<title>Cloudfire</title>
 					</head>
-					<body className="flex flex-col w-full bg-neutral-50">
+					<body>
 						<div id="root" />
 						<script type="module" src="/src/client/main.tsx" />
 					</body>
