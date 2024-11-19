@@ -22,6 +22,9 @@
 			"recommended": true,
 			"style": {
 				"noNonNullAssertion": "warn"
+			},
+			"a11y": {
+				"useKeyWithClickEvents": "off"
 			}
 		}
 	},

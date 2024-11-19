@@ -1,5 +1,6 @@
-import { AnchorButton } from "../../components/ui/buttons";
+import { AnchorButton, Button } from "../../components/ui/buttons";
 import { H4 } from "../../components/ui/typography";
+import { $modal } from "../../modals/modals";
 import { ROUTES } from "../../router";
 
 export default function DashboardPage() {
@@ -9,6 +10,9 @@ export default function DashboardPage() {
 				Welcome to your dashboard
 			</H4>
 			<div className="flex gap-6 mx-auto">
+				<Button onClick={() => $modal.set("EXAMPLE")}>
+					Show Example Modal
+				</Button>
 				<AnchorButton href={ROUTES.HOME}>HOME</AnchorButton>
 			</div>
 		</main>
