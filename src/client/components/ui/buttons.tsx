@@ -1,8 +1,6 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
 import { cn } from "../../lib/utils";
 
-// TODO: Add primary color
-
 type Color = "primary" | "danger";
 type Variant = "default" | "outline" | "ghost";
 type Size = "default" | "icon";

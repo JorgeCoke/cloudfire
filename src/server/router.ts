@@ -8,7 +8,6 @@ export const ApiVersion = "/api/v1";
 export const SwaggerSpecUrl = "/swagger/spec";
 export const SwaggerUiUrl = "/swagger/docs";
 
-// TODO: Add integration tests for each controller
 export const Router = new OpenAPIHono<{ Bindings: CfEnv }>()
 	.route(ApiVersion, AuthController)
 	.route(ApiVersion, UsersController)

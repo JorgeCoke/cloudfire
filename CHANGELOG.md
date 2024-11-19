@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.0](https://github.com/JorgeCoke/cloudfire/compare/v1.0.0...v1.1.0) (2024-11-19)
+
+
+### Features
+
+* ✨ add user.language config ([8dfd8bc](https://github.com/JorgeCoke/cloudfire/commit/8dfd8bc9ceeb029fc96a478bf42355692d95da58))
+* ✨ refresh jwt ([44d66a4](https://github.com/JorgeCoke/cloudfire/commit/44d66a4754f7ce890524f0a34fedde30159469b5))
+* **client:** ✨ add profile page ([ba63cc5](https://github.com/JorgeCoke/cloudfire/commit/ba63cc5e5301fd925cc5ec333ebea26e06208889))
+* **server:** ✨ add get profile + post profile ([0674349](https://github.com/JorgeCoke/cloudfire/commit/06743493adb4da13b68e95eb39150e071a27c35d))
+
+
+### Bug Fixes
+
+* 🐛 fix default body styles ([350774f](https://github.com/JorgeCoke/cloudfire/commit/350774f2fd37599ab2d27093e3d5df55e6262e44))
+
 ## 1.0.0 (2024-11-15)
 
 

@@ -84,3 +84,4 @@ server.onError((err, c) => {
 export default server;
 
 // TODO: Adopt Turborepo monorepo, prevent import server code into client dist
+// TODO: Add integration tests for each controller
