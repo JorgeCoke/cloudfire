@@ -9,8 +9,9 @@ import { HttpException } from "../../lib/http-exceptions";
 import type { AppRouteHandler } from "../../lib/zod-to-json-openapi";
 import {
 	AuthErrors,
-	type GetMeRoute,
+	type GetProfileRoute,
 	type PostLoginRoute,
+	type PostProfileRoute,
 	type PostSignupRoute,
 } from "./auth.controller";
 const { hashSync, compareSync } = bcryptjs;
@@ -74,7 +75,9 @@ export const PostSignupHandler: AppRouteHandler<
 	return c.json({ success: !!result }, 200);
 };
 
-export const GetMeHandler: AppRouteHandler<typeof GetMeRoute> = async (c) => {
+export const GetProfileHandler: AppRouteHandler<
+	typeof GetProfileRoute
+> = async (c) => {
 	const db = drizzle(c.env.DB);
 	const session = await getSession(c);
 	const [user] = await db
@@ -82,6 +85,27 @@ export const GetMeHandler: AppRouteHandler<typeof GetMeRoute> = async (c) => {
 		.from(usersT)
 		.limit(1)
 		.where(eq(usersT.id, session.userId));
+	user.password = "";
+	if (!user) {
+		throw new HttpException(AuthErrors.USER_NOT_FOUND);
+	}
+	return c.json({ user }, 200);
+};
+
+export const PostProfileHandler: AppRouteHandler<
+	typeof PostProfileRoute
+> = async (c) => {
+	const db = drizzle(c.env.DB);
+	const body = c.req.valid("json");
+	const session = await getSession(c);
+	const [user] = await db
+		.update(usersT)
+		.set({
+			language: body.language,
+			password: body.password ? hashSync(body.password, 10) : undefined,
+		})
+		.where(eq(usersT.id, session.userId))
+		.returning();
 	user.password = "";
 	if (!user) {
 		throw new HttpException(AuthErrors.USER_NOT_FOUND);

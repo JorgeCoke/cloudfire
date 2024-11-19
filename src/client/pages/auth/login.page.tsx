@@ -54,7 +54,7 @@ export default function LoginPage() {
 									jwt: res.jwt,
 									payload: JSON.parse(atob(res.jwt.split(".")[1])),
 								});
-								revalidateKeys(AuthServiceKeys.GET_ME);
+								revalidateKeys(AuthServiceKeys.GET_PROFILE);
 								redirectPage(router, "DASHBOARD");
 							}
 						})}

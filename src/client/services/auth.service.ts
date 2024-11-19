@@ -1,7 +1,7 @@
 import { persistentAtom } from "@nanostores/persistent";
 import type { JwtPayload } from "../../models/types/jwt-payload";
 import type {
-	GetMeResponseDto,
+	GetProfileResponseDto,
 	PostLoginBodyDto,
 	PostLoginResponseDto,
 	PostSignupBodyDto,
@@ -13,7 +13,7 @@ import { createFetcherStore, createMutatorStore } from "../lib/nanoquery";
 export const AuthServiceKeys = {
 	LOGIN: "/auth/login",
 	SIGNUP: "/auth/signup",
-	GET_ME: "/auth/me",
+	GET_PROFILE: "/auth/profile",
 } as const;
 
 export const $doLogin = createMutatorStore<
@@ -36,8 +36,8 @@ export const $doSignup = createMutatorStore<
 	}),
 );
 
-export const $doGetMe = createFetcherStore<GetMeResponseDto>(
-	[AuthServiceKeys.GET_ME],
+export const $doGetProfile = createFetcherStore<GetProfileResponseDto>(
+	[AuthServiceKeys.GET_PROFILE],
 	{
 		dedupeTime: Number.POSITIVE_INFINITY,
 	},

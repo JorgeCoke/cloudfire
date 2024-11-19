@@ -18,7 +18,7 @@ export const http = ofetch.create({
 		if (
 			!response.ok &&
 			response._data.message &&
-			!response.url.includes("/auth/me")
+			!response.url.includes("/auth/profile")
 		) {
 			toast.error(response._data.message);
 		}

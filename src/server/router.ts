@@ -10,10 +10,10 @@ export const SwaggerUiUrl = "/swagger/docs";
 
 // TODO: Add integration tests for each controller
 export const Router = new OpenAPIHono<{ Bindings: CfEnv }>()
-	.route("/", AuthController)
-	.route("/", UsersController)
-	.route("/", HealthController)
-	.doc31(SwaggerSpecUrl, {
+	.route(ApiVersion, AuthController)
+	.route(ApiVersion, UsersController)
+	.route(ApiVersion, HealthController)
+	.doc31(`${ApiVersion}${SwaggerSpecUrl}`, {
 		openapi: "3.1.0",
 		info: { title: "Cloudfire API spec", version: "1.0.0" },
 	});

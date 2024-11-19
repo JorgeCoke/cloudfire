@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { LANG } from "../../../models/enums";
 import { User } from "../../lib/db/schemas/users";
 
 export const PostSignupBodyDto = z
@@ -43,7 +44,18 @@ export const PostLoginResponseDto = z.object({
 });
 export type PostLoginResponseDto = z.infer<typeof PostLoginResponseDto>;
 
-export const GetMeResponseDto = z.object({
+export const GetProfileResponseDto = z.object({
 	user: User,
 });
-export type GetMeResponseDto = z.infer<typeof GetMeResponseDto>;
+export type GetProfileResponseDto = z.infer<typeof GetProfileResponseDto>;
+
+export const PostProfileBodyDto = z.object({
+	language: z.nativeEnum(LANG).optional(),
+	password: z.string().min(8).max(50).optional(),
+});
+export type PostProfileBodyDto = z.infer<typeof PostProfileBodyDto>;
+
+export const PostProfileResponseDto = z.object({
+	user: User,
+});
+export type PostProfileResponseDto = z.infer<typeof PostProfileResponseDto>;

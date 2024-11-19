@@ -14,8 +14,11 @@ import { $jwt } from "./services/auth.service.ts";
 
 const LoginPage = lazy(() => import("./pages/auth/login.page.tsx"));
 const SignupPage = lazy(() => import("./pages/auth/signup.page.tsx"));
-const DashboardPage = lazy(() => import("./pages/dashboard.page.tsx"));
 const PlaygroundPage = lazy(() => import("./pages/shared/playground.page.tsx"));
+const DashboardPage = lazy(
+	() => import("./pages/protected/dashboard.page.tsx"),
+);
+const ProfilePage = lazy(() => import("./pages/protected/profile.page.tsx"));
 
 const Routes = () => {
 	const page = useStore(router);
@@ -51,6 +54,8 @@ const Routes = () => {
 			return hasNotSessionGuard(<SignupPage />);
 		case "DASHBOARD":
 			return hasSessionGuard(<DashboardPage />);
+		case "PROFILE":
+			return hasSessionGuard(<ProfilePage />);
 		case "PLAYGROUND":
 			return <PlaygroundPage />;
 		case "ERROR":

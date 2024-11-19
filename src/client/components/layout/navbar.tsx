@@ -1,14 +1,11 @@
 import { useStore } from "@nanostores/react";
-import { redirectPage } from "@nanostores/router";
-import { Flame } from "lucide-react";
-import toast from "react-hot-toast";
-import { mutateCache } from "../../lib/nanoquery";
+import { Flame, User } from "lucide-react";
 import { ROUTES, router } from "../../router";
-import { $doGetMe, $jwt, AuthServiceKeys } from "../../services/auth.service";
-import { AnchorButton, Button } from "../ui/buttons";
+import { $doGetProfile } from "../../services/auth.service";
+import { AnchorButton } from "../ui/buttons";
 
 export const NavBar = () => {
-	const getMe = useStore($doGetMe);
+	const getProfile = useStore($doGetProfile);
 	const page = useStore(router);
 
 	if (page?.route === "AUTH_LOGIN" || page?.route === "AUTH_SIGNUP") {
@@ -24,7 +21,7 @@ export const NavBar = () => {
 				<Flame className="h-6 w-6" />
 				Cloudfire
 			</a>
-			{!getMe.data?.user && (
+			{!getProfile.data?.user && (
 				<AnchorButton
 					className="rounded-full btn-gradient"
 					href={ROUTES.AUTH_LOGIN}
@@ -32,19 +29,18 @@ export const NavBar = () => {
 					Login
 				</AnchorButton>
 			)}
-			{getMe.data?.user && (
-				<Button
-					className="rounded-full bg-gradient-to-tl from-red-800 to-red-500 border-red-500"
-					color="danger"
-					onClick={() => {
-						toast.success("Bye!");
-						$jwt.set(undefined);
-						mutateCache(AuthServiceKeys.GET_ME, null);
-						redirectPage(router, "AUTH_LOGIN");
-					}}
-				>
-					Logout
-				</Button>
+			{getProfile.data?.user && (
+				<div className="gap-4 flex">
+					<AnchorButton className="rounded-full" href={ROUTES.DASHBOARD}>
+						Dashboard
+					</AnchorButton>
+					<AnchorButton
+						className="rounded-full btn-gradient"
+						href={ROUTES.PROFILE}
+					>
+						<User className="w-4 h-4" />
+					</AnchorButton>
+				</div>
 			)}
 		</header>
 	);

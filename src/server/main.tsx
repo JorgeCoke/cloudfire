@@ -30,7 +30,7 @@ const server = new OpenAPIHono<{ Bindings: CfEnv }>()
 		swaggerUI({ url: `${ApiVersion}${SwaggerSpecUrl}` }),
 	)
 	// Add Api Router
-	.route(ApiVersion, Router)
+	.route("/", Router)
 	// Api Not Found Error handler
 	.all(`${ApiVersion}/*`, () => {
 		throw new NotFoundException();

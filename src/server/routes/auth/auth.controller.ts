@@ -7,15 +7,18 @@ import {
 	openApiResponse,
 } from "../../lib/zod-to-json-openapi";
 import {
-	GetMeResponseDto,
+	GetProfileResponseDto,
 	PostLoginBodyDto,
 	PostLoginResponseDto,
+	PostProfileBodyDto,
+	PostProfileResponseDto,
 	PostSignupBodyDto,
 	PostSignupResponseDto,
 } from "./auth.dtos";
 import {
-	GetMeHandler,
+	GetProfileHandler,
 	PostLoginHandler,
+	PostProfileHandler,
 	PostSignupHandler,
 } from "./auth.service";
 
@@ -58,13 +61,27 @@ export const PostSignupRoute = createRoute({
 	},
 });
 
-export const GetMeRoute = createRoute({
+export const GetProfileRoute = createRoute({
 	tags: [AuthBasePath],
 	method: "get",
-	path: `${AuthBasePath}/me`,
+	path: `${AuthBasePath}/profile`,
 	security: openApiBearerGuard(),
 	responses: {
-		...openApiResponse(GetMeResponseDto, 200, "Session user"),
+		...openApiResponse(GetProfileResponseDto, 200, "Session user"),
+		...openApiErrors([AuthErrors.USER_NOT_FOUND]),
+	},
+});
+
+export const PostProfileRoute = createRoute({
+	tags: [AuthBasePath],
+	method: "post",
+	path: `${AuthBasePath}/profile`,
+	request: {
+		body: openApiBody(PostProfileBodyDto),
+	},
+	security: openApiBearerGuard(),
+	responses: {
+		...openApiResponse(PostProfileResponseDto, 200, "Updated user"),
 		...openApiErrors([AuthErrors.USER_NOT_FOUND]),
 	},
 });
@@ -72,4 +89,5 @@ export const GetMeRoute = createRoute({
 export const AuthController = new OpenAPIHono<{ Bindings: CfEnv }>()
 	.openapi(PostLoginRoute, PostLoginHandler)
 	.openapi(PostSignupRoute, PostSignupHandler)
-	.openapi(GetMeRoute, GetMeHandler);
+	.openapi(GetProfileRoute, GetProfileHandler)
+	.openapi(PostProfileRoute, PostProfileHandler);
