@@ -2,7 +2,7 @@ import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createSelectSchema } from "drizzle-zod";
 import { nanoid } from "nanoid";
-import { ROLE } from "../../../../models/enums";
+import { LANG, ROLE } from "../../../../models/enums";
 
 // Prefix tables with "T"
 export const usersT = sqliteTable("users", {
@@ -12,9 +12,12 @@ export const usersT = sqliteTable("users", {
 	email: text().unique().notNull(),
 	password: text().notNull(),
 	enabled: integer({ mode: "boolean" }).notNull().default(true),
-	role: text("role", { enum: [ROLE.ADMIN, ROLE.USER] })
+	role: text({ enum: [ROLE.ADMIN, ROLE.USER] })
 		.notNull()
 		.default(ROLE.USER),
+	language: text({ enum: [LANG.EN, LANG.ES] })
+		.notNull()
+		.default(LANG.EN),
 	lastLogInAt: integer({ mode: "timestamp_ms" }),
 	lastLogInTries: integer().notNull().default(0),
 	createdAt: integer({ mode: "timestamp_ms" })
