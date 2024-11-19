@@ -1,7 +1,9 @@
 import type { Context } from "hono";
 import { verify } from "hono/jwt";
+import { sign } from "hono/jwt";
 import type { JwtPayload } from "../../models/types/jwt-payload";
 import type { CfEnv } from "../env";
+import type { User } from "./db/schemas/users";
 import { UnauthorizedException } from "./http-exceptions";
 
 export const getSession = async (
@@ -20,4 +22,13 @@ export const getSession = async (
 		},
 	)) as JwtPayload;
 	return payload;
+};
+
+export const generateJwt = async (user: User, key: string) => {
+	const jwtPayload: JwtPayload = {
+		userId: user.id,
+		exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
+		role: user.role,
+	};
+	return await sign(jwtPayload, key);
 };

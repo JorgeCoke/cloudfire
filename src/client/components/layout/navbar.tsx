@@ -1,12 +1,24 @@
 import { useStore } from "@nanostores/react";
 import { Flame, User } from "lucide-react";
+import { useEffect } from "react";
 import { ROUTES, router } from "../../router";
-import { $doGetProfile } from "../../services/auth.service";
+import { $doGetProfile, $jwt } from "../../services/auth.service";
 import { AnchorButton } from "../ui/buttons";
 
 export const NavBar = () => {
 	const getProfile = useStore($doGetProfile);
 	const page = useStore(router);
+
+	useEffect(() => {
+		// Update JWT on every profile fetch
+		const newJwt = getProfile.data?.jwt;
+		if (newJwt) {
+			$jwt.set({
+				jwt: newJwt,
+				payload: JSON.parse(atob(newJwt.split(".")[1])),
+			});
+		}
+	}, [getProfile.data?.jwt]);
 
 	if (page?.route === "AUTH_LOGIN" || page?.route === "AUTH_SIGNUP") {
 		return null;

@@ -1,9 +1,7 @@
 import bcryptjs from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { sign } from "hono/jwt";
-import type { JwtPayload } from "../../../models/types/jwt-payload";
-import { getSession } from "../../lib/auth";
+import { generateJwt, getSession } from "../../lib/auth";
 import { usersT } from "../../lib/db/schemas/users";
 import { HttpException } from "../../lib/http-exceptions";
 import type { AppRouteHandler } from "../../lib/zod-to-json-openapi";
@@ -41,12 +39,7 @@ export const PostLoginHandler: AppRouteHandler<typeof PostLoginRoute> = async (
 			.where(eq(usersT.id, user.id));
 		throw new HttpException(AuthErrors.USER_NOT_FOUND);
 	}
-	const jwtPayload: JwtPayload = {
-		userId: user.id,
-		exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
-		role: user.role,
-	};
-	const jwt = await sign(jwtPayload, c.env.AUTH_SESSION_SECRET_KEY);
+	const jwt = await generateJwt(user, c.env.AUTH_SESSION_SECRET_KEY);
 	// Update lastLogInAt and reset lastLogInTries
 	await db
 		.update(usersT)
@@ -89,7 +82,8 @@ export const GetProfileHandler: AppRouteHandler<
 	if (!user) {
 		throw new HttpException(AuthErrors.USER_NOT_FOUND);
 	}
-	return c.json({ user }, 200);
+	const jwt = await generateJwt(user, c.env.AUTH_SESSION_SECRET_KEY);
+	return c.json({ user, jwt }, 200);
 };
 
 export const PostProfileHandler: AppRouteHandler<

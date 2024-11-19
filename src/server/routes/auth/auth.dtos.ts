@@ -46,6 +46,7 @@ export type PostLoginResponseDto = z.infer<typeof PostLoginResponseDto>;
 
 export const GetProfileResponseDto = z.object({
 	user: User,
+	jwt: z.string(),
 });
 export type GetProfileResponseDto = z.infer<typeof GetProfileResponseDto>;
 
