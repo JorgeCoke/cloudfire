@@ -4,6 +4,8 @@ import type {
 	GetProfileResponseDto,
 	PostLoginBodyDto,
 	PostLoginResponseDto,
+	PostProfileBodyDto,
+	PostProfileResponseDto,
 	PostSignupBodyDto,
 	PostSignupResponseDto,
 } from "../../server/routes/auth/auth.dtos";
@@ -14,6 +16,7 @@ export const AuthServiceKeys = {
 	LOGIN: "/auth/login",
 	SIGNUP: "/auth/signup",
 	GET_PROFILE: "/auth/profile",
+	POST_PROFILE: "/auth/profile",
 } as const;
 
 export const $doLogin = createMutatorStore<
@@ -41,6 +44,16 @@ export const $doGetProfile = createFetcherStore<GetProfileResponseDto>(
 	{
 		dedupeTime: Number.POSITIVE_INFINITY,
 	},
+);
+
+export const $doPostProfile = createMutatorStore<
+	PostProfileBodyDto,
+	PostProfileResponseDto
+>(async ({ data }) =>
+	http(AuthServiceKeys.POST_PROFILE, {
+		method: "POST",
+		body: data,
+	}),
 );
 
 export const $jwt = persistentAtom<

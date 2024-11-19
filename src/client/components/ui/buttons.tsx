@@ -33,7 +33,7 @@ const mergeStyles = (props: ButtonProps & { className?: string }): string => {
 	};
 
 	return cn(
-		"rounded-md px-6 py-2 text-sm font-semibold transition-all leading-4 whitespace-nowrap inline-flex justify-center items-center gap-2",
+		"rounded-md px-6 py-2 text-sm font-semibold transition-all leading-4 whitespace-nowrap inline-flex justify-center items-center gap-2 w-fit",
 		props.disabled && "opacity-50 pointer-events-none",
 		props.size === "icon" && "px-2",
 		style[props.color || "primary"][props.variant || "default"],
