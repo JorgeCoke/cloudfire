@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStore } from "@nanostores/react";
-import { redirectPage } from "@nanostores/router";
+import { getPagePath, redirectPage } from "@nanostores/router";
 import { Flame, MoveLeft } from "lucide-react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -8,7 +8,7 @@ import { PostLoginBodyDto } from "../../../server/routes/auth/auth.dtos";
 import { AnchorButton, Button } from "../../components/ui/buttons";
 import { Input } from "../../components/ui/form";
 import { revalidateKeys } from "../../lib/nanoquery";
-import { ROUTES, router } from "../../router";
+import { router$ } from "../../router";
 import { $doLogin, $jwt, AuthServiceKeys } from "../../services/auth.service";
 
 export default function LoginPage() {
@@ -28,7 +28,7 @@ export default function LoginPage() {
 			<div className="flex items-center justify-center py-12">
 				<AnchorButton
 					variant="ghost"
-					href={ROUTES.HOME}
+					href={getPagePath(router$, "HOME")}
 					className="flex gap-2 absolute right-4 top-4 md:right-8 md:top-8"
 				>
 					<MoveLeft className="w-4 h-4" />
@@ -55,7 +55,7 @@ export default function LoginPage() {
 									payload: JSON.parse(atob(res.jwt.split(".")[1])),
 								});
 								revalidateKeys(AuthServiceKeys.GET_PROFILE);
-								redirectPage(router, "DASHBOARD");
+								redirectPage(router$, "DASHBOARD");
 							}
 						})}
 					>
@@ -87,7 +87,7 @@ export default function LoginPage() {
 					</form>
 					<div className="mt-4 text-center text-sm">
 						Don&apos;t have an account?{" "}
-						<a href={ROUTES.AUTH_SIGNUP} className="underline">
+						<a href={getPagePath(router$, "AUTH_SIGNUP")} className="underline">
 							Sign Up
 						</a>
 					</div>

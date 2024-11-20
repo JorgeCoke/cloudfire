@@ -1,13 +1,14 @@
 import { useStore } from "@nanostores/react";
+import { getPagePath } from "@nanostores/router";
 import { Flame, User } from "lucide-react";
 import { useEffect } from "react";
-import { ROUTES, router } from "../../router";
+import { router$ } from "../../router";
 import { $doGetProfile, $jwt } from "../../services/auth.service";
 import { AnchorButton } from "../ui/buttons";
 
 export const NavBar = () => {
 	const getProfile = useStore($doGetProfile);
-	const page = useStore(router);
+	const page = useStore(router$);
 
 	useEffect(() => {
 		// Update JWT on every profile fetch
@@ -36,19 +37,22 @@ export const NavBar = () => {
 			{!getProfile.data?.user && (
 				<AnchorButton
 					className="rounded-full btn-gradient"
-					href={ROUTES.AUTH_LOGIN}
+					href={getPagePath(router$, "AUTH_LOGIN")}
 				>
 					Login
 				</AnchorButton>
 			)}
 			{getProfile.data?.user && (
 				<div className="gap-4 flex">
-					<AnchorButton className="rounded-full" href={ROUTES.DASHBOARD}>
+					<AnchorButton
+						className="rounded-full"
+						href={getPagePath(router$, "DASHBOARD")}
+					>
 						Dashboard
 					</AnchorButton>
 					<AnchorButton
 						className="rounded-full btn-gradient"
-						href={ROUTES.PROFILE}
+						href={getPagePath(router$, "PROFILE")}
 					>
 						<User className="w-4 h-4" />
 					</AnchorButton>

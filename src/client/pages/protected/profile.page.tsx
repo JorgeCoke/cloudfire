@@ -9,7 +9,7 @@ import { Button } from "../../components/ui/buttons";
 import { Select } from "../../components/ui/form";
 import { H2 } from "../../components/ui/typography";
 import { mutateCache, revalidateKeys } from "../../lib/nanoquery";
-import { router } from "../../router";
+import { router$ } from "../../router";
 import {
 	$doGetProfile,
 	$doPostProfile,
@@ -71,7 +71,7 @@ export default function ProfilePage() {
 						toast.success("Bye!");
 						$jwt.set(undefined);
 						mutateCache(AuthServiceKeys.GET_PROFILE, null);
-						redirectPage(router, "HOME");
+						redirectPage(router$, "HOME");
 					}}
 				>
 					Logout
