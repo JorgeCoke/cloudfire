@@ -40,7 +40,7 @@ export default function ProfilePage() {
 				is: <strong>{$jwt.get()?.payload.userId}</strong>
 			</p>
 			<form
-				className="space-y-4 mx-auto min-w-96"
+				className="space-y-4 mx-auto w-full max-w-96"
 				onSubmit={handleSubmit(async (data) => {
 					await postProfile.mutate(data);
 					revalidateKeys(AuthServiceKeys.GET_PROFILE);

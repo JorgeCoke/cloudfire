@@ -18,6 +18,9 @@ export const NavBar = () => {
 				jwt: newJwt,
 				payload: JSON.parse(atob(newJwt.split(".")[1])),
 			});
+		} else {
+			localStorage.removeItem("session");
+			$jwt.set(undefined);
 		}
 	}, [getProfile.data?.jwt]);
 

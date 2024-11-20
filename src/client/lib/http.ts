@@ -22,5 +22,12 @@ export const http = ofetch.create({
 		) {
 			toast.error(response._data.message);
 		}
+		if (
+			!response.ok &&
+			response.url.includes("/auth/profile") &&
+			response.status === 401
+		) {
+			localStorage.removeItem("session");
+		}
 	},
 });
