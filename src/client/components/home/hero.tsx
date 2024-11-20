@@ -29,8 +29,8 @@ export const Hero = () => {
 					</H0>
 					<p className="max-w-md mx-auto text-center text-lg text-neutral-500">
 						Delightful, overpowered, beautifully handcrafted full-stack web
-						framework template, built on top of NextJS & Cloudflare, seasoned
-						with modern tools
+						framework template, built on top of Hono and React, seasoned with
+						modern tools
 					</p>
 					<div className="space-y-4 md:space-y-0 md:space-x-4">
 						<AnchorButton

@@ -18,12 +18,12 @@ import {
 } from "../../services/auth.service";
 
 export default function ProfilePage() {
-	const getMe = useStore($doGetProfile);
+	const getProfile = useStore($doGetProfile);
 	const postProfile = useStore($doPostProfile);
 	const { register, handleSubmit, formState } = useForm<PostProfileBodyDto>({
 		resolver: zodResolver(PostProfileBodyDto),
 		defaultValues: {
-			language: getMe.data?.user.language,
+			language: getProfile.data?.user.language,
 		},
 	});
 
@@ -32,7 +32,7 @@ export default function ProfilePage() {
 			<H2 className="font-thin text-center">
 				Hello{" "}
 				<span className="font-normal">
-					{getMe.loading ? "loading..." : getMe.data?.user?.email}
+					{getProfile.loading ? "loading..." : getProfile.data?.user?.email}
 				</span>
 			</H2>
 			<p className="text-center">

@@ -12,6 +12,7 @@ import type {
 import { http } from "../lib/http";
 import { createFetcherStore, createMutatorStore } from "../lib/nanoquery";
 
+// TODO: Generate queryKeys here, not string literals
 export const AuthServiceKeys = {
 	LOGIN: "/auth/login",
 	SIGNUP: "/auth/signup",

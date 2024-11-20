@@ -18,7 +18,10 @@ export const Modals = () => {
 			onClick={() => $modal.set("NONE")}
 			className="w-dvw h-dvh backdrop-blur-sm bg-black/30 absolute left-0 top-0 z-10 flex align-middle items-center justify-center"
 		>
-			<div className="max-w-xl w-full" onClick={(e) => e.stopPropagation()}>
+			<div
+				className="max-w-xl w-full shadow-md"
+				onClick={(e) => e.stopPropagation()}
+			>
 				{modal === "EXAMPLE" && <ExampleModal />}
 			</div>
 		</div>

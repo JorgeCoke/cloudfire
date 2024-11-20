@@ -29,6 +29,7 @@ export const generateJwt = async (user: User, key: string) => {
 		userId: user.id,
 		exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 24h expiration
 		role: user.role,
+		language: user.language,
 	};
 	return await sign(jwtPayload, key);
 };

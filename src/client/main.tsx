@@ -20,6 +20,9 @@ const ProfilePage = lazy(() => import("./pages/protected/profile.page.tsx"));
 const DashboardPage = lazy(
 	() => import("./pages/protected/dashboard.page.tsx"),
 );
+
+// TODO: Add :userId page example
+
 const Routes = () => {
 	const page = useStore(router$);
 
