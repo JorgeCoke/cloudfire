@@ -1,7 +1,7 @@
 import { getPagePath } from "@nanostores/router";
 import { AnchorButton } from "../../components/ui/buttons";
 import { H1, H4 } from "../../components/ui/typography";
-import { router$ } from "../../router";
+import { $router } from "../../router";
 
 export default function ErrorPage({ code = "500" }: { code?: string }) {
 	return (
@@ -14,7 +14,7 @@ export default function ErrorPage({ code = "500" }: { code?: string }) {
 			</H4>
 			<AnchorButton
 				className="mx-auto"
-				href={getPagePath(router$, "DASHBOARD")}
+				href={getPagePath($router, "DASHBOARD")}
 			>
 				Go Back
 			</AnchorButton>

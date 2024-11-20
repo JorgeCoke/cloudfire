@@ -1,7 +1,7 @@
 import { useStore } from "@nanostores/react";
 import { type ReactNode, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import { router$ } from "./router.ts";
+import { $router } from "./router.ts";
 import "./index.css";
 import { redirectPage } from "@nanostores/router";
 import { lazy } from "react";
@@ -24,11 +24,11 @@ const DashboardPage = lazy(
 // TODO: Add :userId page example
 
 const Routes = () => {
-	const page = useStore(router$);
+	const page = useStore($router);
 
 	const hasSessionGuard = (page: ReactNode) => {
 		if (!$jwt.get()?.jwt) {
-			redirectPage(router$, "AUTH_LOGIN");
+			redirectPage($router, "AUTH_LOGIN");
 			setTimeout(() => {
 				toast.error("Please, login first", { id: "logInFirst" });
 			}, 100);
@@ -39,7 +39,7 @@ const Routes = () => {
 
 	const hasNotSessionGuard = (page: ReactNode) => {
 		if ($jwt.get()?.jwt) {
-			redirectPage(router$, "DASHBOARD");
+			redirectPage($router, "DASHBOARD");
 			setTimeout(() => {
 				toast.success("Welcome back", { id: "logInFirst" });
 			}, 100);

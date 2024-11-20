@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { PostSignupBodyDto } from "../../../server/routes/auth/auth.dtos";
 import { AnchorButton, Button } from "../../components/ui/buttons";
 import { Input } from "../../components/ui/form";
-import { router$ } from "../../router";
+import { $router } from "../../router";
 import { $doSignup } from "../../services/auth.service";
 
 export default function SignupPage() {
@@ -28,7 +28,7 @@ export default function SignupPage() {
 			<div className="flex items-center justify-center py-12">
 				<AnchorButton
 					variant="ghost"
-					href={getPagePath(router$, "HOME")}
+					href={getPagePath($router, "HOME")}
 					className="flex gap-2 absolute right-4 top-4 md:right-8 md:top-8"
 				>
 					<MoveLeft className="w-4 h-4" />
@@ -52,7 +52,7 @@ export default function SignupPage() {
 								toast.success(
 									"Your account is ready! Now you can login with your credentials",
 								);
-								return redirectPage(router$, "AUTH_LOGIN");
+								return redirectPage($router, "AUTH_LOGIN");
 							}
 						})}
 					>
@@ -93,7 +93,7 @@ export default function SignupPage() {
 					</form>
 					<div className="mt-4 text-center text-sm">
 						Already have an account?{" "}
-						<a href={getPagePath(router$, "AUTH_LOGIN")} className="underline">
+						<a href={getPagePath($router, "AUTH_LOGIN")} className="underline">
 							Log In
 						</a>
 					</div>

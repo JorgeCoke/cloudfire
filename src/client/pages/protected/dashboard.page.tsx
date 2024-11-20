@@ -2,7 +2,7 @@ import { getPagePath } from "@nanostores/router";
 import { AnchorButton, Button } from "../../components/ui/buttons";
 import { H4 } from "../../components/ui/typography";
 import { $modal } from "../../modals/modals";
-import { router$ } from "../../router";
+import { $router } from "../../router";
 
 export default function DashboardPage() {
 	return (
@@ -14,7 +14,7 @@ export default function DashboardPage() {
 				<Button onClick={() => $modal.set("EXAMPLE")}>
 					Show Example Modal
 				</Button>
-				<AnchorButton href={getPagePath(router$, "HOME")}>HOME</AnchorButton>
+				<AnchorButton href={getPagePath($router, "HOME")}>HOME</AnchorButton>
 			</div>
 		</main>
 	);

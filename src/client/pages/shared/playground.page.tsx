@@ -8,7 +8,7 @@ import { AnchorButton, Button } from "../../components/ui/buttons";
 import { Card } from "../../components/ui/card";
 import { Input, Select } from "../../components/ui/form";
 import { H0, H1, H2, H3, H4 } from "../../components/ui/typography";
-import { router$ } from "../../router";
+import { $router } from "../../router";
 
 const PlaygroundFormSchema = z.object({
 	email: z.string().nullish(),
@@ -38,7 +38,7 @@ export default function PlaygroundPage() {
 
 	return (
 		<main className="container pt-24 space-y-6">
-			<AnchorButton href={getPagePath(router$, "HOME")}>
+			<AnchorButton href={getPagePath($router, "HOME")}>
 				<MoveLeft className="w-4 h-4" />
 				Homepage
 			</AnchorButton>

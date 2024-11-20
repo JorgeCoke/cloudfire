@@ -1,6 +1,6 @@
 import { getPagePath } from "@nanostores/router";
 import { ArrowRight, Github, PenToolIcon } from "lucide-react";
-import { router$ } from "../../router";
+import { $router } from "../../router";
 import { Badge } from "../ui/badge";
 import { AnchorButton } from "../ui/buttons";
 import { H0 } from "../ui/typography";
@@ -34,14 +34,14 @@ export const Hero = () => {
 					</p>
 					<div className="space-y-4 md:space-y-0 md:space-x-4">
 						<AnchorButton
-							href={getPagePath(router$, "AUTH_LOGIN")}
+							href={getPagePath($router, "AUTH_LOGIN")}
 							className="w-5/6 md:w-1/4 font-bold group/arrow btn-gradient"
 						>
 							Access
 							<ArrowRight className="size-5 ml-2 group-hover/arrow:translate-x-1 transition-transform" />
 						</AnchorButton>
 						<AnchorButton
-							href={getPagePath(router$, "PLAYGROUND")}
+							href={getPagePath($router, "PLAYGROUND")}
 							className="w-5/6 md:w-1/4 font-bold group/pen"
 						>
 							UI Kit
