@@ -3,21 +3,22 @@ import { useStore } from "@nanostores/react";
 import { redirectPage } from "@nanostores/router";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { LANG } from "../../../models/enums";
-import { PostProfileBodyDto } from "../../../server/routes/auth/auth.dtos";
-import { Button } from "../../components/ui/buttons";
-import { Select } from "../../components/ui/form";
-import { H2 } from "../../components/ui/typography";
-import { mutateCache, revalidateKeys } from "../../lib/nanoquery";
-import { $router } from "../../router";
+import { LANG } from "../../models/enums";
+import { PostProfileBodyDto } from "../../server/routes/auth/auth.dtos";
+import { Button } from "../components/ui/buttons";
+import { Card } from "../components/ui/card";
+import { Select } from "../components/ui/form";
+import { H4 } from "../components/ui/typography";
+import { mutateCache, revalidateKeys } from "../lib/nanoquery";
+import { $router } from "../router";
 import {
 	$doGetProfile,
 	$doPostProfile,
 	$jwt,
 	AuthServiceKeys,
-} from "../../services/auth.service";
+} from "../services/auth.service";
 
-export default function ProfilePage() {
+export const ProfileModal = () => {
 	const getProfile = useStore($doGetProfile);
 	const postProfile = useStore($doPostProfile);
 	const { register, handleSubmit, formState } = useForm<PostProfileBodyDto>({
@@ -28,13 +29,13 @@ export default function ProfilePage() {
 	});
 
 	return (
-		<main className="container flex flex-col space-y-6 py-28">
-			<H2 className="font-thin text-center">
+		<Card className="p-12 space-y-12 flex flex-col">
+			<H4 className="font-thin text-center">
 				Hello{" "}
 				<span className="font-normal">
 					{getProfile.loading ? "loading..." : getProfile.data?.user?.email}
 				</span>
-			</H2>
+			</H4>
 			<p className="text-center">
 				You are an <strong>{$jwt.get()?.payload.role}</strong> and your userId
 				is: <strong>{$jwt.get()?.payload.userId}</strong>
@@ -72,11 +73,12 @@ export default function ProfilePage() {
 						$jwt.set(undefined);
 						mutateCache(AuthServiceKeys.GET_PROFILE, null);
 						redirectPage($router, "HOME");
+						$modal.set("NONE");
 					}}
 				>
 					Logout
 				</Button>
 			</div>
-		</main>
+		</Card>
 	);
-}
+};

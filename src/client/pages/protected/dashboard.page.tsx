@@ -1,8 +1,5 @@
-import { getPagePath } from "@nanostores/router";
-import { AnchorButton, Button } from "../../components/ui/buttons";
 import { H4 } from "../../components/ui/typography";
-import { $modal } from "../../modals/modals";
-import { $router } from "../../router";
+import { $jwt } from "../../services/auth.service";
 
 export default function DashboardPage() {
 	return (
@@ -10,12 +7,11 @@ export default function DashboardPage() {
 			<H4 className="text-center text-neutral-500">
 				Welcome to your dashboard
 			</H4>
-			<div className="flex gap-6 mx-auto">
-				<Button onClick={() => $modal.set("EXAMPLE")}>
-					Show Example Modal
-				</Button>
-				<AnchorButton href={getPagePath($router, "HOME")}>HOME</AnchorButton>
-			</div>
+			<p className="text-center max-w-screen-sm mx-auto">
+				You have an active session, you are an{" "}
+				<strong>{$jwt.get()?.payload.role}</strong> and your userId is:{" "}
+				<strong>{$jwt.get()?.payload.userId}</strong>
+			</p>
 		</main>
 	);
 }

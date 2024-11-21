@@ -1,14 +1,16 @@
 import { useStore } from "@nanostores/react";
-import { getPagePath } from "@nanostores/router";
-import { Flame, User } from "lucide-react";
+import { getPagePath, openPage } from "@nanostores/router";
+import { ArrowRight, Flame, User } from "lucide-react";
 import { useEffect } from "react";
+import { $modal } from "../../modals/modals";
 import { $router } from "../../router";
 import { $doGetProfile, $jwt } from "../../services/auth.service";
-import { AnchorButton } from "../ui/buttons";
+import { AnchorButton, Button } from "../ui/buttons";
 
 export const NavBar = () => {
 	const getProfile = useStore($doGetProfile);
 	const page = useStore($router);
+	const router = useStore($router);
 
 	useEffect(() => {
 		// Update JWT on every profile fetch
@@ -32,7 +34,7 @@ export const NavBar = () => {
 		<header className="md:max-w-screen-md md:top-5 backdrop-blur-sm z-10 p-3 px-4 left-0 right-0 m-auto fixed w-full shadow-sm md:rounded-full border-b md:border border-neutral-200 bg-white/90 flex justify-between items-center">
 			<a
 				className="flex items-center gap-3 font-bold text-lg cursor-pointer hover:scale-105 transition-all duration-300"
-				href="/"
+				href={getPagePath($router, "HOME")}
 			>
 				<Flame className="h-6 w-6" />
 				Cloudfire
@@ -47,18 +49,24 @@ export const NavBar = () => {
 			)}
 			{getProfile.data?.user && (
 				<div className="gap-4 flex">
-					<AnchorButton
-						className="rounded-full"
-						href={getPagePath($router, "DASHBOARD")}
-					>
-						Dashboard
-					</AnchorButton>
-					<AnchorButton
+					<Button
 						className="rounded-full btn-gradient"
-						href={getPagePath($router, "PROFILE")}
+						onClick={() => {
+							if (router?.route === "HOME") {
+								openPage($router, "DASHBOARD");
+							} else {
+								$modal.set("PROFILE_MODAL");
+							}
+						}}
 					>
-						<User className="w-4 h-4" />
-					</AnchorButton>
+						{router?.route === "HOME" && (
+							<>
+								Access
+								<ArrowRight className="w-4 h-4" />
+							</>
+						)}
+						{router?.route !== "HOME" && <User className="w-4 h-4" />}
+					</Button>
 				</div>
 			)}
 		</header>

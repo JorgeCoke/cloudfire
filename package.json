@@ -10,7 +10,7 @@
 		"cf-typegen": "wrangler types src/server/env.d.ts --env-interface CfEnv",
 		"deploy:preview": "npm run build && wrangler pages deploy --branch=preview",
 		"deploy:prod": "npm run build && wrangler pages deploy --branch=main",
-		"db:generate": "drizzle-kit generate",
+		"db:generate": "drizzle-kit generate && echo '\nRemember to update reset.sql script in case you have created any new table!\n'",
 		"db:migrate:local": "wrangler d1 migrations apply cloudfire-prod-db --local",
 		"db:migrate:preview": "wrangler d1 migrations apply --env preview cloudfire-preview-db --remote",
 		"db:migrate:prod": "wrangler d1 migrations apply cloudfire-prod-db --remote",
@@ -80,9 +80,7 @@
 		}
 	},
 	"commitlint": {
-		"extends": [
-			"@commitlint/config-conventional"
-		]
+		"extends": ["@commitlint/config-conventional"]
 	},
 	"lint-staged": {
 		"src/**/*": [

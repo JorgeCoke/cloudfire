@@ -1,8 +1,8 @@
 import { useStore } from "@nanostores/react";
 import { atom } from "nanostores";
-import { ExampleModal } from "./example.modal";
+import { ProfileModal } from "./profile.modal";
 
-export type MODAL = "NONE" | "EXAMPLE";
+export type MODAL = "NONE" | "PROFILE_MODAL";
 
 export const $modal = atom<MODAL>("NONE");
 
@@ -22,7 +22,7 @@ export const Modals = () => {
 				className="max-w-xl w-full shadow-md"
 				onClick={(e) => e.stopPropagation()}
 			>
-				{modal === "EXAMPLE" && <ExampleModal />}
+				{modal === "PROFILE_MODAL" && <ProfileModal />}
 			</div>
 		</div>
 	);

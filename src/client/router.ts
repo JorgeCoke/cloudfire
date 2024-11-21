@@ -5,7 +5,6 @@ export const $router = createRouter({
 	AUTH_LOGIN: "/auth/login",
 	AUTH_SIGNUP: "/auth/signup",
 	DASHBOARD: "/dashboard",
-	PROFILE: "/profile",
 	PLAYGROUND: "/playground",
 	ERROR: "/error/:code",
 });
