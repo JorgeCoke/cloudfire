@@ -64,6 +64,7 @@
 		"autoprefixer": "^10.4.20",
 		"better-sqlite3": "^11.5.0",
 		"commit-and-tag-version": "^12.5.0",
+		"cross-env": "^7.0.3",
 		"cz-conventional-changelog": "^3.3.0",
 		"devmoji": "^2.3.0",
 		"drizzle-kit": "^0.28.0",

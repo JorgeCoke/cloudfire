@@ -8,7 +8,7 @@ compatibility_flags = [ "nodejs_compat" ]
 [[d1_databases]]
 binding="DB" # i.e. available in your Worker on env.DB
 database_name="cloudfire-prod-db"
-database_id="ddf229d5-18c8-4b40-8f6e-162ef29c6fdc"
+database_id="insert_your_id_here"
 preview_database_id="DB"
 migrations_dir="./src/server/lib/db/migrations"
 

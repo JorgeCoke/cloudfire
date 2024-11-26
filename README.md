@@ -92,9 +92,9 @@ npm run db:generate
 Launch database studio:
 
 ```
-npm run db:studo:local
-npm run db:studo:preview
-npm run db:studo:prod
+npm run db:studio:local
+npm run db:studio:preview
+npm run db:studio:prod
 ```
 
 ## 🔦 Check vulnerabilities and update outdated dependencies

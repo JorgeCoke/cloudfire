@@ -17,6 +17,7 @@ import {
 	$jwt,
 	AuthServiceKeys,
 } from "../services/auth.service";
+import { $modal } from "./modals";
 
 export const ProfileModal = () => {
 	const getProfile = useStore($doGetProfile);
