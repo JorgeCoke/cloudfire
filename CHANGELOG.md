@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.0](https://github.com/JorgeCoke/cloudfire/compare/v1.1.0...v1.2.0) (2024-11-26)
+
+
+### Features
+
+* **client:** ✨ add modals example ([d24fee1](https://github.com/JorgeCoke/cloudfire/commit/d24fee167ac6cfa2ffc40f7b6913aebda7ee69f4))
+
+
+### Bug Fixes
+
+* **client:** 🐛 minor fixes ([556306a](https://github.com/JorgeCoke/cloudfire/commit/556306ab7b77ad11fcbbf048291cc1e76afe0f0e))
+
 ## [1.1.0](https://github.com/JorgeCoke/cloudfire/compare/v1.0.0...v1.1.0) (2024-11-19)
 
 

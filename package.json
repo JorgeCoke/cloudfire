@@ -1,7 +1,7 @@
 {
 	"name": "cloudfire",
 	"type": "module",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"scripts": {
 		"dev": "vite",
 		"build": "npm run biome && tsc --noEmit && vite build && rm -rf dist && vite build --mode client && cp -r static dist",
@@ -81,7 +81,9 @@
 		}
 	},
 	"commitlint": {
-		"extends": ["@commitlint/config-conventional"]
+		"extends": [
+			"@commitlint/config-conventional"
+		]
 	},
 	"lint-staged": {
 		"src/**/*": [
