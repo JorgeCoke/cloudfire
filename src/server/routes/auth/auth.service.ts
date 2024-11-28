@@ -4,6 +4,7 @@ import { drizzle } from "drizzle-orm/d1";
 import { generateJwt, getSession } from "../../lib/auth";
 import { usersT } from "../../lib/db/schemas/users";
 import { HttpException } from "../../lib/http-exceptions";
+import { validateTurnstileToken } from "../../lib/turnstile";
 import type { AppRouteHandler } from "../../lib/zod-to-json-openapi";
 import {
 	AuthErrors,
@@ -19,6 +20,13 @@ export const PostLoginHandler: AppRouteHandler<typeof PostLoginRoute> = async (
 ) => {
 	const db = drizzle(c.env.DB);
 	const body = c.req.valid("json");
+	const validTurnstile = await validateTurnstileToken(
+		body["cf-turnstile-response"],
+		c.env.TURNSTILE_SECRET_KEY,
+	);
+	if (!validTurnstile) {
+		throw new HttpException(AuthErrors.USER_NOT_FOUND);
+	}
 	const [user] = await db
 		.select()
 		.from(usersT)
@@ -53,6 +61,13 @@ export const PostSignupHandler: AppRouteHandler<
 > = async (c) => {
 	const db = drizzle(c.env.DB);
 	const body = c.req.valid("json");
+	const validTurnstile = await validateTurnstileToken(
+		body["cf-turnstile-response"],
+		c.env.TURNSTILE_SECRET_KEY,
+	);
+	if (!validTurnstile) {
+		throw new HttpException(AuthErrors.ERROR_SIGN_UP);
+	}
 	const [user] = await db
 		.select()
 		.from(usersT)

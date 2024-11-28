@@ -8,6 +8,7 @@ export interface CfEnv {
 	DOCS_REALM: string;
 	ADMIN_USER: string;
 	ADMIN_PASSWORD: string;
+	TURNSTILE_SECRET_KEY: string;
 	CF_ACCOUNT_ID: string;
 	CF_TOKEN: string;
 	DB: D1Database;

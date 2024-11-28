@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { useStore } from "@nanostores/react";
 import { getPagePath, redirectPage } from "@nanostores/router";
 import { Flame, MoveLeft } from "lucide-react";
@@ -12,9 +13,10 @@ import { $doSignup } from "../../services/auth.service";
 
 export default function SignupPage() {
 	const signup = useStore($doSignup);
-	const { register, handleSubmit, formState } = useForm<PostSignupBodyDto>({
-		resolver: zodResolver(PostSignupBodyDto),
-	});
+	const { register, handleSubmit, formState, setValue } =
+		useForm<PostSignupBodyDto>({
+			resolver: zodResolver(PostSignupBodyDto),
+		});
 
 	return (
 		<main className="w-full h-[100vh] lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -82,6 +84,12 @@ export default function SignupPage() {
 							icon
 							errorLabel={formState.errors.repeatPassword?.message}
 							{...register("repeatPassword")}
+						/>
+						<Turnstile
+							siteKey="0x4AAAAAAA1EhnWNSw86PLe9"
+							onSuccess={(res) => {
+								setValue("cf-turnstile-response", res);
+							}}
 						/>
 						<Button
 							type="submit"

@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { useStore } from "@nanostores/react";
 import { getPagePath, redirectPage } from "@nanostores/router";
 import { Flame, MoveLeft } from "lucide-react";
@@ -13,9 +14,10 @@ import { $doLogin, $jwt, AuthServiceKeys } from "../../services/auth.service";
 
 export default function LoginPage() {
 	const login = useStore($doLogin);
-	const { register, handleSubmit, formState } = useForm<PostLoginBodyDto>({
-		resolver: zodResolver(PostLoginBodyDto),
-	});
+	const { register, handleSubmit, formState, setValue } =
+		useForm<PostLoginBodyDto>({
+			resolver: zodResolver(PostLoginBodyDto),
+		});
 	return (
 		<main className="w-full h-[100vh] lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
 			<div className="hidden bg-neutral-950  lg:flex justify-center relative">
@@ -76,6 +78,12 @@ export default function LoginPage() {
 							icon
 							errorLabel={formState.errors.password?.message}
 							{...register("password")}
+						/>
+						<Turnstile
+							siteKey="0x4AAAAAAA1EhnWNSw86PLe9"
+							onSuccess={(res) => {
+								setValue("cf-turnstile-response", res);
+							}}
 						/>
 						<Button
 							type="submit"

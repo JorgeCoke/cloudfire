@@ -19,6 +19,7 @@ export const PostSignupBodyDto = z
 			.trim()
 			.min(8, { message: "Password must containt at least 8 characteres" })
 			.max(50),
+		"cf-turnstile-response": z.string(),
 	})
 	.refine(({ password, repeatPassword }) => password === repeatPassword, {
 		path: ["repeatPassword"],
@@ -37,6 +38,7 @@ export const PostLoginBodyDto = z.object({
 		.min(1)
 		.email({ message: "Email is not a valid email address" }),
 	password: z.string().trim().min(1),
+	"cf-turnstile-response": z.string(),
 });
 export type PostLoginBodyDto = z.infer<typeof PostLoginBodyDto>;
 export const PostLoginResponseDto = z.object({

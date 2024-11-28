@@ -13,6 +13,9 @@ DOCS_REALM="cloudfire-swagger"
 ADMIN_USER="admin_user@example.com"
 ADMIN_PASSWORD="admin_password"
 
+# Turnstile Captcha
+TURNSTILE_SECRET_KEY="your_turnstile_secret_key"
+
 # [Only needed in local environment for Drizzle studio] Get yours from: https://dash.cloudflare.com/ > Workers & Pages
 CF_ACCOUNT_ID=""
 # [Only needed in local environment for Drizzle studio] Get yours from: https://dash.cloudflare.com/profile/api-tokens (add D1 edit permissions)
